@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 及时行乐
+title: 闻鸡起舞
 subtitle: ''
 description: ''
 keywords:
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: polarbear
+theme: ayer
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
