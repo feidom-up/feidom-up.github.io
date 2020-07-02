@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 魔动闪霸
+title: Feidom
 subtitle: ''
 description: ''
 keywords:
@@ -101,7 +101,6 @@ deploy:
   type: git
   repository: https://github.com/feidom-up/feidom-up.github.io.git
   branch: master
-
 
 archive_generator:
     per_page: 0
