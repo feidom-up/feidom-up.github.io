@@ -162,15 +162,15 @@
     'background-color: #ffbca2; padding: 8px; font-size: 14px;';
   const ayerNameStyle = 'background-color: #eaf8ff;';
 
-  console.log(
-    '%c%s%c%s%c%s',
-    ayerInfoStyle,
-    ayerInfo,
-    ayerURLStyle,
-    ayerURL,
-    ayerNameStyle,
-    ayerNameStr
-  );
+  // console.log(
+  //   '%c%s%c%s%c%s',
+  //   ayerInfoStyle,
+  //   ayerInfo,
+  //   ayerURLStyle,
+  //   ayerURL,
+  //   ayerNameStyle,
+  //   ayerNameStr
+  // );
   document.write('<script type="text/javascript"  src="https://js.users.51.la/20544303.js"></script>');
 })(jQuery);
 
