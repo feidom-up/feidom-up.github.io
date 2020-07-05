@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang=en><head><meta charset=utf-8>
+<html lang=en>
+
+<head>
+    <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width,initial-scale=1">
     <link rel=icon href=/favicon.ico>
@@ -10,33 +13,69 @@
     <link href=/js/chunk-vendors.1e5c55d3.js rel=preload as=script>
     <link href=/css/app.b087a504.css rel=stylesheet>
 </head>
+
 <body>
     <noscript>
-        <strong>We're sorry but hello-world doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <strong>We're sorry but hello-world doesn't work properly without JavaScript enabled. Please enable it to
+            continue.</strong>
     </noscript>
     <p>[[data]]</p>
     <div id=app></div>
     <script src=/js/chunk-vendors.1e5c55d3.js></script>
     <script src=/js/app.37c0be8d.js></script>
+    <script src="/scripts/feidomlibs.js"></script>
+    <script src="/scripts/index.js"></script>
     <!-- 在实际项目中，es6语法被部分浏览器支持。如果全部babel成es5，那么支持es6的浏览器就难受了。
     所以：一般项目中有两套js，一套es6，一套babel后的es5。 然后用方案实现在不同浏览器中，不同代码的运行，使es6的优势发挥到极致-->
-    <!-- 使用script的type="module"(支持es6)和type="nomodule"(不支持es6)来做方案 -->
+    <!-- 使用script的type="module"(支持es6)和type="nomodule"(不支持es6)来做方案(ES moudle)。module和nomodule也可以作为标签属性这么写-->
+
+    <!--     
+    但是同时会有以下情况
+    1.支持module，也支持nomodule。 运行type="module"里的代码逻辑。支持nomodule，不运行nomodule 。就执行一次
+    2.支持module，不支持nomodule。 就把nomodule属性当作了xxx属性（不认识的属性），也执行一次。执行2次
+    3.不支持module，不支持nomodule。 不执行type="module"，把nomodule都当作xxx这个不认识属性，就执行一次 -->
+    <script>
+        // https://gist.github.com/samthor/64b114e4a4f539915a95b91ffd340acc  
+        // safari-nomodule.js  以下代码用来解决情况2加载两次的问题
+        (function () {
+            var check = document.createElement('script');
+            if (!('noModule' in check) && 'onbeforeload' in check) {
+                var support = false;
+                document.addEventListener('beforeload', function (e) {
+                    if (e.target === check) {
+                        support = true;
+                    } else if (!e.target.hasAttribute('nomodule') || !support) {
+                        return;
+                    }
+                    e.preventDefault();
+                }, true);
+
+                check.type = 'module';
+                check.src = '.';
+                document.head.appendChild(check);
+                check.remove();
+            }
+        }());
+    </script>
+
+
     <script type="module">
-        import('./scripts/data.js').then((_)=>{
-            console.log(_.default)
+        import('./scripts/data.js').then((_) => {
+            console.log("module", _.default)
         })
     </script>
-    <script type="nomodule" src="https://cdn.staticfile.org/systemjs/6.3.3/system.js"></script>
-    <script type="nomodule">
+    <script nomodule src="https://cdn.staticfile.org/systemjs/6.3.3/system.js"></script>
+    <script nomodule>
         // 此时浏览器不支持es6，所以下面的import方法也不被支持，这个时候使用system.js来兼容import。System.import
         // system.js是干啥的，就是个模块加载器
-        System.import('./scripts/data_bundle.js').then((_)=>{
+        System.import('./scripts/data_bundle.js').then((_) => {
             console.log(_.default)
         })
     </script>
-    <!-- 如果nomodule都不支持，咋办 -->
-    <script type="xxx">
-        console.log("xxx")
-    </script>
+    <!-- <script xxx>
+        console.log('xxx')
+    </script> -->
+    
 </body>
+
 </html>
