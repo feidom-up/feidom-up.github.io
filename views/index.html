@@ -1,18 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
+<html lang=en><head><meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <link rel=icon href=/favicon.ico>
+    <title>hello-world</title>
+    <link href=/js/about.0505df9e.js rel=prefetch>
+    <link href=/css/app.b087a504.css rel=preload as=style>
+    <link href=/js/app.37c0be8d.js rel=preload as=script>
+    <link href=/js/chunk-vendors.1e5c55d3.js rel=preload as=script>
+    <link href=/css/app.b087a504.css rel=stylesheet>
 </head>
 <body>
-    <div id="app-6">
-        <p>[[data]]</p>
-        <p>{{ message }}</p>
-        <input v-model="message">
-    </div>
-    <script src="https://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
-    <script src="/scripts/index.js"></script>
+    <noscript>
+        <strong>We're sorry but hello-world doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <p>[[data]]</p>
+    <div id=app></div>
+    <script src=/js/chunk-vendors.1e5c55d3.js></script>
+    <script src=/js/app.37c0be8d.js></script>
+    <!-- 在实际项目中，es6语法被部分浏览器支持。如果全部babel成es5，那么支持es6的浏览器就难受了。
+    所以：一般项目中有两套js，一套es6，一套babel后的es5。 然后用方案实现在不同浏览器中，不同代码的运行，使es6的优势发挥到极致-->
+    <!-- 使用script的type="module"(支持es6)和type="nomodule"(不支持es6)来做方案 -->
+    <script type="module">
+        import('./scripts/data.js').then((_)=>{
+            console.log(_.default)
+        })
+    </script>
+    <script type="nomodule" src="https://cdn.staticfile.org/systemjs/6.3.3/system.js"></script>
+    <script type="nomodule">
+        // 此时浏览器不支持es6，所以下面的import方法也不被支持，这个时候使用system.js来兼容import。System.import
+        // system.js是干啥的，就是个模块加载器
+        System.import('./scripts/data_bundle.js').then((_)=>{
+            console.log(_.default)
+        })
+    </script>
+    <!-- 如果nomodule都不支持，咋办 -->
+    <script type="xxx">
+        console.log("xxx")
+    </script>
 </body>
 </html>

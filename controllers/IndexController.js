@@ -5,7 +5,7 @@ class IndexController extends Controller{
         super();
     }
     async actionIndex(ctx, next){
-        ctx.body = await ctx.render("index.back.html", {
+        ctx.body = await ctx.render("index.html", {
             data: '后端数据'
         })
     }

@@ -3,7 +3,7 @@ const { extend } = require('lodash');
 const { join } = require('path');
 let config = {
     viewDir : join(__dirname, '..', 'views'),
-    staticDir: join(__dirname, '..', 'assets/back'),
+    staticDir: join(__dirname, '..', 'assets'),
 };
 if(process.env.NODE_ENV === "development"){
     let localConfig = {
