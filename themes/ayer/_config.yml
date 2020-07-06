@@ -42,9 +42,9 @@ excerpt_all: false
 # 是否开启代码复制按钮
 copy_btn: true
 # 是否开启文章分享按钮
-share_enable: true
+share_enable: false
 # 国内的社交平台(If you are not in China, maybe you prefer to set:false)
-share_china: true
+share_china: false
 # 文章分享文字
 share_text: 分享
 
@@ -81,7 +81,7 @@ weixin: https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg
 
 # 版权声明
 # 版权声明type设定：0-关闭版权声明； 1-文章对应的md文件里有copyright: true属性，才有版权声明； 2-所有文章均有版权声明
-copyright_type: 2
+copyright_type: 0
 
 # 是否启用搜索
 # 需要安装hexo-generator-searchdb(https://github.com/theme-next/hexo-generator-searchdb)
@@ -149,7 +149,7 @@ katex:
   copy_tex: false
 
 # 网站成立年份(默认为 2019，若填入年份小于当前年份，则显示为 2018-2019 类似的格式)
-since: 2019
+since: 2020
 
 # 是否显示页脚信息(建议保留)
 pageFooter: false

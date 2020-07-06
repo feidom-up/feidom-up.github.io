@@ -1,7 +1,7 @@
 ---
 title: NodeJs前端话事人
 date: 2020-07-01 09:27:39
-categories: NodeJs
+categories: nodejs
 tags: 
 - 技术
 - nodejs

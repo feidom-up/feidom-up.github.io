@@ -1,7 +1,9 @@
 ---
 title: git常用命令(个人总结)
 date: 2020-07-04 21:04:13
-tags: git
+tags: 
+- git
+- 技术
 categories: git
 ---
 ### git概念
@@ -43,8 +45,8 @@ categories: git
 `$ git push [remote] [branch]`
 `$ git push`(分支有关联关系时)
 ---
-* 新建一个分支，并切换到该分支
-`$ git checkout -b [branch]`(会建立本地分支和远程分支的关联关系)
+* 新建一个本地分支，并切换到该分支
+`$ git checkout -b [branch] [remote]`(-b会建立本地分支和远程分支的关联关系)
 ---
 * 创建一个新的空分支（内容来自互联网）
 `$ git checkout --orphan [新的分支名]` (建一个没有父节点的分支，但是会复制当前分支的内容到新的分支上。)
