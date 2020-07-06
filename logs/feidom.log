@@ -1,0 +1,33 @@
+[2020-07-06T17:44:25.357] [ERROR] cheese - ReferenceError: xxx is not defined
+    at actionIndex (F:\feidom-up.github.io\controllers\ApiController.js:9:19)
+    at dispatch (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:186:18)
+    at Router._lookup (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:198:12)
+    at F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:138:21
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:12:19
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:5:23
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at serve (F:\feidom-up.github.io\node_modules\koa-static\index.js:53:15)
+[2020-07-06T18:03:42.497] [ERROR] cheese - ReferenceError: xxx is not defined
+    at actionIndex (F:\feidom-up.github.io\controllers\ApiController.js:9:19)
+    at dispatch (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:186:18)
+    at Router._lookup (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:198:12)
+    at F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:138:21
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:12:19
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:5:23
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at serve (F:\feidom-up.github.io\node_modules\koa-static\index.js:53:15)
+[2020-07-06T18:03:42.769] [ERROR] cheese - ReferenceError: xxx is not defined
+    at actionIndex (F:\feidom-up.github.io\controllers\ApiController.js:9:19)
+    at dispatch (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:186:18)
+    at Router._lookup (F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:198:12)
+    at F:\feidom-up.github.io\node_modules\koa-simple-router\index.js:138:21
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:12:19
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at F:\feidom-up.github.io\middlewares\errorHandler.js:5:23
+    at dispatch (F:\feidom-up.github.io\node_modules\koa\node_modules\koa-compose\index.js:42:32)
+    at serve (F:\feidom-up.github.io\node_modules\koa-static\index.js:53:15)

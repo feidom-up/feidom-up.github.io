@@ -6,7 +6,7 @@ class IndexController extends Controller{
     }
     async actionIndex(ctx, next){
         ctx.body = await ctx.render("index.html", {
-            data: '后端数据'
+            data: '点击可以触发节流'
         })
     }
 }

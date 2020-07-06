@@ -30,6 +30,8 @@
     "koa-swig": "^2.2.1",
     "koa2-connect-history-api-fallback": "^0.1.2",
     "lodash": "^4.17.15",
+    "log4js": "^6.3.0",
+    "module-alias": "^2.2.2",
     "nodemon": "^2.0.4"
   }
 }

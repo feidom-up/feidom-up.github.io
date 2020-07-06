@@ -6,7 +6,7 @@ class ApiController extends Controller{
     }
     async actionIndex(ctx, next){
         ctx.body = {
-            data: 123
+            data: xxx
         }
     }
     async actionCreate(ctx, next){
