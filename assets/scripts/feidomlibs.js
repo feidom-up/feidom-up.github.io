@@ -32,24 +32,43 @@
     }
     function mixin(obj) {
         each(functions(obj), function(name) {
-            console.log(name)
-          var func = _[name] = obj[name];
-          _.prototype[name] = function() {
+          var func = (_[name] = obj[name]);  // 方法往静态方法上挂
+          _.prototype[name] = function() {   // 静态方法往原型上挂
             var args = [this._wrapped];
             push.apply(args, arguments);
             console.log('args', args)
-            // return chainResult(this, func.apply(_, args));
+            return func.apply(_, args)
             // func(arguments)
           };
         });
 
-      }
-
-    function map(obj, handler){}
+    }
+    // 函数式编程实现节流
+    function throttle(fn, wait = 2000){
+        let timer;
+        return function(...args){
+            if(timer == null){
+                timer = setTimeout(()=>{
+                    timer = null
+                }, wait)
+                return fn.apply(this, args)
+            }
+        }
+    }
+    function map(obj, handler){
+        if(isFunction(handler)){
+            console.log('obj', obj)
+            console.log('handler', handler)
+        }else{
+            throw new Error('传参错误，不执行')
+        }
+        
+    }
     var allExports = {
         map,
+        throttle
     }
 
     mixin(allExports);
-    root._ = root
+    root._ = _
 })()
