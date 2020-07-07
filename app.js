@@ -40,7 +40,7 @@ app.context.render = co.wrap(render({
 app.use(serve(staticDir));
 
 errorHandler.error(app, logger)
-// app.use(historyApiFallback({ index: '/', whiteList: ['/api'] }));   //要写在路由逻辑的前边
+app.use(historyApiFallback({ index: '/', whiteList: ['/api'] }));   //要写在路由逻辑的前边
 
 require('./controllers')(app);  // 路由逻辑
 
