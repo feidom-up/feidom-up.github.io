@@ -57,3 +57,4 @@ $ hexo new page categories
 ``` bash
 $ hexo new page tags
 ```
+
