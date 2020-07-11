@@ -16,9 +16,9 @@ sonarqube依赖高版本的java环境，以下内容使用jdk14
 在[oracle官网](https://www.oracle.com/)下载[java](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)mac版（macOS Installer）和服务器Linux版（Linux RPM Package）。这种的不需要配环境变量，自动配好。
 > 注意：不要装openjdk
 * 将服务器Linux版的jdk上传到服务器并安装(pwd命令查看文件绝对路径)
-`scp /Users/yingying/Downloads/jdk-14.0.1_linux-x64_bin.rpm root@8.129.182.113:/opt/`
+`$ scp /Users/yingying/Downloads/jdk-14.0.1_linux-x64_bin.rpm root@8.129.182.113:/opt/`
 安装jdk
-`rpm -i jdk-14.0.1_linux-x64_bin.rpm`
+`$ rpm -i jdk-14.0.1_linux-x64_bin.rpm`
 
 ### 安装sonarqube
 * 在服务器端安装
@@ -45,7 +45,6 @@ root$ chmod 777 /opt/sonarqube-developer-8.4.0.35506.zip
 sonar$ cd /opt/sonarqube-8.4.0.35506/bin/linux-x86-64/
 ```
 
-
 ### 运行sonarqube
 在这有sonar.sh启动脚本，先不着急./sonar.sh start。先使用console查看启动日志,再start
 ```bash
@@ -54,3 +53,41 @@ sonar$ ./sonar.sh start
 ```
 > 意外：在启动成功后，使用公网ip:端口号 访问失败。发现是阿里云安全组的问题。配置好了以后访问成功
 > 意外：在装了汉化包之后，重启sonarqube，启动成功。但是访问一直pending。过一会就好了。应该是汉化包太大，在加载的原因
+
+### 初始化一个项目（test）
+以下操作都可以在公网ip:9000项目中可视化操作
+1. 使用公网ip:9000访问到sonarqube
+2. 使用默认账号/密码：admin/admin登陆
+3. 手工设置一个项目：test
+4. 设置一个token（客户端会用到的口令）
+5. 开始分析项目
+6. 选择项目的主要语言：其他（js）
+7. 选择客户端的操作系统（macOS）
+8. 下载并解压macOS平台的解析器
+9. 在你的电脑上e执行SonarQube扫描
+```
+# 使用SonarQube分析是非常简单的。只需要在你的项目目录下执行如下命令。
+sonar-scanner \
+  -Dsonar.projectKey=test \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://8.129.182.113:9000 \
+  -Dsonar.login=a258647adea0e982df705ac3512cbbe47154cfd3
+```
+10. [下载SonarScanner](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/)，是一个zip文件
+11. 配置环境变量
+配置～/.bash_profile
+```bash
+# sonar-scanner 环境变量  pwd找到sonar-scanner目录下的bin文件夹路径
+export SCANNER_HOME="/Users/yingying/Documents/qwf/libs/sonar-scanner-4.4.0.2170-macosx"
+export PATH=$PATH:$SCANNER_HOME/bin
+```
+使环境变量生效
+`$ source .bash_profile`
+可以执行`$ sonar-scanner -v`来查看是否配置安装成功
+12. 在项目（例：nodejs-demo）中配置SonarScanner
+在项目根目录新建`sonar-project.properties`文件，将第9步中的代码粘进来保存。可以修改扫描代码的路径Dsonar.sources为src \
+13. 在终端 shell 执行你的这个 sonar-project.properties 文件。静静等待...
+14. 结果会在公网ip:9000中可视化展示
+
+### 结束
+[大神同学详细链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
