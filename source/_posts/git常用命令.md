@@ -3,7 +3,6 @@ title: git常用命令(个人总结)
 date: 2020-07-04 21:04:13
 tags: 
 - git
-- 技术
 categories: git
 ---
 ### git概念
