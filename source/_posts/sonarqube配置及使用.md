@@ -21,8 +21,8 @@ sonarqube依赖高版本的java环境，以下内容使用jdk14
 `$ rpm -i jdk-14.0.1_linux-x64_bin.rpm`
 
 ### 安装sonarqube
-* 在服务器端安装
-`wget https://binaries.sonarsource.com/CommercialDistribution/sonarqube-developer/sonarqube-developer-8.4.0.35506.zip`
+* 在服务器端安装Community版本
+`wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.4.0.35506.zip`
 * sonarqube不能使用root身份启动，所以建一个sonar用户，将sonarqube-developer-8.4.0.35506.zip文件给到sonar用户。
 ```bash
 root$ useradd sonar
@@ -86,7 +86,7 @@ export PATH=$PATH:$SCANNER_HOME/bin
 可以执行`$ sonar-scanner -v`来查看是否配置安装成功
 12. 在项目（例：nodejs-demo）中配置SonarScanner
 在项目根目录新建`sonar-project.properties`文件，将第9步中的代码粘进来保存。可以修改扫描代码的路径Dsonar.sources为src \
-13. 在终端 shell 执行你的这个 sonar-project.properties 文件。静静等待...
+13. 在终端 shell 执行你的这个 sonar-project.properties 文件`bash sonar-project.properties`。静静等待10分钟左右...
 14. 结果会在公网ip:9000中可视化展示
 
 ### 结束
