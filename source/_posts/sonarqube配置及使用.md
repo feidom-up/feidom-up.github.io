@@ -63,18 +63,8 @@ sonar$ ./sonar.sh start
 5. 开始分析项目
 6. 选择项目的主要语言：其他（js）
 7. 选择客户端的操作系统（macOS）
-8. 下载并解压macOS平台的解析器
-9. 在你的电脑上e执行SonarQube扫描
-```
-# 使用SonarQube分析是非常简单的。只需要在你的项目目录下执行如下命令。
-sonar-scanner \
-  -Dsonar.projectKey=test \
-  -Dsonar.sources=. \
-  -Dsonar.host.url=http://8.129.182.113:9000 \
-  -Dsonar.login=a258647adea0e982df705ac3512cbbe47154cfd3
-```
-10. [下载SonarScanner](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/)，是一个zip文件
-11. 配置环境变量
+8. [下载并解压macOS平台的解析器SonarScanner](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/)，是一个zip文件
+9. 为SonarScanner配置环境变量
 配置～/.bash_profile
 ```bash
 # sonar-scanner 环境变量  pwd找到sonar-scanner目录下的bin文件夹路径
@@ -84,10 +74,21 @@ export PATH=$PATH:$SCANNER_HOME/bin
 使环境变量生效
 `$ source .bash_profile`
 可以执行`$ sonar-scanner -v`来查看是否配置安装成功
-12. 在项目（例：nodejs-demo）中配置SonarScanner
-在项目根目录新建`sonar-project.properties`文件，将第9步中的代码粘进来保存。可以修改扫描代码的路径Dsonar.sources为src \
-13. 在终端 shell 执行你的这个 sonar-project.properties 文件`bash sonar-project.properties`。静静等待10分钟左右...
-14. 结果会在公网ip:9000中可视化展示
+10. 在项目（例：nodejs-demo）中配置SonarScanner
+在项目根目录新建`sonar-project.properties`文件。
+``` bash
+sonar-scanner \
+  # 项目名
+  -Dsonar.projectKey=test \
+  # 要扫描的代码目录
+  -Dsonar.sources=. \
+  # 要上报报告的服务器链接
+  -Dsonar.host.url=http://8.129.182.113:9000 \
+  # token
+  -Dsonar.login=a258647adea0e982df705ac3512cbbe47154cfd3
+```
+11. 在终端 shell 执行你的这个 sonar-project.properties 文件`bash sonar-project.properties`。静静等待10分钟左右...
+12. 结果会在公网ip:9000中可视化展示
 
 ### 结束
 [大神同学详细链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
