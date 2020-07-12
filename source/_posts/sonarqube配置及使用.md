@@ -88,7 +88,30 @@ sonar-scanner \
   -Dsonar.login=a258647adea0e982df705ac3512cbbe47154cfd3
 ```
 11. 在终端 shell 执行你的这个 sonar-project.properties 文件`bash sonar-project.properties`。静静等待10分钟左右...
-12. 结果会在公网ip:9000中可视化展示
+12. 结果报表会在公网ip:9000中可视化展示
+
+### 数据库配置
+* 自带的内嵌数据库比较小。处理大项目需要配一下
+* sonarQube默认不支持mysql。需要安装[mysql Connector(驱动)](https://dev.mysql.com/downloads/connector/j/)后才能使用
+安装方式：将驱动放在`extensions/jdbc-driver/mysql/`（这个路径不确定）下
+* 配置文件：/opt/sonarqube-8.4.0.35506/conf/sonar.properties
+```
+sonar.jdbc.url=jdbc:mysql://192.168.1.222:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+```
+* 在使用库使，要提前建立好sonar库，命令参照如下：
+``` mysql
+DROP DATABASE sonar;
+
+CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE USER 'sonar' IDENTIFIED BY 'sonar';
+
+GRANT ALL ON sonar.* TO 'sonar'@'%' IDENTIFIED BY 'sonar';
+
+GRANT ALL ON sonar.* TO 'sonar'@'localhost' IDENTIFIED BY 'sonar';
+
+FLUSH PRIVILEGES;
+```
 
 ### 结束
-[大神同学详细链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
+[大神同学详细操作链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
