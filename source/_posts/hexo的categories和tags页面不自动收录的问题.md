@@ -3,7 +3,6 @@ title: categories和tags页面不自动收录的问题
 date: 2020-07-06 09:51:18
 tags: 
 - 问题解决
-- 技术
 - hexo
 categories: hexo
 ---

@@ -4,7 +4,7 @@ date: 2020-07-07 10:51:12
 tags:
 - Linux
 - 前端工程化
-categories: Linux
+categories: 前端工程化
 ---
 前端在部署项目时，使用Linux免密远程登录可以实现自动化中的一环。
 
