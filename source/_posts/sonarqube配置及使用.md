@@ -114,4 +114,4 @@ FLUSH PRIVILEGES;
 ```
 
 ### 结束
-[大神同学详细操作链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
+[详细操作链接](https://hondrytravis.github.io/blog/engineering/sonar.html#sonar)
