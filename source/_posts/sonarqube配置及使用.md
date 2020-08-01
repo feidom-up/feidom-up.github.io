@@ -48,6 +48,7 @@ sonar$ cd /opt/sonarqube-8.4.0.35506/bin/linux-x86-64/
 ### 运行sonarqube
 在这有sonar.sh启动脚本，先不着急./sonar.sh start。先使用console查看启动日志,再start
 ```bash
+sonar$ cd /opt/sonarqube-8.4.0.35506/bin/linux-x86-64/
 sonar$ ./sonar.sh console
 sonar$ ./sonar.sh start
 ```

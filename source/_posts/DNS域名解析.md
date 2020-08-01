@@ -17,7 +17,7 @@ DNS: domain name system
     分为ipv4，ipv6
 
 * 解析详解
-    ![解析图解](http://qcukvp3iz.bkt.clouddn.com/dns%E8%A7%A3%E6%9E%90.png)
+    ![解析图解](http://i.feidom.com/dns%E8%A7%A3%E6%9E%90.png)
     1. www.baidu.com?
     2. com = 1.1.1.1 （TLD服务器地址）
     3. www.baidu.com?

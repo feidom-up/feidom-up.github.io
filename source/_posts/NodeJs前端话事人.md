@@ -10,7 +10,7 @@ Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时。 [Node.js 中
 
 #### NodeJs应用场景
 * 我要的只是一个香蕉，得到的确是整个森林
-![实际情况](http://qcukvp3iz.bkt.clouddn.com/node_a.jpg)
+![实际情况](http://i.feidom.com/node_a.jpg)
 
 * SSR(服务器端渲染)
     * SEO友好
