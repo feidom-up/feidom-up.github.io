@@ -5,7 +5,7 @@ tags: 前端性能优化
 categories: 前端性能优化
 ---
 ### Navigation Timing
-![实际情况](http://qcukvp3iz.bkt.clouddn.com/performance_timing_api.jpg)
+![实际情况](http://i.feidom.com/performance_timing_api.jpg)
 
 图解：
 * Prompt for unload                   // 激起卸载
