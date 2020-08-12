@@ -27,6 +27,9 @@ categories: git
 * 查看分支关联关系
 `$ git branch -vv`
 ---
+* 查看不同
+`$ git diff`
+
 * 显示有变更的文件
 `$ git status`
 
@@ -62,3 +65,5 @@ categories: git
 * 新建本地分支与远程分支关联关系
 `git branch --set-upstream-to [远程分支] [本地分支]`
 
+* 从远程获取其他用户push上来的新分支
+`git fetch`
