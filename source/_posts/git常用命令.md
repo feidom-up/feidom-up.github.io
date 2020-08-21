@@ -12,6 +12,22 @@ categories: git
 * Remote：远程仓库
 
 ### 常用命令
+* 查看git config配置
+`git config --list`
+
+* git config全局配置
+```bash
+git config --global user.name "feidom"
+git config --global user.email "qiaoxiansen@hotmail.com"
+```
+
+* git config针对单个项目配置
+```bash
+# cd 项目目录,作用于当前项目下的.git目录下的config
+git config user.name "feidom"
+git config user.email "qiaoxiansen@hotmail.com"
+```
+---
 * 克隆一个项目和它的整个代码历史
 `$ git clone [url]`
 
