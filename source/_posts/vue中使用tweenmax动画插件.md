@@ -10,7 +10,7 @@ categories: vue
 ---
 ### gsap 动画
 
-(TweenMax基础案例)[https://www.tweenmax.com.cn/demo/]
+[TweenMax基础案例](https://www.tweenmax.com.cn/demo/)
 
 * npm install / yarn add 二选一
 ```bash

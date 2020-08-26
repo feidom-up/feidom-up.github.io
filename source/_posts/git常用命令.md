@@ -21,7 +21,7 @@ git config --global user.name "feidom"
 git config --global user.email "qiaoxiansen@hotmail.com"
 ```
 
-* git config针对单个项目配置
+* git config针对单个项目配置用户
 ```bash
 # cd 项目目录,作用于当前项目下的.git目录下的config
 git config user.name "feidom"
@@ -83,3 +83,12 @@ git config user.email "qiaoxiansen@hotmail.com"
 
 * 从远程获取其他用户push上来的新分支
 `git fetch`
+---
+* 查看远程仓库信息
+`git remote -v`
+
+* 移除远程仓库
+`git remote remove origin`
+
+* 添加远程仓库
+`git remote add origin [远程仓库地址]`
