@@ -9,7 +9,7 @@ categories: vue
 ---
 
 ### 在vue项目中使用swiper.js
-swiper.js在vue框架中，有一个专业的`vue-awesome-swiper.js`,在vue项目中使用时，需要把这个包也装上。
+有一个专业vue封装库的`vue-awesome-swiper.js`,在vue项目中使用时，需要把这个包也装上。
 ```bash
     yarn add swiper@5.3.6 vue-awesome-swiper@4.1.0
 ```
