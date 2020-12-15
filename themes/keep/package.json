@@ -1,0 +1,28 @@
+{
+  "name": "hexo-theme-keep",
+  "version": "3.0.4",
+  "private": false,
+  "description": "A simple and elegant theme for Hexo.",
+  "scripts": {
+    "release": "git push --tag && git push -u origin master",
+    "publish": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/XPoet/hexo-theme-keep.git"
+  },
+  "keywords": [
+    "hexo",
+    "theme",
+    "simple-theme",
+    "elegant-theme",
+    "beautiful-theme",
+    "powerful-theme"
+  ],
+  "author": "XPoet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/XPoet/hexo-theme-keep/issues"
+  },
+  "homepage": "https://github.com/XPoet/hexo-theme-keep#readme"
+}

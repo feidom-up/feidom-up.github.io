@@ -1,0 +1,203 @@
+# ---------------------------------------------------------------------------------------
+#  Your basic info
+# ---------------------------------------------------------------------------------------
+base_info:
+  title: FEIDOM
+  author: 
+  url: https://keep.xpoet.cn/
+
+
+# ---------------------------------------------------------------------------------------
+# Theme style settings
+# ---------------------------------------------------------------------------------------
+style:
+  # Theme primary color
+  primary_color: '#0066CC'
+
+  # Avatar (You can use local image or image external link)
+  avatar: /images/logo.jpg
+
+  # Favicon (You can use local image or image external link)
+  favicon: /images/logo.jpg
+
+  # Image align position, value: left | center
+  img_position: left
+
+  # Left side width
+  left_side_width: 260px
+
+  # Content area max width
+  content_max_width: 900px
+
+  # Mouse hover
+  hover:
+    shadow: true   # shadow effect when the mouse hover
+    scale: false   # scale effect when the mouse hover
+
+  # First screen
+  first_screen:
+    enable: true
+    background_img: /images/bg.svg
+    description: 你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江.
+
+
+# ---------------------------------------------------------------------------------------
+# Social contact link
+# ---------------------------------------------------------------------------------------
+social_contact:
+  enable: false
+  links:
+    github:          # your GitHub URL
+    weixin:          # your WeChat QR-Code URL
+    weibo:           # your WeiBo URL
+    twitter:         # your twitter URL
+    facebook:        # your facebook URL
+    email:           # your email
+
+
+# ---------------------------------------------------------------------------------------
+# Navigation menu
+# ---------------------------------------------------------------------------------------
+menu:
+  Home: /
+  Archives: /archives
+  # Categories: /categories
+  # Tags: /tags
+  # Links: /links
+  About: /about
+  # ...
+
+
+# ---------------------------------------------------------------------------------------
+# RSS
+# Dependencies: hexo-generator-feed
+# See: https://github.com/hexojs/hexo-generator-feed
+# ---------------------------------------------------------------------------------------
+rss:
+  enable: false
+
+
+# ---------------------------------------------------------------------------------------
+# Comment plugin
+# ---------------------------------------------------------------------------------------
+comment:
+  # Valine
+  # See: https://github.com/xCss/Valine
+  valine:
+    enable: false
+    appid:                # your leancloud application appid
+    appkey:               # your leancloud application appkey
+    meta:                 # comment input meta, type: Array, values: ['nick', 'mail', 'link']
+    placeholder:          # your placeholder
+
+  # Gitalk
+  # See: https://github.com/gitalk/gitalk
+  gitalk:
+    enable: false
+    github_id:             # GitHub repo owner
+    repository:            # Repository name to store issues
+    client_id:             # GitHub Application Client ID
+    client_secret:         # GitHub Application Client Secret
+
+
+# ---------------------------------------------------------------------------------------
+# Website count
+# ---------------------------------------------------------------------------------------
+website_count:
+  # busuanzi
+  # See: http://ibruce.info/2015/04/04/busuanzi/
+  busuanzi_count:
+    enable: false
+    site_uv: false
+    site_pv: false
+    page_pv: false
+
+
+# ---------------------------------------------------------------------------------------
+# Local Search
+# Dependencies: hexo-generator-searchdb
+# See: https://github.com/theme-next/hexo-generator-searchdb
+# ---------------------------------------------------------------------------------------
+local_search:
+  enable: true
+
+  # If auto, trigger search by changing input.
+  # If manual, trigger search by pressing enter key or search button.
+  trigger: auto  # values: auto | manual
+
+  # Unescape html strings to the readable one.
+  unescape: false
+
+  # Preload the search data when the page loads.
+  preload: false
+
+
+# ---------------------------------------------------------------------------------------
+# Post word count
+# Dependencies: hexo-wordcount
+# See: https://github.com/willin/hexo-wordcount
+# ---------------------------------------------------------------------------------------
+post_wordcount:
+  enable: false
+  wordcount: false  # word count, one article
+  min2read: false   # time to read, one article
+
+
+# ---------------------------------------------------------------------------------------
+# Home page article block display settings
+# ---------------------------------------------------------------------------------------
+home_article:
+  category:
+    enable: false     # show category in home page article block
+    limit: 3          # max number of categories shown in home page article block
+  tag:
+    enable: false     # show tags in home page article block
+    limit: 5          # max number of tags shown in home page article block
+
+
+# ---------------------------------------------------------------------------------------
+# Code copy
+# ---------------------------------------------------------------------------------------
+code_copy:
+  enable: true
+  style: default        # values: default | mac
+
+
+# ---------------------------------------------------------------------------------------
+# Table of Contents in the Sidebar
+# ---------------------------------------------------------------------------------------
+toc:
+  enable: false
+
+  # Automatically add list number to toc.
+  number: true
+
+  # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
+  expand_all: true
+
+
+# ---------------------------------------------------------------------------------------
+# Post copyright info
+# ---------------------------------------------------------------------------------------
+copyright_info:
+  enable: true
+
+
+# ---------------------------------------------------------------------------------------
+# Footer settings
+# ---------------------------------------------------------------------------------------
+footer:
+  since: 2020
+
+
+# ---------------------------------------------------------------------------------------
+# CDN
+# ---------------------------------------------------------------------------------------
+cdn:
+  enable: true
+
+
+# ---------------------------------------------------------------------------------------
+# Keep version (Please don't modify)
+# ---------------------------------------------------------------------------------------
+version: 3.0.4
