@@ -12,6 +12,22 @@ categories: git
 * Remote：远程仓库
 
 ### 常用命令
+* 查看git config配置
+`git config --list`
+
+* git config全局配置
+```bash
+git config --global user.name "feidom"
+git config --global user.email "qiaoxiansen@hotmail.com"
+```
+
+* git config针对单个项目配置用户
+```bash
+# cd 项目目录,作用于当前项目下的.git目录下的config
+git config user.name "feidom"
+git config user.email "qiaoxiansen@hotmail.com"
+```
+---
 * 克隆一个项目和它的整个代码历史
 `$ git clone [url]`
 
@@ -27,6 +43,9 @@ categories: git
 * 查看分支关联关系
 `$ git branch -vv`
 ---
+* 查看不同
+`$ git diff`
+
 * 显示有变更的文件
 `$ git status`
 
@@ -62,3 +81,14 @@ categories: git
 * 新建本地分支与远程分支关联关系
 `git branch --set-upstream-to [远程分支] [本地分支]`
 
+* 从远程获取其他用户push上来的新分支
+`git fetch`
+---
+* 查看远程仓库信息
+`git remote -v`
+
+* 移除远程仓库
+`git remote remove origin`
+
+* 添加远程仓库
+`git remote add origin [远程仓库地址]`

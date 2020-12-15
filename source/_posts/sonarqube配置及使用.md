@@ -17,8 +17,12 @@ sonarqube依赖高版本的java环境，以下内容使用jdk14
 > 注意：不要装openjdk
 * 将服务器Linux版的jdk上传到服务器并安装(pwd命令查看文件绝对路径)
 `$ scp /Users/yingying/Downloads/jdk-14.0.1_linux-x64_bin.rpm root@8.129.182.113:/opt/`
-安装jdk
+rpm安装jdk
 `$ rpm -i jdk-14.0.1_linux-x64_bin.rpm`
+rpm查询包信息
+`$ rpm -qa`  找到=> `jdk-14.0.1-14.0.1-ga.x86_64`
+rpm卸载jsk
+`$ rpm -e jdk-14.0.1-14.0.1-ga.x86_64`
 
 ### 安装sonarqube
 * 在服务器端安装Community版本
@@ -29,7 +33,7 @@ root$ useradd sonar
 root$ passwd sonar
 root$ chown -R sonar sonarqube-developer-8.4.0.35506.zip
 ```
-* 切换用户身份到sonar进行接下来的操作
+* 切换用户身份到sonar进行接下来的操作`su sonar`
 ```bash
 sonar$ unzip sonarqube-developer-8.4.0.35506.zip
 ```

@@ -7,7 +7,7 @@ title: feidom up up up
 subtitle: ''
 description: ''
 keywords:
-author: QiaoWenfei
+author: 乔文飞
 language: zh-CN
 timezone: ''
 
@@ -93,7 +93,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: ayer
+theme: indigo
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -107,3 +107,5 @@ archive_generator:
     yearly: false
     monthly: false
     daily: false
+    
+feed: false
