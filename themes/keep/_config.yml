@@ -4,7 +4,7 @@
 base_info:
   title: FEIDOM
   author: 
-  url: https://keep.xpoet.cn/
+  url: http://www.feidom.com/
 
 
 # ---------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ style:
   first_screen:
     enable: true
     background_img: /images/bg.svg
-    description: 你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江.
+    description: 你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。
 
 
 # ---------------------------------------------------------------------------------------
