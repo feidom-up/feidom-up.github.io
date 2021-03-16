@@ -19,7 +19,7 @@ webpack构建后的代码存在大量的闭包代码
 * 将所有模块的代码按照引用顺序放在一个函数作用域中，然后适当的重命名一些变量以防止变量名冲突
 * 对比，通过scope hoisting 可以减少函数声明代码和内存开销
 
-#### 开启scop hoisting
+#### 开启scope hoisting
 
 * webpack4 mode 为 production默认开启，必须是ES6语法，commonJS不支持
 * webpack3 增加插件 new webpack.optimize.ModuleConcatenationPlugin()
