@@ -13,8 +13,7 @@ categories: vue
 * [html 《==转换==》 vNode](/2020/08/13/vue源码解读之html与vNode间的转换/)
 * [Observer重写array监听](/2020/08/12/vue源码解析之observer重写array监听/)
 * [keep-alive的实现]()
-编译时，运行时
-dom diff
+
         
 
 

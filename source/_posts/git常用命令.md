@@ -99,3 +99,13 @@ git config user.email "qiaoxiansen@hotmail.com"
 ![选择分支](https://image-static.segmentfault.com/236/385/2363856556-59e965b2e3674_articlex)
     
 
+### git问题解决：
+* git clone 时出错： 
+```
+    error: RPC failed; result=35, HTTP code = 0
+    fatal: The remote end hung up unexpectedly
+```
+解决：
+    * 查看全局的postBuffer配置 `git config http.postBuffer`
+    * 把这个配置改大一点： `git config http.postBuffer 24288000`
+    
