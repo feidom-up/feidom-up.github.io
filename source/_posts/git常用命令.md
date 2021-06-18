@@ -80,6 +80,8 @@ git config user.email "qiaoxiansen@hotmail.com"
 `$ git push -u origin [branch]`(-u会建立本地分支和远程分支的关联关系)
 * 新建本地分支与远程分支关联关系
 `git branch --set-upstream-to [远程分支] [本地分支]`
+* 删除本地分支
+切到其他分支，然后`git branch -d [本地分支]`
 
 * 从远程获取其他用户push上来的新分支
 `git fetch`
