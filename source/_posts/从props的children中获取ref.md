@@ -48,7 +48,7 @@ class App extends Component {
 interface Props {
   forwardedRef: ref | null;
 }
-const Com extends React.Component<Props, State> {
+class Com extends React.Component<Props, State> {
   render() {
     const {forwardedRef} = this.props;
     return <>
