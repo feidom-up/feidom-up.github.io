@@ -35,3 +35,6 @@ B：B的操作B
 图示：
 ![ot](http://www.alloyteam.com/wp-content/uploads/2019/07/0973dffd-399c-48e9-8fcf-77ff3a6809e6-272x300.png)
 
+[一个演示OT的小网站](http://operational-transformation.github.io/)
+
+> 参考:[揭开在线协作的神秘面纱-OT算法](http://www.alloyteam.com/2019/07/13659/)
