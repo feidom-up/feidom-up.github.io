@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        react的转发ref |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">react的转发ref</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2021-07-12 17:18:41
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="简单理解"><a href="#简单理解" class="headerlink" title="简单理解"></a>简单理解</h4><p>使用通用的高阶组件时，外层组件ref控制高阶组件中包裹的子组件中的元素，此时外层组件传入的ref并不作用于高阶上，这个时候，高阶组件就要用到<code>React.forwardRef</code>进行ref转发。</p>
+<h4 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h4><p><a class="link"   href="https://zh-hans.reactjs.org/docs/react-api.html#reactforwardref"  target="_blank" rel="noopener">React.forwardRef<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="简单举栗🌰"><a href="#简单举栗🌰" class="headerlink" title="简单举栗🌰"></a>简单举栗🌰</h4><p>🌰栗子 来自<a class="link"   href="https://www.jianshu.com/p/ea89610dbbfd"  target="_blank" rel="noopener">JamesSawyer—-React 中的转发ref<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">// 高阶组件</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProps</span>(<span class="params">Component</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">LogProps</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    componentDidUpdate(prevProps) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'先前的属性：'</span>, prevProps);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'当前属性：'</span>, <span class="keyword">this</span>.props);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    render() &#123;</span><br><span class="line">      <span class="comment">// 使用forwardedRef作为一个ref属性传入组件中</span></span><br><span class="line">      <span class="keyword">const</span> &#123; forwardedRef, ...rest &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">      <span class="keyword">return</span> (</span><br><span class="line">        &lt;Component ref=&#123;forwardedRef&#125; &#123;...rest&#125; /&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 使用React.forwardRef对LogProps组件进行转发</span></span><br><span class="line">  <span class="keyword">return</span> React.forwardRef(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> (</span><br><span class="line">    &#123;<span class="string">' 上面定义的LogProps组件接受一个forwarded属性 '</span>&#125;</span><br><span class="line">    &lt;LogProps forwardedRef=&#123;ref&#125; &#123;...props&#125; /&gt;</span><br><span class="line">  ));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// FancyButton.js 子组件</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> logProps <span class="keyword">from</span> <span class="string">'./logProps'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受props和ref作为参数</span></span><br><span class="line"><span class="comment">// 返回一个React 组件</span></span><br><span class="line"><span class="keyword">const</span> FancyButton = React.forwardRef(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> (</span><br><span class="line">    &lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">"fancybutton"</span> ref=&#123;ref&#125;&gt;</span><br><span class="line">    &#123;props.children&#125;</span><br><span class="line">  &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">));</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 使用高阶组件对其进行封装</span></span><br><span class="line"><span class="regexp">export default logProps(FancyButton);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 父组件</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ app.js</span></span><br><span class="line"><span class="regexp">class App extends React.Component &#123;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  constructor(props) &#123;</span></span><br><span class="line"><span class="regexp">    super(props);</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ 创建一个ref 名字随意</span></span><br><span class="line"><span class="regexp">    this.ref = React.createRef();</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  componentDidMount() &#123;</span></span><br><span class="line"><span class="regexp">    console.log('ref', this.ref);</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ this.ref.current 表示获取ref指向的DOM元素</span></span><br><span class="line"><span class="regexp">    this.ref.current.classList.add('primary'); /</span><span class="regexp">/ 给FancyButton中的button添加一个class</span></span><br><span class="line"><span class="regexp">    this.ref.current.focus(); /</span><span class="regexp">/ focus到button元素上</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  render() &#123;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ 直接使用ref=&#123;this.fancyButtonRef&#125;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">        &lt;FancyButton ref=&#123;this.fancyButtonRef&#125;&gt;子组件&lt;/</span>FancyButton&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：react的转发ref</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2021-07-12 17:18:41</li>
+        <li>
+            本文链接：http://www.feidom.com/2021/07/12/react的转发ref/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/07/12/%E4%BB%8Eprops%E7%9A%84children%E4%B8%AD%E8%8E%B7%E5%8F%96ref/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">从props的children中获取ref</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/06/18/React-%E9%98%B2%E6%AD%A2%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%A4%84%E7%90%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React-防止内存泄漏处理</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2021 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单理解"><span class="nav-number">1.</span> <span class="nav-text">简单理解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#官方文档"><span class="nav-number">2.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单举栗🌰"><span class="nav-number">3.</span> <span class="nav-text">简单举栗🌰</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>
