@@ -94,6 +94,26 @@ git config user.email "qiaoxiansen@hotmail.com"
 
 * 添加远程仓库
 `git remote add origin [远程仓库地址]`
+
+* 查看该分支的远程仓库
+`git remote show`
+upstream：被fork的仓库/origin：自己fork的仓库
+
+* 从自己本地切一个分支出来
+`git checkout -b [本地分支名]`
+
+* 从远程仓库地址pull代码
+`git pull origin master --rebase` 先拉自己fork仓库的最新代码
+`git pull upstream master --rebase` 再拉被fork仓库的最新代码
+
+* 推送代码到自己fork仓库分支
+`git push origin [自己远程仓库的分支]`
+
+* 合并多个commit记录为一个
+`git rebase -i HEAD~`
+
+* 自己的远端提pull request到upstream的远端，github上操作
+
 ---
 * vscode合并分支
 在vscode界面，输入：`ctrl(win)/command(mac)+shift+p`,然后输入`git merge`，然后选一个要合并到当前分支的分支，回车确定即可。
