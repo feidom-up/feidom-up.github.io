@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        vue中使用svg图标 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">vue中使用svg图标</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-11-03 08:41:24
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/vue/">vue</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/svg/">svg</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue/">vue</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="对svg图标的简单实用和认识"><a href="#对svg图标的简单实用和认识" class="headerlink" title="对svg图标的简单实用和认识"></a>对svg图标的简单实用和认识</h3><p><a href="/2020/07/04/svg图标的使用/">svg图标的使用</a></p>
+<h3 id="在Vue项目中写一个svg组件"><a href="#在Vue项目中写一个svg组件" class="headerlink" title="在Vue项目中写一个svg组件"></a>在Vue项目中写一个svg组件</h3><ul>
+<li>安装<a class="link"   href="https://www.npmjs.com/package/svg-sprite-loader"  target="_blank" rel="noopener">svg-sprite-loader<i class="fas fa-external-link-alt"></i></a>插件对svg文件进行编译解析<br>  <code>yarn add svg-sprite-loader</code></li>
+<li>在<code>src/assets/</code>目录下新建<code>icons</code>目录，存放需要用到的svg图标</li>
+<li>在vue-cli4中，对<code>vue.config.js</code>进行配置  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">chainWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// set svg-sprite-loader</span></span><br><span class="line">    <span class="comment">// 第一步：让其他svg loader不要对svg进行操作</span></span><br><span class="line">    config.module</span><br><span class="line">    .rule(<span class="string">'svg'</span>)</span><br><span class="line">    .exclude.add(path.join(__dirname, <span class="string">'src/assets/icons'</span>))</span><br><span class="line">    .end()</span><br><span class="line">    <span class="comment">// 第二步：使用svg-sprite-loader 对svg进行操作</span></span><br><span class="line">    config.module</span><br><span class="line">    .rule(<span class="string">'icons'</span>)</span><br><span class="line">    .test(<span class="regexp">/\.svg$/</span>)</span><br><span class="line">    .include.add(path.join(__dirname, <span class="string">'src/assets/icons'</span>))</span><br><span class="line">    .end()</span><br><span class="line">    .use(<span class="string">'svg-sprite-loader'</span>)</span><br><span class="line">    .loader(<span class="string">'svg-sprite-loader'</span>)</span><br><span class="line">    <span class="comment">//定义规则 使用时 &lt;svg class="icon"&gt; &lt;use xlink:href="#icon-svg文件名"&gt;&lt;/use&gt;&lt;/svg&gt;</span></span><br><span class="line">    .options(&#123;</span><br><span class="line">        symbolId: <span class="string">'icon-[name]'</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .end()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>如果是vue-cli2中，配置<code>build/webpack.base.conf.js</code>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.svg$/</span>,</span><br><span class="line">                loader: <span class="string">"svg-sprite-loader"</span>,</span><br><span class="line">                include: [resolve(<span class="string">"src/assets/icons"</span>)],</span><br><span class="line">                options: &#123;</span><br><span class="line">                symbolId: <span class="string">"icon-[name]"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.(png|jpe?g|gif|svg)(\?.*)?$/</span>,</span><br><span class="line">                loader: <span class="string">"url-loader"</span>,</span><br><span class="line">                exclude: [resolve(<span class="string">"src/assets/icons"</span>)],</span><br><span class="line">                options: &#123;</span><br><span class="line">                limit: <span class="number">10000</span>,</span><br><span class="line">                name: utils.assetsPath(<span class="string">"img/[name].[hash:7].[ext]"</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在icons目录下，新建<code>index.js</code>文件  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> SvgIcon <span class="keyword">from</span> <span class="string">'@/components/common/svgIcon'</span></span><br><span class="line"><span class="comment">// 全局注册组件</span></span><br><span class="line">Vue.component(<span class="string">'svg-icon'</span>, SvgIcon)</span><br><span class="line"><span class="comment">// 定义一个加载目录的函数</span></span><br><span class="line"><span class="keyword">const</span> requireAll = <span class="function"><span class="params">requireContext</span> =&gt;</span> &#123;</span><br><span class="line">    requireContext.keys().map(requireContext)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> req = <span class="built_in">require</span>.context(<span class="string">'@/assets/icons'</span>, <span class="literal">false</span>, /\.svg$/)</span><br><span class="line"><span class="comment">// 加载目录下的所有 svg 文件</span></span><br><span class="line">requireAll(req)</span><br></pre></td></tr></table></figure></li>
+<li>上述<code>index.js</code>中，引用了<code>svgIcon</code>组件，在对应的引用路径下新建<code>svgIcon.vue</code>文件  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;svg :class&#x3D;&quot;svgClass&quot; aria-hidden&#x3D;&quot;true&quot;&gt;</span><br><span class="line">        &lt;use :xlink:href&#x3D;&quot;iconName&quot;&gt;&lt;&#x2F;use&gt;</span><br><span class="line">    &lt;&#x2F;svg&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    export default &#123;</span><br><span class="line">        name: &#39;svg-icon&#39;,</span><br><span class="line">        props: &#123;</span><br><span class="line">            &#x2F;&#x2F; 组件样式，可以控制svg图标</span><br><span class="line">            iconClass: &#123;</span><br><span class="line">                type: String,</span><br><span class="line">                required: true</span><br><span class="line">            &#125;,</span><br><span class="line">            &#x2F;&#x2F; 使用svg文件名的方式使用对应svg图标</span><br><span class="line">            className: &#123;</span><br><span class="line">                type: String</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        computed: &#123;</span><br><span class="line">            iconName() &#123;</span><br><span class="line">                return &#96;#icon-$&#123;this.iconClass&#125;&#96;</span><br><span class="line">            &#125;,</span><br><span class="line">            svgClass() &#123;</span><br><span class="line">                if (this.className) &#123;</span><br><span class="line">                    return &#39;svg-icon &#39; + this.className</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return &#39;svg-icon&#39;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.svg-icon &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    margin: 4px 6px 0 0;</span><br><span class="line">    width: 13px;</span><br><span class="line">    height: 13px;</span><br><span class="line">    vertical-align: 1px;</span><br><span class="line">    fill: #e1e1e1;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在<code>main.js</code>中引入<br>  <code>import &#39;./assets/icons&#39;</code></li>
+<li>使用svg-icon  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg-icon</span><br><span class="line">    :iconClass&#x3D;&quot;&#39;download&#39;&quot;   &#x2F;&#x2F;覆盖样式类名</span><br><span class="line">    className&#x3D;&quot;downloadIcon&quot;  &#x2F;&#x2F;文件名</span><br><span class="line">&gt;&lt;&#x2F;svg-icon&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：vue中使用svg图标</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-11-03 08:41:24</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/11/03/vue中使用svg图标/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/11/05/vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E6%96%B9%E6%B3%95/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue定义全局方法</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/09/10/%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E9%98%B2%E8%8C%83xss%E6%94%BB%E5%87%BB/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">前端如何防范xss攻击</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#对svg图标的简单实用和认识"><span class="nav-number">1.</span> <span class="nav-text">对svg图标的简单实用和认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Vue项目中写一个svg组件"><span class="nav-number">2.</span> <span class="nav-text">在Vue项目中写一个svg组件</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        设计模式-观察者模式 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">设计模式-观察者模式</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-08-12 09:24:58
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="简单介绍一下"><a href="#简单介绍一下" class="headerlink" title="简单介绍一下"></a>简单介绍一下</h3><p>观察者模式，又称<strong>发布/订阅模式</strong>，它定义了一种<strong>一对多</strong>的关系，让多个观察者对象同时监听某一个主题对象，这个主题对象的状态发生变化时就会通知所有的观察者对象，使得它们能够自动更新自己。</p>
+<h3 id="使用观察者模式的好处："><a href="#使用观察者模式的好处：" class="headerlink" title="使用观察者模式的好处："></a>使用观察者模式的好处：</h3><ul>
+<li>支持简单的广播通信，自动通知所有已经订阅过的对象。</li>
+<li>页面载入后目标对象很容易与观察者存在一种动态关联，增加了灵活性。</li>
+<li>目标对象与观察者之间的抽象耦合关系能够单独扩展以及重用。</li>
+</ul>
+<h3 id="用javaScript实现一般简单的观察者模式"><a href="#用javaScript实现一般简单的观察者模式" class="headerlink" title="用javaScript实现一般简单的观察者模式"></a>用javaScript实现一般简单的观察者模式</h3><p><em>pub(Publish) 发布</em><br><em>sub(Subscribe) 订阅</em><br><em>dep 发布订阅中心-电话本</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dep = &#123;&#125;;  <span class="comment">// dep相当于电话本，所有订阅者都注册在这里</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">q</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> topics = &#123;&#125;, <span class="comment">// 回调函数存放的数组</span></span><br><span class="line">        subUid = <span class="number">-1</span>;</span><br><span class="line">    <span class="comment">// 发布方法</span></span><br><span class="line">    q.publish = <span class="function"><span class="keyword">function</span> (<span class="params">topic, args</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!topics[topic]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> subscribers = topics[topic],</span><br><span class="line">                len = subscribers ? subscribers.length : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (len--) &#123;</span><br><span class="line">                <span class="comment">// 遍历所有订阅的方法，全部执行</span></span><br><span class="line">                subscribers[len].func(topic, args);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 订阅方法</span></span><br><span class="line">    <span class="comment">// @param  topic  订阅者名称</span></span><br><span class="line">    <span class="comment">// @param  func   订阅方法，通知时，调用这个方法实现通知</span></span><br><span class="line">    q.subscribe = <span class="function"><span class="keyword">function</span> (<span class="params">topic, func</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!topics[topic]) &#123;</span><br><span class="line">            <span class="comment">// 注册观察对象</span></span><br><span class="line">            topics[topic] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> token = (++subUid).toString();   <span class="comment">// 方法的唯一口令标识，退订时可用</span></span><br><span class="line">        <span class="comment">// 注册观察方法</span></span><br><span class="line">        topics[topic].push(&#123;</span><br><span class="line">            token: token,</span><br><span class="line">            func: func</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> token;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//退订方法</span></span><br><span class="line">    q.unsubscribe = <span class="function"><span class="keyword">function</span> (<span class="params">token</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> m <span class="keyword">in</span> topics) &#123;</span><br><span class="line">            <span class="keyword">if</span> (topics[m]) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, j = topics[m].length; i &lt; j; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (topics[m][i].token === token) &#123;</span><br><span class="line">                        <span class="comment">// 根据唯一口令标识 移除观察方法，实现退订</span></span><br><span class="line">                        topics[m].splice(i, <span class="number">1</span>);</span><br><span class="line">                        <span class="keyword">return</span> token;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125; (dep));</span><br></pre></td></tr></table></figure>
+
+<p>使用上面这个观察者模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 来，订阅一个</span></span><br><span class="line">pubsub.subscribe(<span class="string">'example1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">topics, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 通知时，这个方法收到通知执行</span></span><br><span class="line">    <span class="built_in">console</span>.log(topics + <span class="string">": "</span> + data);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 再加一个订阅方法</span></span><br><span class="line">pubsub.subscribe(<span class="string">'example1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">topics, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 这个方法也收到通知执行</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(data))&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'接到通知2'</span>,topics,  data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//发布通知</span></span><br><span class="line">pubsub.publish(<span class="string">'example1'</span>, <span class="string">'hello world!'</span>);</span><br><span class="line">pubsub.publish(<span class="string">'example1'</span>, [<span class="string">'test'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]);</span><br><span class="line">pubsub.publish(<span class="string">'example1'</span>, [&#123; <span class="string">'color'</span>: <span class="string">'blue'</span> &#125;, &#123; <span class="string">'text'</span>: <span class="string">'hello'</span>&#125;]);</span><br></pre></td></tr></table></figure>
+<h3 id="一张图说清楚观察者模式"><a href="#一张图说清楚观察者模式" class="headerlink" title="一张图说清楚观察者模式"></a>一张图说清楚观察者模式</h3><p><img src="http://i.feidom.com/sub_pub%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="观察者模式"></p>
+<h3 id="特别鸣谢"><a href="#特别鸣谢" class="headerlink" title="特别鸣谢"></a>特别鸣谢</h3><p>此篇笔记是看了<a class="link"   href="https://www.cnblogs.com/TomXu/archive/2012/03/02/2355128.html"  target="_blank" rel="noopener">汤姆大叔的博客-深入理解JavaScript系列（32）：设计模式之观察者模式<i class="fas fa-external-link-alt"></i></a>,笔记内容大多来自该篇博客。大叔的博客中还有其他观察者模式的实现方式，如需更深的理解，请移步。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：设计模式-观察者模式</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-08-12 09:24:58</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/08/12/观察者模式/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/08/12/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bobserver%E9%87%8D%E5%86%99array%E7%9B%91%E5%90%AC/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue2.x源码解读之observer重写array监听</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/08/07/vue%E4%B8%AD%E4%BD%BF%E7%94%A8tweenmax%E5%8A%A8%E7%94%BB%E6%8F%92%E4%BB%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue中使用gsap的动画插件</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍一下"><span class="nav-number">1.</span> <span class="nav-text">简单介绍一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用观察者模式的好处："><span class="nav-number">2.</span> <span class="nav-text">使用观察者模式的好处：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用javaScript实现一般简单的观察者模式"><span class="nav-number">3.</span> <span class="nav-text">用javaScript实现一般简单的观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一张图说清楚观察者模式"><span class="nav-number">4.</span> <span class="nav-text">一张图说清楚观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特别鸣谢"><span class="nav-number">5.</span> <span class="nav-text">特别鸣谢</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

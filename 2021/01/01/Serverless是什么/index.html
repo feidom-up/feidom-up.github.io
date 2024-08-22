@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        Serverless是什么 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Serverless是什么</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2021-01-01 21:59:56
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/serverless/">serverless</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><ul>
+<li><p>广义上来说<br>是构建和运行软件时不需要关心服务器的一种架构思想。虽然 Serverless 翻译过来是 “无服务器”，但这并不代表着应用运行不需要服务器，而是开发者不需要关心服务器。而基于 Serverless 思想实现的软件架构就是 Serverless 架构。</p>
+</li>
+<li><p>狭义上说<br>  狭义的 Serverless 是 <code>FaaS</code> 和 <code>BaaS</code> 的组合。</p>
+<ul>
+<li>FaaS（Function as a Service）：<ol>
+<li>FaaS本质上是一个函数运行平台，函数运行时，你对底层的服务器是无感知的，FaaS 产品会负责资源的调度和运维，这是它的特点之一，<strong>不用运维</strong>。</li>
+<li>FaaS 中的函数也不是持续运行的，而是通过事件进行触发，比如 HTTP 事件、消息事件等，产生事件的源头叫触发器，FaaS 平台会集成这些触发器，我们直接用就行，这是 FaaS 的第二个特点，<strong>事件驱动</strong>。</li>
+<li>FaaS 的第三个特点是<strong>按量付费</strong>。 FaaS 产品的收费方式，都是按照函数执行次数和执行时消耗的 CPU、内存等资源进行计费的。</li>
+<li>FaaS 在运行函数的时候，会根据并发量自动生成多个函数实例，并且并发理论是没有上限的，这是它的第四个特点，<strong>弹性伸缩</strong>。</li>
+</ol>
+<ul>
+<li>FaaS 每次执行函数时，都会初始化一个新的运行环境，然后从头开始执行整个代码，而不是只执行其中的 handler 方法。执行完毕后，运行环境就会被释放。这样每次函数执行，都是新的运行环境，自然不同函数之间就无法共用 pv 这个变量了。FaaS 的另一个特点，<strong>无状态</strong>。</li>
+</ul>
+</li>
+<li>BaaS（Backend as a Service）<br> 为了解决分布式中的状态共享问题<br> BaaS 本质上就是把后端功能封装起来，以接口的形式提供服务。</li>
+</ul>
+</li>
+<li><p>总<br>基于 FaaS 和 BaaS 的架构，是一种计算和存储分离的架构。 计算由 FaaS 负责，存储由 BaaS 负责，计算和存储也被分开部署和收费。这使应用的存储不再是应用本身的一部分，而是演变成了独立的云服务，降低了数据丢失的风险。而应用本身也变成了无状态的应用，更容易进行调度和扩缩容。</p>
+</li>
+</ul>
+<p>基于 FaaS 和 BaaS ，你的应用就实现了自动弹性伸缩、按量付费、不用关心服务器，这正是 Serverless 架构的必要因素。所以说狭义的 Serverless 是 FaaS 和 BaaS 的组合。</p>
+<h3 id="与其他架构的区别"><a href="#与其他架构的区别" class="headerlink" title="与其他架构的区别"></a>与其他架构的区别</h3><ul>
+<li>PaaS<br>  PaaS （平台即服务）是云计算虚拟机时代的主要形态之一。 它是指云厂商提供开发工具、依赖库、服务和运行平台等能力，开发者可以依赖这些能力将自己的应用直接部署在云平台上，不用关心底层的计算资源、网络、存储等。虽然与Serverless 很类似，但依旧存在一些区别。</li>
+<li>Kubernetes<br>  Kubernetes 是一种容器编排技术。在 Kubernetes 中应用运行的基本单位是 Pod（容器组），Pod 是应用及运行环境的集合，所以你也不用关心服务器了。基于 Kubernetes，你能很方便地进行 Pod 的管理，并且实现应用的弹性伸缩。<br>  所以，Kubernetes 是介于 Serverful 和 Serverless 中间的产物。</li>
+</ul>
+<p><strong>Serverless 是云原生的一种实现，云原生的另一种实现是 Kubernetes。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Serverless</th>
+<th align="left">PaaS （平台即服务）</th>
+<th align="left">Kubernetes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">按实际使用量付费</td>
+<td align="left">按资源付费</td>
+<td align="left">按照资源数量计费</td>
+</tr>
+</tbody></table>
+<h3 id="Serverless-的优缺点"><a href="#Serverless-的优缺点" class="headerlink" title="Serverless 的优缺点"></a>Serverless 的优缺点</h3><ul>
+<li>优点：不用运维、弹性伸缩、节省成本、开发简单、降低风险、易于扩展。</li>
+<li>缺点：<ol>
+<li>依赖第三方服务：一旦你选择了一个云厂商，要想从一个云移到另一个台，成本很高</li>
+<li>底层硬件的多样性：代码依赖的地层硬件多样性</li>
+<li>应用性能瓶颈：函数运行前需要现初始化函数运行环境，这个过程需要消耗一定时间。因为函数不是持续“在线”的，而是需要运行的时候才启动（不像传统应用，服务是一直启动的）。</li>
+<li>函数通信效率低：在 Serverless 应用中，函数与函数之间就完全独立了。如果两个函数的数据有依赖，需要进行通信、交换数据，就要进行函数与函数之间的调用（调用方式是 HTTP 调用）。相比之前的内存调用，数据交互效率显然低了很多。而这个问题的本质，是 FaaS 还没有比较好的数据通信协议或方案。</li>
+<li>开发调试复杂：Serverless 架构正处于飞速发展的阶段，其开发、调试、部署工具链并不完善（基本是每个云厂商各玩各的）</li>
+</ol>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Serverless是什么</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2021-01-01 21:59:56</li>
+        <li>
+            本文链接：http://www.feidom.com/2021/01/01/Serverless是什么/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/01/02/%E8%99%9A%E6%8B%9Fdom/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Virtual DOM的工作原理</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/12/31/React%E9%9D%A2%E5%90%91%E7%BB%84%E4%BB%B6%E8%B7%A8%E5%B1%82%E7%BA%A7%E9%80%9A%E4%BF%A1/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React面向组件跨层级通信</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#是什么"><span class="nav-number">1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与其他架构的区别"><span class="nav-number">2.</span> <span class="nav-text">与其他架构的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serverless-的优缺点"><span class="nav-number">3.</span> <span class="nav-text">Serverless 的优缺点</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

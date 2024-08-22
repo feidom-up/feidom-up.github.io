@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        vue使用swiper |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">vue使用swiper</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-08-25 14:26:14
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/vue/">vue</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/css/">css</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue/">vue</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8A%A8%E7%94%BB/">动画</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="在vue项目中使用swiper-js"><a href="#在vue项目中使用swiper-js" class="headerlink" title="在vue项目中使用swiper.js"></a>在vue项目中使用swiper.js</h3><p>有一个专业vue封装库的<code>vue-awesome-swiper.js</code>,在vue项目中使用时，需要把这个包也装上。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add swiper@5.3.6 vue-awesome-swiper@4.1.0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面装包时指定版本，是因为在项目中踩坑了。装了新包不能用。于是查看vue-awesome-swiper<a class="link"   href="https://github.com/surmon-china/surmon-china.github.io"  target="_blank" rel="noopener">在github上的示例代码<i class="fas fa-external-link-alt"></i></a>，发现<code>swiper@5.3.6 vue-awesome-swiper@4.1.0</code>，装包后可以使用</p>
+</blockquote>
+<h3 id="使用demo"><a href="#使用demo" class="headerlink" title="使用demo"></a>使用demo</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"example-3d"</span>&gt;</span><br><span class="line">		&lt;swiper <span class="class"><span class="keyword">class</span></span>=<span class="string">"swiper"</span> :options=<span class="string">"swiperOption"</span>&gt;</span><br><span class="line">			&lt;swiper-slide v-<span class="keyword">for</span>=<span class="string">"(item, index) in colorList"</span> :key=<span class="string">"index"</span> :style=<span class="string">"'background: '+item"</span>&gt;Slide &#123;&#123;index&#125;&#125;&lt;<span class="regexp">/swiper-slide&gt;</span></span><br><span class="line"><span class="regexp">		&lt;/</span>swiper&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; Swiper, SwiperSlide &#125; <span class="keyword">from</span> <span class="string">'vue-awesome-swiper'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'swiper/css/swiper.css'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	name: <span class="string">'swiper-example-3d-coverflow'</span>,</span><br><span class="line">	title: <span class="string">'3D Coverflow effect'</span>,</span><br><span class="line">	components: &#123;</span><br><span class="line">		Swiper,</span><br><span class="line">		SwiperSlide,</span><br><span class="line">	&#125;,</span><br><span class="line">	data() &#123;</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">            colorList:[<span class="string">'#c82829'</span>,<span class="string">'#f5871f'</span>,<span class="string">'#eab700'</span>,<span class="string">'#718c00'</span>,<span class="string">'#3e999f'</span>],</span><br><span class="line">			swiperOption: &#123;</span><br><span class="line">				initialSlide: <span class="number">1</span>,</span><br><span class="line">				virtualTranslate: <span class="literal">true</span>,</span><br><span class="line">				effect: <span class="string">'coverflow'</span>,</span><br><span class="line">				grabCursor: <span class="literal">false</span>,</span><br><span class="line">				centeredSlides: <span class="literal">true</span>,</span><br><span class="line">				slidesPerView: <span class="string">'auto'</span>,</span><br><span class="line">				coverflowEffect: &#123;</span><br><span class="line">					rotate: <span class="number">10</span>,</span><br><span class="line">					stretch: <span class="number">0</span>,</span><br><span class="line">					depth: <span class="number">10</span>,</span><br><span class="line">					modifier: <span class="number">1</span>,</span><br><span class="line">					slideShadows: <span class="literal">false</span>,</span><br><span class="line">				&#125;,</span><br><span class="line">				on: &#123;</span><br><span class="line">					click: <span class="function"><span class="keyword">function</span> (<span class="params">swiper, event</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">					&#125;,</span><br><span class="line">				&#125;,</span><br><span class="line">				slideToClickedSlide: <span class="literal">true</span>,</span><br><span class="line">				slidesPerView: <span class="number">5</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;style lang="scss" scoped&gt;</span></span><br><span class="line"><span class="regexp">.example-3d &#123;</span></span><br><span class="line"><span class="regexp">	width: 100%;</span></span><br><span class="line"><span class="regexp">	height: 400px;</span></span><br><span class="line"><span class="regexp">	padding-top: 50px;</span></span><br><span class="line"><span class="regexp">	padding-bottom: 50px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">.swiper &#123;</span></span><br><span class="line"><span class="regexp">	height: 100%;</span></span><br><span class="line"><span class="regexp">	width: 100%;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">	.swiper-slide &#123;</span></span><br><span class="line"><span class="regexp">		display: flex;</span></span><br><span class="line"><span class="regexp">		justify-content: center;</span></span><br><span class="line"><span class="regexp">		align-items: center;</span></span><br><span class="line"><span class="regexp">		width: 300px;</span></span><br><span class="line"><span class="regexp">		height: 300px;</span></span><br><span class="line"><span class="regexp">		text-align: center;</span></span><br><span class="line"><span class="regexp">		font-weight: bold;</span></span><br><span class="line"><span class="regexp">		background-color: #2c8dfb;</span></span><br><span class="line"><span class="regexp">		background-position: center;</span></span><br><span class="line"><span class="regexp">		background-size: cover;</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：vue使用swiper</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-08-25 14:26:14</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/08/25/vue使用swiper/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/08/26/vue%E4%B8%AD%E4%BD%BF%E7%94%A8vueChartJs/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue中使用vueChartJs</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/08/18/vue%E4%BD%BF%E7%94%A8flow%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue使用flow静态检查</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在vue项目中使用swiper-js"><span class="nav-number">1.</span> <span class="nav-text">在vue项目中使用swiper.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用demo"><span class="nav-number">2.</span> <span class="nav-text">使用demo</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

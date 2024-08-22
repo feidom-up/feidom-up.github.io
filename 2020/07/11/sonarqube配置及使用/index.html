@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        sonarqube配置及使用 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">sonarqube配置及使用</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-07-11 08:47:02
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/sonarqube/">sonarqube</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p><a class="link"   href="https://docs.sonarqube.org/latest/"  target="_blank" rel="noopener">sonarqube官网文档<i class="fas fa-external-link-alt"></i></a>：代码质量的检测及管理</p>
+<h3 id="安装java环境"><a href="#安装java环境" class="headerlink" title="安装java环境"></a>安装java环境</h3><ul>
+<li>安装java环境（本地和服务器都需要）<br>sonarqube依赖高版本的java环境，以下内容使用jdk14<br>在<a class="link"   href="https://www.oracle.com/"  target="_blank" rel="noopener">oracle官网<i class="fas fa-external-link-alt"></i></a>下载<a class="link"   href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html"  target="_blank" rel="noopener">java<i class="fas fa-external-link-alt"></i></a>mac版（macOS Installer）和服务器Linux版（Linux RPM Package）。这种的不需要配环境变量，自动配好。<blockquote>
+<p>注意：不要装openjdk</p>
+</blockquote>
+</li>
+<li>将服务器Linux版的jdk上传到服务器并安装(pwd命令查看文件绝对路径)<br><code>$ scp /Users/yingying/Downloads/jdk-14.0.1_linux-x64_bin.rpm root@8.129.182.113:/opt/</code><br>rpm安装jdk<br><code>$ rpm -i jdk-14.0.1_linux-x64_bin.rpm</code><br>rpm查询包信息<br><code>$ rpm -qa</code>  找到=&gt; <code>jdk-14.0.1-14.0.1-ga.x86_64</code><br>rpm卸载jsk<br><code>$ rpm -e jdk-14.0.1-14.0.1-ga.x86_64</code></li>
+</ul>
+<h3 id="安装sonarqube"><a href="#安装sonarqube" class="headerlink" title="安装sonarqube"></a>安装sonarqube</h3><ul>
+<li>在服务器端安装Community版本<br><code>wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.4.0.35506.zip</code></li>
+<li>sonarqube不能使用root身份启动，所以建一个sonar用户，将sonarqube-developer-8.4.0.35506.zip文件给到sonar用户。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root$ useradd sonar</span><br><span class="line">root$ passwd sonar</span><br><span class="line">root$ chown -R sonar sonarqube-developer-8.4.0.35506.zip</span><br></pre></td></tr></table></figure></li>
+<li>切换用户身份到sonar进行接下来的操作<code>su sonar</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sonar$ unzip sonarqube-developer-8.4.0.35506.zip</span><br></pre></td></tr></table></figure>
+提示没有权限。<blockquote>
+<p>注意：在opt文件夹下解压 文件.zip。会创建一个新的文件夹存放解压文件。此时sonar用户没有opt文件夹的读写执行权限。所以报错<code>Permission denied</code><br>解决：使用root身份修改文件权限。给sonar权限。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root$ chmod 754 opt</span><br><span class="line">root$ chmod 777 /opt/sonarqube-developer-8.4.0.35506.zip</span><br></pre></td></tr></table></figure>
+然后执行unzip，解压成功。之后进入解压文件夹下的bin目录的linux-x86-64目录<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sonar$ <span class="built_in">cd</span> /opt/sonarqube-8.4.0.35506/bin/linux-x86-64/</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="运行sonarqube"><a href="#运行sonarqube" class="headerlink" title="运行sonarqube"></a>运行sonarqube</h3><p>在这有sonar.sh启动脚本，先不着急./sonar.sh start。先使用console查看启动日志,再start</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sonar$ <span class="built_in">cd</span> /opt/sonarqube-8.4.0.35506/bin/linux-x86-64/</span><br><span class="line">sonar$ ./sonar.sh console</span><br><span class="line">sonar$ ./sonar.sh start</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>意外：在启动成功后，使用公网ip:端口号 访问失败。发现是阿里云安全组的问题。配置好了以后访问成功<br>意外：在装了汉化包之后，重启sonarqube，启动成功。但是访问一直pending。过一会就好了。应该是汉化包太大，在加载的原因</p>
+</blockquote>
+<h3 id="初始化一个项目（test）"><a href="#初始化一个项目（test）" class="headerlink" title="初始化一个项目（test）"></a>初始化一个项目（test）</h3><p>以下操作都可以在公网ip:9000项目中可视化操作</p>
+<ol>
+<li>使用公网ip:9000访问到sonarqube</li>
+<li>使用默认账号/密码：admin/admin登陆</li>
+<li>手工设置一个项目：test</li>
+<li>设置一个token（客户端会用到的口令）</li>
+<li>开始分析项目</li>
+<li>选择项目的主要语言：其他（js）</li>
+<li>选择客户端的操作系统（macOS）</li>
+<li><a class="link"   href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/"  target="_blank" rel="noopener">下载并解压macOS平台的解析器SonarScanner<i class="fas fa-external-link-alt"></i></a>，是一个zip文件</li>
+<li>为SonarScanner配置环境变量<br>配置～/.bash_profile<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sonar-scanner 环境变量  pwd找到sonar-scanner目录下的bin文件夹路径</span></span><br><span class="line"><span class="built_in">export</span> SCANNER_HOME=<span class="string">"/Users/yingying/Documents/qwf/libs/sonar-scanner-4.4.0.2170-macosx"</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$SCANNER_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+使环境变量生效<br><code>$ source .bash_profile</code><br>可以执行<code>$ sonar-scanner -v</code>来查看是否配置安装成功</li>
+<li>在项目（例：nodejs-demo）中配置SonarScanner<br>在项目根目录新建<code>sonar-project.properties</code>文件。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sonar-scanner \</span><br><span class="line">  <span class="comment"># 项目名</span></span><br><span class="line">  -Dsonar.projectKey=<span class="built_in">test</span> \</span><br><span class="line">  <span class="comment"># 要扫描的代码目录</span></span><br><span class="line">  -Dsonar.sources=. \</span><br><span class="line">  <span class="comment"># 要上报报告的服务器链接</span></span><br><span class="line">  -Dsonar.host.url=http://8.129.182.113:9000 \</span><br><span class="line">  <span class="comment"># token</span></span><br><span class="line">  -Dsonar.login=a258647adea0e982df705ac3512cbbe47154cfd3</span><br></pre></td></tr></table></figure></li>
+<li>在终端 shell 执行你的这个 sonar-project.properties 文件<code>bash sonar-project.properties</code>。静静等待10分钟左右…</li>
+<li>结果报表会在公网ip:9000中可视化展示</li>
+</ol>
+<h3 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h3><ul>
+<li>自带的内嵌数据库比较小。处理大项目需要配一下</li>
+<li>sonarQube默认不支持mysql。需要安装<a class="link"   href="https://dev.mysql.com/downloads/connector/j/"  target="_blank" rel="noopener">mysql Connector(驱动)<i class="fas fa-external-link-alt"></i></a>后才能使用<br>安装方式：将驱动放在<code>extensions/jdbc-driver/mysql/</code>（这个路径不确定）下</li>
+<li>配置文件：/opt/sonarqube-8.4.0.35506/conf/sonar.properties<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sonar.jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;192.168.1.222:3306&#x2F;sonar?useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf8&amp;rewriteBatchedStatements&#x3D;true</span><br></pre></td></tr></table></figure></li>
+<li>在使用库使，要提前建立好sonar库，命令参照如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE sonar;</span><br><span class="line"></span><br><span class="line">CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;</span><br><span class="line"></span><br><span class="line">CREATE USER &#39;sonar&#39; IDENTIFIED BY &#39;sonar&#39;;</span><br><span class="line"></span><br><span class="line">GRANT ALL ON sonar.* TO &#39;sonar&#39;@&#39;%&#39; IDENTIFIED BY &#39;sonar&#39;;</span><br><span class="line"></span><br><span class="line">GRANT ALL ON sonar.* TO &#39;sonar&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;sonar&#39;;</span><br><span class="line"></span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p><a class="link"   href="https://hondrytravis.github.io/blog/engineering/sonar.html#sonar"  target="_blank" rel="noopener">详细操作链接<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：sonarqube配置及使用</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-07-11 08:47:02</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/07/11/sonarqube配置及使用/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/07/11/linux%E4%B8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">linux下常用命令查看端口占用</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/07/08/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">进程&amp;线程&amp;协程</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装java环境"><span class="nav-number">1.</span> <span class="nav-text">安装java环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装sonarqube"><span class="nav-number">2.</span> <span class="nav-text">安装sonarqube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行sonarqube"><span class="nav-number">3.</span> <span class="nav-text">运行sonarqube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个项目（test）"><span class="nav-number">4.</span> <span class="nav-text">初始化一个项目（test）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库配置"><span class="nav-number">5.</span> <span class="nav-text">数据库配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束"><span class="nav-number">6.</span> <span class="nav-text">结束</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

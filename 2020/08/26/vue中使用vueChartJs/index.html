@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        vue中使用vueChartJs |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">vue中使用vueChartJs</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-08-26 15:24:53
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/vue/">vue</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/vue/">vue</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%9B%BE%E8%A1%A8/">图表</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="vue-chartJs"><a href="#vue-chartJs" class="headerlink" title="vue-chartJs"></a>vue-chartJs</h3><p><a class="link"   href="https://vue-chartjs.org/zh-cn/"  target="_blank" rel="noopener">vue-chartJs<i class="fas fa-external-link-alt"></i></a>是vue对<a class="link"   href="http://chartjs.cn/"  target="_blank" rel="noopener">Chart.js<i class="fas fa-external-link-alt"></i></a>的封装,可以很简单的创建可复用的图表组件。由于是对底层的封装，所以许多图表的配置，还是需要看这个<a class="link"   href="http://chartjs.cn/docs/"  target="_blank" rel="noopener">Chart.js的文档<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="先简单封装个组件"><a href="#先简单封装个组件" class="headerlink" title="先简单封装个组件"></a>先简单封装个组件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vBar.vue</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; Bar &#125; <span class="keyword">from</span> <span class="string">'vue-chartjs'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'vBar'</span>,</span><br><span class="line">  extends: Bar,</span><br><span class="line">  props: [<span class="string">'chartdata'</span>, <span class="string">'options'</span>],</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    <span class="keyword">this</span>.renderChart(<span class="keyword">this</span>.chartdata,<span class="keyword">this</span>.options)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在需要的地方用这个组件"><a href="#在需要的地方用这个组件" class="headerlink" title="在需要的地方用这个组件"></a>在需要的地方用这个组件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"example-3d"</span>&gt;</span><br><span class="line">	&lt;vBar :chartdata=<span class="string">"vBarData"</span> :options=<span class="string">"vOptions"</span> :styles=<span class="string">"myStyles"</span>&gt;&lt;<span class="regexp">/vBar&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">import &#123; vBar &#125; from '@/</span>components/vCharts/vBar<span class="string">'</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">	name: '</span>barTest<span class="string">',</span></span><br><span class="line"><span class="string">	components: &#123;</span></span><br><span class="line"><span class="string">		vBar,</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	data() &#123;</span></span><br><span class="line"><span class="string">		return &#123;</span></span><br><span class="line"><span class="string">			vBarData: &#123;</span></span><br><span class="line"><span class="string">				labels: ['</span><span class="number">1</span><span class="string">', '</span><span class="number">2</span><span class="string">', '</span><span class="number">3</span><span class="string">', '</span><span class="number">4</span><span class="string">', '</span><span class="number">5</span><span class="string">', '</span><span class="number">6</span><span class="string">'],</span></span><br><span class="line"><span class="string">				datasets: [</span></span><br><span class="line"><span class="string">					&#123;</span></span><br><span class="line"><span class="string">						data: [1,2,3,4,5,6],</span></span><br><span class="line">						backgroundColor: '#ffa200',</span><br><span class="line">						barPercentage: <span class="number">1</span>,</span><br><span class="line">						maxBarThickness: <span class="number">12</span>,</span><br><span class="line">					&#125;,</span><br><span class="line">				],</span><br><span class="line">			&#125;,</span><br><span class="line">			vOptions: &#123;</span><br><span class="line">                <span class="comment">// 自适应必须要加的下面两个配置</span></span><br><span class="line">                responsive: <span class="literal">true</span>,</span><br><span class="line">                maintainAspectRatio: <span class="literal">false</span>,</span><br><span class="line">				layout: &#123;</span><br><span class="line">					padding: &#123;</span><br><span class="line">						left: <span class="number">5</span>,</span><br><span class="line">						right: <span class="number">5</span>,</span><br><span class="line">						top: <span class="number">5</span>,</span><br><span class="line">						bottom: <span class="number">5</span>,</span><br><span class="line">					&#125;,</span><br><span class="line">				&#125;,</span><br><span class="line">				legend: &#123; <span class="attr">display</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">				scales: &#123;</span><br><span class="line">					grid: &#123;</span><br><span class="line">						x: <span class="number">10</span>,</span><br><span class="line">						x2: <span class="number">20</span>,</span><br><span class="line">						y: <span class="number">20</span>,</span><br><span class="line">						y2: <span class="number">10</span>,</span><br><span class="line">					&#125;,</span><br><span class="line">					xAxes: [</span><br><span class="line">						&#123;</span><br><span class="line">							gridLines: &#123;</span><br><span class="line">								display: <span class="literal">false</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">							ticks: &#123;</span><br><span class="line">								display: <span class="literal">false</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">						&#125;,</span><br><span class="line">					],</span><br><span class="line">					yAxes: [</span><br><span class="line">						&#123;</span><br><span class="line">							gridLines: &#123;</span><br><span class="line">								display: <span class="literal">false</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">							ticks: &#123;</span><br><span class="line">								display: <span class="literal">false</span>,</span><br><span class="line">							&#125;,</span><br><span class="line">						&#125;,</span><br><span class="line">					],</span><br><span class="line">				&#125;,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	computed: &#123;</span><br><span class="line">		myStyles() &#123;</span><br><span class="line">			<span class="keyword">return</span> &#123;</span><br><span class="line">				height: <span class="string">'100px'</span>,</span><br><span class="line">                <span class="comment">// 自适应必须要加的position: 'relative',</span></span><br><span class="line">                position: <span class="string">'relative'</span>,</span><br><span class="line">                marginTop: <span class="string">'200px'</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">	mounted() &#123;&#125;,</span><br><span class="line">	created() &#123;&#125;,</span><br><span class="line">	methods: &#123;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="vue-chartJs的自适应resize"><a href="#vue-chartJs的自适应resize" class="headerlink" title="vue-chartJs的自适应resize"></a>vue-chartJs的自适应resize</h3><ul>
+<li>v-chart配置<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Options: &#123;</span><br><span class="line">    responsive: <span class="literal">true</span>,</span><br><span class="line">    maintainAspectRatio: <span class="literal">false</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>组件实例绑定styles属性<code>:styles=&quot;myStyles&quot;</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">myStyles() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="comment">// 自适应必须要加的position: 'relative',</span></span><br><span class="line">        position: <span class="string">'relative'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：vue中使用vueChartJs</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-08-26 15:24:53</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/08/26/vue中使用vueChartJs/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/08/31/ast%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">ast抽象语法树</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/08/25/vue%E4%BD%BF%E7%94%A8swiper/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue使用swiper</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-chartJs"><span class="nav-number">1.</span> <span class="nav-text">vue-chartJs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先简单封装个组件"><span class="nav-number">2.</span> <span class="nav-text">先简单封装个组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在需要的地方用这个组件"><span class="nav-number">3.</span> <span class="nav-text">在需要的地方用这个组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-chartJs的自适应resize"><span class="nav-number">4.</span> <span class="nav-text">vue-chartJs的自适应resize</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

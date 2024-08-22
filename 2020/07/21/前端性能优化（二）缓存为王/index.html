@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        前端性能优化（二）缓存为王 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">前端性能优化（二）缓存为王</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-07-21 09:27:45
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">前端性能优化</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">前端性能优化</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h3><p>常用的库(jquery等)，不经常变得这些库，版本要求不是很严格，用HTTP强缓存。<br><a href="/2020/07/21/前端性能优化（三）协议处理/">前端性能优化（三）协议处理</a></p>
+<h3 id="前端离线缓存"><a href="#前端离线缓存" class="headerlink" title="前端离线缓存"></a>前端离线缓存</h3><p>业务代码，md5变化频繁，使用本地缓存。</p>
+<ul>
+<li><p>cookie</p>
+<ul>
+<li>存储最大数据量为4K</li>
+<li>同一个域名下存放 Cookie 的个数是有限制的，不同浏览器的个数不一样，一般为 20 个；</li>
+<li>Cookie 支持设置过期时间，当过期时自动销毁；</li>
+<li>每次发起同域下的请求都会发送回服务器</li>
+</ul>
+</li>
+<li><p>Local Storage</p>
+<ul>
+<li>用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去删除。（和Session Storage的区别）</li>
+<li>相当于一个 5M左右的针对于前端页面的数据库</li>
+<li>键值对存储，存储的Value限定为string类型</li>
+<li>在浏览器的隐私模式下不可读取</li>
+<li>本质上是对字符串的读取,且<strong>操作是同步的</strong>，建议存储量在2.5M以下，否则会变卡</li>
+<li>不能被爬虫抓取到</li>
+<li>受到同源限制，不能跨域。但是,可以借助postMessage和iframe来实现跨域的数据读取</li>
+<li>在同源的所有标签页和窗口之间共享数据</li>
+</ul>
+</li>
+<li><p>Session Storage</p>
+<ul>
+<li>与 localStorage 拥有统一的 API 接口；</li>
+<li>用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。（和Local Storage的区别）</li>
+<li>数据在页面刷新后依然存在，但在关闭浏览器标签页之后数据就会被清除；</li>
+</ul>
+</li>
+<li><p>IndexedDB（NoSQL 数据库）</p>
+<ul>
+<li>允许储存大量数据（一般来说不少于 250M，甚至没有上限），提供查找接口，还能建立索引。</li>
+<li>键值对储存。所有类型的数据都可以直接存入，包括 JavaScript 对象。同时支持二进制储存（ArrayBuffer 对象和 Blob 对象）。</li>
+<li><strong>操作是异步的</strong></li>
+<li>支持事务。</li>
+<li>受到同源限制，每一个数据库对应创建它的域名。访问不能跨域。<blockquote>
+<p>来自 <a class="link"   href="http://www.ruanyifeng.com/blog/2018/07/indexeddb.html"  target="_blank" rel="noopener">阮一峰的网络日志<i class="fas fa-external-link-alt"></i></a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Web SQl</p>
+<ul>
+<li>Web SQL 能方便进行对象存储</li>
+<li>Web SQL 支持事务，能方便地进行数据查询和数据处理操作</li>
+<li><strong>HTML5放弃了Web SQL Database</strong><br>放弃的原因是：<br>This document was on the W3C Recommendation track but specification work has stopped. The specification reached an impasse: all interested implementors have used the same SQL backend (Sqlite), but we need multiple independent implementations to proceed along a standardisation path.<br>大概意思是：这个文档是W3C推荐的，但是规范工作已经停止了。规范陷入了僵局:所有感兴趣的实现者都使用相同的SQL后端(Sqlite)，但是我们需要多个独立的实现来沿着标准化的道路前进。</li>
+</ul>
+</li>
+</ul>
+<h3 id="本地缓存方案"><a href="#本地缓存方案" class="headerlink" title="本地缓存方案"></a>本地缓存方案</h3><ul>
+<li>主流的数据 开源库<ul>
+<li>localForage<br>localForage 是一个快速简单的 JavaScript 存储库。它通过使用类似于 localStorage 的简单 API 来使用异步存储（IndexedDB 或 WebSQL)），进而改善你的 Web 应用程序的离线体验。</li>
+<li>Dexie.js<br>Dexie.js 是 IndexedDB 的包装库，它提供了一套经过精心设计的 API，强大的错误处理，较强的可扩展性，此外它能够跟踪数据变化，支持 KeyRange (搜索不区分大小写，可设置匹方式和 OR 操作)。<br>Dexie.js 主要为了解决原生 IndexedDB API 中存在的三个主要问题：异常错误处理。较弱的查询功能。代码复杂性。</li>
+</ul>
+</li>
+<li>local Storage缓存js方案管理版本</li>
+</ul>
+<ol>
+<li>存储文件的js完整路径及名称，名称中包含文件版本信息（md5等）。<br><code>localStorage.setItem(&quot;common:widget/a.js&quot;, &quot;/static/common/widget/a_[md5旧].js&quot;)</code></li>
+<li>根据js完整路径及名称，存储js代码<br><code>localStorage.setItem(&quot;/static/common/widget/a_[md5旧].js&quot;, &quot;代码code...&quot;)</code></li>
+<li>init时，启动的js脚本加载manifest这种清单<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const manifest = &#123;</span><br><span class="line">    "common:widget/a.js":"/static/common/widget/a_[md5新].js"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>逻辑判断，加载js<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> aJs = localStorage.getItem(<span class="string">"common:widget/a.js"</span>) <span class="comment">// "/static/common/widget/a_[md5旧].js"</span></span><br><span class="line"><span class="keyword">const</span> md5 = <span class="string">"md5新"</span> <span class="comment">// 文件版本</span></span><br><span class="line">&lt;!-- 然后判断这个文件是否存在 --&gt;</span><br><span class="line"><span class="keyword">if</span>(aJs)&#123;</span><br><span class="line">    <span class="comment">// 存在，有缓存</span></span><br><span class="line">    <span class="keyword">if</span>(md5 === <span class="string">"md5旧"</span>)&#123;</span><br><span class="line">        <span class="comment">// 缓存没过期，直接去缓存里的</span></span><br><span class="line">        <span class="keyword">const</span> aJsCode =  localStorage.getItem(aJs)</span><br><span class="line">        <span class="comment">// 执行缓存的js代码,evel只是例子，不建议使用.可以addScript</span></span><br><span class="line">        evel(aJsCode)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 缓存过期</span></span><br><span class="line">        localStorage.removeItem(aJs)</span><br><span class="line">        <span class="comment">// 拉取新的</span></span><br><span class="line">        <span class="keyword">const</span> aJsCodeNew = fetch(<span class="string">"/static/common/widget/a_[md5新].js"</span>)</span><br><span class="line">        <span class="comment">// 存缓存</span></span><br><span class="line">        localStorage.setItem(<span class="string">"common:widget/a.js"</span>, <span class="string">"/static/common/widget/a_[md5新].js"</span>)</span><br><span class="line">        localStorage.setItem( <span class="string">"/static/common/widget/a_[md5新].js"</span>, aJsNew)</span><br><span class="line">        <span class="comment">// 执行新的js代码</span></span><br><span class="line">        evel(aJsCodeNew)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 不存在，没有缓存。拉取新的文件，执行</span></span><br><span class="line">    fetch(<span class="string">"/static/common/widget/a_[md5新].js"</span>)</span><br><span class="line">    <span class="comment">// 做缓存</span></span><br><span class="line">    localStorage.setItem(<span class="string">"common:widget/a.js"</span>, <span class="string">"/static/common/widget/a_[md5新].js"</span>)</span><br><span class="line">    localStorage.setItem(<span class="string">"/static/common/widget/a_[md5新].js"</span>, <span class="string">"代码code..."</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：前端性能优化（二）缓存为王</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-07-21 09:27:45</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/07/21/前端性能优化（二）缓存为王/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/07/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E4%B8%89%EF%BC%89%E5%8D%8F%E8%AE%AE%E5%A4%84%E7%90%86/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">前端性能优化（三）协议处理</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/07/21/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E4%B8%80%EF%BC%89%E9%9B%85%E8%99%8E%E5%86%9B%E8%A7%84/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">前端性能优化（一）雅虎军规</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP缓存"><span class="nav-number">1.</span> <span class="nav-text">HTTP缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端离线缓存"><span class="nav-number">2.</span> <span class="nav-text">前端离线缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地缓存方案"><span class="nav-number">3.</span> <span class="nav-text">本地缓存方案</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+.page-container {
+  position: relative;
+  padding-top: 2.8px;
+keep-tablet()
+}
+.page-container .page-header .header-progress {
+  visibility: hidden;
+  position: fixed;
+  width: 0;
+  height: 2.8px;
+  top: 0;
+  left: 0;
+  background: var(--primary-color);
+  transition: all 0.1s ease;
+  z-index: $z-index-7;
+}
+.page-container .page-main .page-main-content {
+  padding-top: $header-height;
+  position: relative;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main .page-main-content .page-main-content-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: $header-height;
+keep-tablet()
+keep-mobile()
+  z-index: $z-index-5;
+  box-sizing: border-box;
+}
+.page-container .page-main .page-main-content .page-main-content-middle {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: $component-interspace 0;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main .page-main-content .page-main-content-middle .main-content {
+  position: relative;
+  box-sizing: border-box;
+  width: $main-content-width;
+  max-width: $content-max-width;
+  height: 100%;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main .page-main-content .page-main-content-bottom {
+  width: 100%;
+}
+.page-container .page-main .page-main-content-top-shrink {
+  padding-top: $header-shrink-height;
+}
+.page-container .page-main .page-main-content-top-shrink .page-main-content-top {
+  height: $header-shrink-height;
+}
+.page-container .page-aside {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  z-index: $z-index-6;
+  overflow-y: auto;
+  border-radius: 0 !important;
+keep-tablet()
+}
+.page-container .sidebar-tools {
+  position: fixed;
+  top: $header-height$component-interspace;
+  right: $component-interspace;
+keep-tablet()
+keep-mobile()
+}
+.page-container .right-bottom-side-tools {
+  position: fixed;
+  bottom: $component-interspace;
+  right: 0;
+}

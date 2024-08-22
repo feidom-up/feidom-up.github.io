@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        git常用命令(个人总结) |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">git常用命令(个人总结)</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-07-04 21:04:13
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/git/">git</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/git/">git</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="git概念"><a href="#git概念" class="headerlink" title="git概念"></a>git概念</h3><ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：本地仓库</li>
+<li>Remote：远程仓库</li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li><p>查看git config配置<br><code>git config --list</code></p>
+</li>
+<li><p>git config全局配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"feidom"</span></span><br><span class="line">git config --global user.email <span class="string">"qiaoxiansen@hotmail.com"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>git config针对单个项目配置用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd 项目目录,作用于当前项目下的.git目录下的config</span></span><br><span class="line">git config user.name <span class="string">"feidom"</span></span><br><span class="line">git config user.email <span class="string">"qiaoxiansen@hotmail.com"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>克隆一个项目和它的整个代码历史<br><code>$ git clone [url]</code></p>
+</li>
+<li><p>查看本地仓库分支<br><code>$ git branch</code></p>
+</li>
+<li><p>查看所有本地分支和远程分支<br><code>$ git branch -a</code></p>
+</li>
+<li><p>查看所有所有远程分支<br><code>$ git branch -r</code></p>
+</li>
+<li><p>查看分支关联关系<br><code>$ git branch -vv</code></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>查看不同<br><code>$ git diff</code></p>
+</li>
+<li><p>显示有变更的文件<br><code>$ git status</code></p>
+</li>
+<li><p>添加当前目录的所有文件到暂存区<br><code>$ git add .</code></p>
+</li>
+<li><p>提交暂存区到本地仓库<br><code>$ git commit -m [提交信息]</code></p>
+</li>
+<li><p>拉取远程仓库带代码到本地仓库并合并<br><code>$ git pull [remote] [branch]</code><br><code>$ git pull</code>(分支有关联关系时)</p>
+</li>
+<li><p>上传本地指定分支到远程仓库<br><code>$ git push [remote] [branch]</code><br><code>$ git push</code>(分支有关联关系时)</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>创建一个新的空分支（内容来自互联网）<br><code>$ git checkout --orphan [新的分支名]</code> (建一个没有父节点的分支，但是会复制当前分支的内容到新的分支上。)</li>
+</ul>
+<blockquote>
+<p>&emsp; 这个命令创建了新的分支并切换到新的分支下，并且里边有上个分支的内容<br>&emsp; <strong>注意</strong> ：其实这个时候新的分支还不能说是一个分支，你查看分支的话，是没有这个分支的，你必须要提交一次，这个分支才算是真的创建出来了<br>&emsp; 因为这个分支没有父节点，所以没有任何的历史，只需要调用<br>&emsp; <code>$ git rm -rf .</code><br>&emsp; 删除所有的文件（只会删除加入版本管理的文件），然后你可以随便创建一个文件，提交之后，这个新的空分支就算是创建完成了。</p>
+</blockquote>
+<ul>
+<li><p>新建一个本地分支，并切换到该分支<br><code>$ git checkout -b [本地分支] [remote]</code>(-b会建立本地分支和远程分支的关联关系)</p>
+</li>
+<li><p>从某个提交记录(2b5c3292)拉一个新分支出来<br><code>$ git checkout 2b5c3292 -b [branch]</code></p>
+</li>
+<li><p>提交当前分支到远程仓库的对应的新分支<br><code>$ git push -u origin [branch]</code>(-u会建立本地分支和远程分支的关联关系)</p>
+</li>
+<li><p>新建本地分支与远程分支关联关系<br><code>git branch --set-upstream-to [远程分支] [本地分支]</code></p>
+</li>
+<li><p>删除本地分支<br>切到其他分支，然后<code>git branch -d [本地分支]</code></p>
+</li>
+<li><p>从远程获取其他用户push上来的新分支<br><code>git fetch</code></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>查看远程仓库信息<br><code>git remote -v</code></p>
+</li>
+<li><p>移除远程仓库<br><code>git remote remove origin</code></p>
+</li>
+<li><p>添加远程仓库<br><code>git remote add origin [远程仓库地址]</code></p>
+</li>
+<li><p>查看该分支的远程仓库<br><code>git remote show</code><br>upstream：被fork的仓库/origin：自己fork的仓库</p>
+</li>
+<li><p>从自己本地切一个分支出来<br><code>git checkout -b [本地分支名]</code></p>
+</li>
+<li><p>从远程仓库地址pull代码<br><code>git pull origin master --rebase</code> 先拉自己fork仓库的最新代码<br><code>git pull upstream master --rebase</code> 再拉被fork仓库的最新代码</p>
+</li>
+<li><p>推送代码到自己fork仓库分支<br><code>git push origin [自己远程仓库的分支]</code></p>
+</li>
+<li><p>合并多个commit记录为一个<br><code>git rebase -i HEAD~</code></p>
+</li>
+<li><p>自己的远端提pull request到upstream的远端，github上操作</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>vscode合并分支<br>在vscode界面，输入：<code>ctrl(win)/command(mac)+shift+p</code>,然后输入<code>git merge</code>，然后选一个要合并到当前分支的分支，回车确定即可。<br><img src="https://image-static.segmentfault.com/800/712/800712115-59e96580eae4c_articlex" alt="git merge"><br><img src="https://image-static.segmentfault.com/236/385/2363856556-59e965b2e3674_articlex" alt="选择分支"></li>
+</ul>
+<h3 id="git问题解决："><a href="#git问题解决：" class="headerlink" title="git问题解决："></a>git问题解决：</h3><ul>
+<li>git clone 时出错： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: RPC failed; result&#x3D;35, HTTP code &#x3D; 0</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
+解决：<ul>
+<li>查看全局的postBuffer配置 <code>git config http.postBuffer</code></li>
+<li>把这个配置改大一点： <code>git config http.postBuffer 24288000</code></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：git常用命令(个人总结)</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-07-04 21:04:13</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/07/04/git常用命令/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/07/06/hexo%E7%9A%84categories%E5%92%8Ctags%E9%A1%B5%E9%9D%A2%E4%B8%8D%E8%87%AA%E5%8A%A8%E6%94%B6%E5%BD%95%E7%9A%84%E9%97%AE%E9%A2%98/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">categories和tags页面不自动收录的问题</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/07/04/svg%E5%9B%BE%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">svg图标的使用</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#git概念"><span class="nav-number">1.</span> <span class="nav-text">git概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git问题解决："><span class="nav-number">3.</span> <span class="nav-text">git问题解决：</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

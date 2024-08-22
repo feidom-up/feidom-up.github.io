@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        Css从边角走向中心 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Css从边角走向中心</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-08-04 15:25:26
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/css/">css</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/css/">css</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/postcss/">postcss</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h3 id="被轻视的CSS"><a href="#被轻视的CSS" class="headerlink" title="被轻视的CSS"></a>被轻视的CSS</h3><p>CSS是Cascading Style Sheets（层叠样式表单）的简称。这种样式脚本一直和其他编程语言有差距。导致了css被轻视。近几年所有的前端技术都在疯狂的迭代更新，css也不例外。从sass，less，stylus这些预处理器之后，到CSS Module，CSS-in-JS（典型的代表，react的styled-components）。再聊聊<a class="link"   href="https://www.postcss.com.cn/"  target="_blank" rel="noopener">PostCss<i class="fas fa-external-link-alt"></i></a>这种插件系统。</p>
+<h3 id="预处理器"><a href="#预处理器" class="headerlink" title="预处理器"></a>预处理器</h3><h5 id="在css发展的过程中，出现了一些痛点："><a href="#在css发展的过程中，出现了一些痛点：" class="headerlink" title="在css发展的过程中，出现了一些痛点："></a>在css发展的过程中，出现了一些痛点：</h5><ul>
+<li>语法不够强大，不能够嵌套书写，不利于模块开发</li>
+<li>没有变量和逻辑上的复用机制，导致在css的属性值中只能使用字面量形式，以及不断重复的样式，导致难以维护。</li>
+</ul>
+<h5 id="然后css预处理器的出现，弥补了这些遗憾："><a href="#然后css预处理器的出现，弥补了这些遗憾：" class="headerlink" title="然后css预处理器的出现，弥补了这些遗憾："></a>然后css预处理器的出现，弥补了这些遗憾：</h5><ul>
+<li><strong>变量</strong>：对变量进行声明，在需要的地方引用。</li>
+<li><strong>作用域</strong>：对变量进行管理，像js一样，从局部作用域开始向上查找变量。</li>
+<li><strong>嵌套</strong>：由于dom的树状结构，css有嵌套的写法，更直接的表现了父子层级之间的明确关系。</li>
+<li><strong>混合(Mixin) Extend</strong>：</li>
+<li><strong>运算</strong>：</li>
+<li><strong>函数</strong>：</li>
+<li><strong>Namespaces&amp;Accessors</strong>：</li>
+<li><strong>scope</strong>：</li>
+<li><strong>注释</strong>：</li>
+</ul>
+<p>css预处理器提供的这些方案，是我们开发人员在写css时更加灵活，维护性强。<br>但是，项目越来越大，缺乏模块的概念，全局变量的问题困扰着你。每次定义选择器时，总要顾及到其他文件中是否使用了同样的命名。</p>
+<h5 id="有问题就有解决，各种方案出现（css分层）"><a href="#有问题就有解决，各种方案出现（css分层）" class="headerlink" title="有问题就有解决，各种方案出现（css分层）"></a>有问题就有解决，各种方案出现（css分层）</h5><h6 id="Q：为什么要分层？"><a href="#Q：为什么要分层？" class="headerlink" title="Q：为什么要分层？"></a>Q：为什么要分层？</h6><p>A:原因： </p>
+<ul>
+<li>CSS有语义化的命名约定和CSS层的分离，将有助于它的可扩展性，性能的提⾼<br>和代码的组织管理。</li>
+<li>⼤量的样式，覆盖、权重和很多!important，分好层可以让团队命名统⼀规范，<br>⽅便维护。</li>
+<li>有责任感地去命名你的选择器。</li>
+</ul>
+<h6 id="分层的设计规范有很多，以下具体介绍BEM规范"><a href="#分层的设计规范有很多，以下具体介绍BEM规范" class="headerlink" title="分层的设计规范有很多，以下具体介绍BEM规范"></a>分层的设计规范有很多，以下具体介绍BEM规范</h6><ul>
+<li>BEM规范<br>和SMACCS⾮常类似，主要⽤来如何给项⽬命名。⼀个简单命名更容易让别<br>⼈⼀起⼯作。⽐如选项卡导航是⼀个块(Block)，这个块⾥的元素的是其中标签之⼀<br>(Element)，⽽当前选项卡是⼀个修饰状态(Modifier)：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bookList模块   </span></span><br><span class="line">&lt;form <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-from"</span>&gt;</span><br><span class="line">    &lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"list-from__input"</span>&gt;&lt;<span class="regexp">/input&gt;</span></span><br><span class="line"><span class="regexp">    &lt;button class="list-from__button"&gt;&lt;/</span>button&gt;</span><br><span class="line">&lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 其中归类为以下约定</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ BEM：块（block）、元素（element）、修饰符（modifier）</span></span><br><span class="line"><span class="regexp">.block&#123;&#125;  /</span><span class="regexp">/ 代表了更⾼级别的抽象或组件</span></span><br><span class="line"><span class="regexp">.block__element&#123;&#125;  /</span><span class="regexp">/ 代表.block的后代，⽤于形成⼀个完整的.block的整体</span></span><br><span class="line"><span class="regexp">.block--modifier&#123;&#125;  /</span><span class="regexp">/ 代表.block的不同状态或不同版本</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 其中块可以用单个连字符来界定：如</span></span><br><span class="line"><span class="regexp">.site-search&#123;&#125; /</span><span class="regexp">/块</span></span><br><span class="line"><span class="regexp">.site-search__field&#123;&#125; /</span><span class="regexp">/元素</span></span><br><span class="line"><span class="regexp">.site-search--full&#123;&#125; /</span><span class="regexp">/修饰符</span></span><br></pre></td></tr></table></figure>
+……<br>好麻烦。</li>
+</ul>
+<hr>
+<p>还有<a class="link"   href="https://smacss.com/"  target="_blank" rel="noopener">SMACSS(Scalable and Modular Architecture for CSS 可扩展的模块化架构的CSS)<i class="fas fa-external-link-alt"></i></a>、<a class="link"   href="https://suitcss.github.io/"  target="_blank" rel="noopener">SUIT：衍生自BEM<i class="fas fa-external-link-alt"></i></a>、<a class="link"   href="http://patternlab.io/"  target="_blank" rel="noopener">ACSS：原子css规范<i class="fas fa-external-link-alt"></i></a>、<a class="link"   href="http://csswizardry.net/talks/2014/11/itcss-dated.pdf"  target="_blank" rel="noopener">ITCSS<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="后处理器"><a href="#后处理器" class="headerlink" title="后处理器"></a>后处理器</h3><ul>
+<li>CSS压缩 ClEAN_CSS</li>
+<li>自动添加浏览器前缀 Autoprefixer</li>
+<li>CSS更加美观排序 CSScomb</li>
+<li>Rework取代styles，后处理器发热</li>
+</ul>
+<h3 id="近几年火爆的CSS-Module，CSS-in-JS（典型的代表，react的styled-components）。"><a href="#近几年火爆的CSS-Module，CSS-in-JS（典型的代表，react的styled-components）。" class="headerlink" title="近几年火爆的CSS Module，CSS-in-JS（典型的代表，react的styled-components）。"></a>近几年火爆的CSS Module，CSS-in-JS（典型的代表，react的styled-components）。</h3><p>可以参考<a class="link"   href="http://www.ruanyifeng.com/blog/2016/06/css_modules.html"  target="_blank" rel="noopener">阮一峰写的CSS Module<i class="fas fa-external-link-alt"></i></a><br>看8月3老袁的课，写一下。</p>
+<h3 id="PostCSS是什么？"><a href="#PostCSS是什么？" class="headerlink" title="PostCSS是什么？"></a>PostCSS是什么？</h3><p><a class="link"   href="https://www.postcss.com.cn/"  target="_blank" rel="noopener">PostCSS<i class="fas fa-external-link-alt"></i></a><br>是一个用 JavaScript 工具和插件转换 CSS 代码的工具。—-官方简介</p>
+<p>PostCSS同时支持预处理和后处理，也可以在原生的css中使用它。通俗来说，PostCSS是一个“壳壳”，可以加载各种生态中的插件来实现对css的处理，可以结合兼容sass，less等</p>
+<h5 id="下面介绍几种插件（plugins）："><a href="#下面介绍几种插件（plugins）：" class="headerlink" title="下面介绍几种插件（plugins）："></a>下面介绍几种插件（plugins）：</h5><ul>
+<li>postcss-cssnext plugin —  使用下个版本的css语法，语法见cssnext (css4)语法</li>
+<li>postcss-custom-properties — 运行时变量</li>
+<li>postcss-simple-vars — 与SCSS一致的变量实现</li>
+<li>postcss-mixins — 实现类似sass的@mixin的功能</li>
+<li>postcss-extend — 实现类似sass的继承功能</li>
+<li>postcss-import — 实现类似sass的import<h5 id="使用gulp和webpack处理postcss代码："><a href="#使用gulp和webpack处理postcss代码：" class="headerlink" title="使用gulp和webpack处理postcss代码："></a>使用gulp和webpack处理postcss代码：</h5>// gulpfile.js<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>); </span><br><span class="line"><span class="keyword">var</span> postcss = <span class="built_in">require</span>(<span class="string">'gulp-postcss'</span>); </span><br><span class="line"><span class="keyword">var</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>); </span><br><span class="line"><span class="keyword">var</span> cssgrace = <span class="built_in">require</span>(<span class="string">'cssgrace'</span>); </span><br><span class="line"><span class="keyword">var</span> cssnext = <span class="built_in">require</span>(<span class="string">'cssnext'</span>); </span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'css'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> processors = [ </span><br><span class="line">        autoprefixer(&#123;<span class="attr">browsers</span>: [<span class="string">'last 3 version'</span>], </span><br><span class="line">        cascade: <span class="literal">false</span>, </span><br><span class="line">        remove: <span class="literal">false</span> </span><br><span class="line">        &#125;), </span><br><span class="line">        cssnext(), </span><br><span class="line">        cssgrace </span><br><span class="line">    ]; </span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'./src/css/*.css'</span>) </span><br><span class="line">        .pipe(postcss(processors)) </span><br><span class="line">        .pipe(gulp.dest(<span class="string">'./dist'</span>)); </span><br><span class="line">&#125;); </span><br><span class="line">gulp.task(<span class="string">'watch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    gulp.watch(<span class="string">'./src/css/*.css'</span>, [<span class="string">'css'</span>]); </span><br><span class="line">&#125;); </span><br><span class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'watch'</span>, <span class="string">'css'</span>]);</span><br></pre></td></tr></table></figure>
+// webpack.conf.js<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> config = &#123;</span><br><span class="line">    output:&#123;<span class="attr">publicPath</span>: <span class="string">'../dist/'</span>&#125;,</span><br><span class="line">    <span class="built_in">module</span>:&#123;</span><br><span class="line">        <span class="comment">// loaders...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    postcss: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">            ima4dpr(dpr: <span class="number">3</span>,<span class="attr">q</span>: <span class="string">'q50'</span>,<span class="attr">s</span>: <span class="string">'s150'</span>&#125;),</span><br><span class="line">            px2rem(&#123;<span class="attr">remUnit</span>: remUnit, <span class="attr">baseDpr</span>: baseDpr &#125;),</span><br><span class="line">            autoprefixer(&#123;<span class="attr">browers</span>: [<span class="string">"ios_saf &gt;= 7"</span>,<span class="string">"android &gt;= 4"</span>]&#125;)</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: <span class="string">'source-map'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+打包处理逻辑如下图所示：</li>
+</ul>
+<p><img src="http://i.feidom.com/%E6%89%93%E5%8C%85%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84postcss.jpg" alt="打包处理逻辑"></p>
+<hr>
+<p><em>以上内容借鉴<a class="link"   href="https://segmentfault.com/a/1190000011595620"  target="_blank" rel="noopener">zimo的《谈谈PostCSS》<i class="fas fa-external-link-alt"></i></a></em></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Css从边角走向中心</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-08-04 15:25:26</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/08/04/postcss/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/08/07/vue%E4%B8%AD%E4%BD%BF%E7%94%A8animateCss/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">vue中使用animate.css</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/08/02/npm%E5%B8%B8%E7%94%A8%E5%8C%85/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">npm/yarn及其他包管理工具常用总结</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#被轻视的CSS"><span class="nav-number">1.</span> <span class="nav-text">被轻视的CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预处理器"><span class="nav-number">2.</span> <span class="nav-text">预处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在css发展的过程中，出现了一些痛点："><span class="nav-number">2.0.1.</span> <span class="nav-text">在css发展的过程中，出现了一些痛点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后css预处理器的出现，弥补了这些遗憾："><span class="nav-number">2.0.2.</span> <span class="nav-text">然后css预处理器的出现，弥补了这些遗憾：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#有问题就有解决，各种方案出现（css分层）"><span class="nav-number">2.0.3.</span> <span class="nav-text">有问题就有解决，各种方案出现（css分层）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Q：为什么要分层？"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">Q：为什么要分层？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#分层的设计规范有很多，以下具体介绍BEM规范"><span class="nav-number">2.0.3.2.</span> <span class="nav-text">分层的设计规范有很多，以下具体介绍BEM规范</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后处理器"><span class="nav-number">3.</span> <span class="nav-text">后处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#近几年火爆的CSS-Module，CSS-in-JS（典型的代表，react的styled-components）。"><span class="nav-number">4.</span> <span class="nav-text">近几年火爆的CSS Module，CSS-in-JS（典型的代表，react的styled-components）。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PostCSS是什么？"><span class="nav-number">5.</span> <span class="nav-text">PostCSS是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#下面介绍几种插件（plugins）："><span class="nav-number">5.0.1.</span> <span class="nav-text">下面介绍几种插件（plugins）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用gulp和webpack处理postcss代码："><span class="nav-number">5.0.2.</span> <span class="nav-text">使用gulp和webpack处理postcss代码：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

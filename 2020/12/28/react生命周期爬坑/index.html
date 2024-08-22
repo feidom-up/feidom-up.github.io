@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        react生命周期爬坑 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">react生命周期爬坑</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-12-28 19:43:41
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>由于函数式组件会从头执行到尾，所以生命周期一定是在谈论类组件</p>
+<h3 id="梳理生命周期的时机和职责，建立时机与操作的对应关系"><a href="#梳理生命周期的时机和职责，建立时机与操作的对应关系" class="headerlink" title="梳理生命周期的时机和职责，建立时机与操作的对应关系"></a>梳理生命周期的<strong>时机</strong>和<strong>职责</strong>，建立时机与操作的对应关系</h3><ul>
+<li>使用方式（时机梳理）： 挂载，更新，卸载</li>
+<li>适用范围（职责梳理）：状态变更、错误处理</li>
+</ul>
+<h4 id="时机梳理"><a href="#时机梳理" class="headerlink" title="时机梳理"></a>时机梳理</h4><h5 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h5><pre><code>挂载阶段是指组件从初始化到完成加载的过程。</code></pre><ul>
+<li><p>constructor<br>  是类通用的构造函数，常用于初始化。所以在过去，constructor 通常用于初始化 state 与绑定函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Com</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">   <span class="comment">// constructor react 官方弃用</span></span><br><span class="line">   <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">      <span class="keyword">super</span>(props)   </span><br><span class="line">      <span class="keyword">this</span>.state = &#123;<span class="attr">count</span>: <span class="number">0</span>&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getDerivedStateFromProps</p>
+<ul>
+<li>当props被传入</li>
+<li>state发生变化时</li>
+<li>fouceUpdate被调用<blockquote>
+<p>最常见的一个错误是认为只有 props 发生变化时，getDerivedStateFromProps 才会被调用，而实际上只要父级组件重新渲染时，getDerivedStateFromProps 就会被调用。所以是外部参数，也就是 props 传入时就会发生变化。你可能不需要使用派生 state</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>UNSAFE_componentWillMount(componentWillMount)<br>  用于组件加载前做某些操作<br>  因在React的异步渲染机制下，会被多次调用。react弃用<br>  eg：同构时，在服务器端和客户端同时发起请求拉取数据，会分别被执行一次</p>
+</li>
+<li><p>render 纯函数  返回jsx解构，描述渲染内容</p>
+</li>
+<li><p>componentDidMount<br>  组件加载完成时做某些操作，用于发起请求</p>
+</li>
+</ul>
+<h5 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h5><pre><code>更新阶段是指外部 props 传入，或者 state 发生变化时的阶段。</code></pre><ul>
+<li><p>UNSAFE_componentWillReceiveProps<br>  被标记弃用，因为其功能可被函数 getDerivedStateFromProps 所替代。</p>
+</li>
+<li><p>getDerivedStateFromProps<br>  同挂载阶段的表现一致。</p>
+</li>
+<li><p>shouldComponentUpdate<br>  该方法通过返回 true 或者 false 来确定是否需要触发新的渲染。因为渲染触发最后一道关卡，所以也是性能优化的必争之地。通过添加判断条件来阻止不必要的渲染。</p>
+<p>  React 官方提供了一个通用的优化方案，也就是 PureComponent。PureComponent 的核心原理就是默认实现了shouldComponentUpdate函数，在这个函数中对 props 和 state 进行浅比较，用来判断是否触发更新。 </p>
+</li>
+<li><p>UNSAFE_componentWillUpdate<br>  同样已废弃，因为后续的 React 异步渲染设计中，可能会出现组件暂停更新渲染的情况。</p>
+</li>
+<li><p>render<br>  同挂载阶段的表现一致。</p>
+</li>
+<li><p>getSnapshotBeforeUpdate<br>  getSnapshotBeforeUpdate 方法是配合 React 新的异步渲染的机制，在 DOM 更新发生前被调用，返回值将作为 componentDidUpdate 的第三个参数。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScrollingList</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props);</span><br><span class="line">        <span class="keyword">this</span>.listRef = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    getSnapshotBeforeUpdate(prevProps, prevState) &#123;</span><br><span class="line">        <span class="comment">// Are we adding new items to the list?</span></span><br><span class="line">        <span class="comment">// Capture the scroll position so we can adjust scroll later.</span></span><br><span class="line">        <span class="keyword">if</span> (prevProps.list.length &lt; <span class="keyword">this</span>.props.list.length) &#123;</span><br><span class="line">            <span class="keyword">const</span> list = <span class="keyword">this</span>.listRef.current;</span><br><span class="line">            <span class="keyword">return</span> list.scrollHeight - list.scrollTop;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    componentDidUpdate(prevProps, prevState, snapshot) &#123;</span><br><span class="line">        <span class="comment">// If we have a snapshot value, we've just added new items.</span></span><br><span class="line">        <span class="comment">// Adjust scroll so these new items don't push the old ones out of view.</span></span><br><span class="line">        <span class="comment">// (snapshot here is the value returned from getSnapshotBeforeUpdate)</span></span><br><span class="line">        <span class="keyword">if</span> (snapshot !== <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> list = <span class="keyword">this</span>.listRef.current;</span><br><span class="line">            list.scrollTop = list.scrollHeight - snapshot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div ref=&#123;<span class="keyword">this</span>.listRef&#125;&gt;&#123;<span class="comment">/* ...contents... */</span>&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>componentDidUpdate<br>  正如上面的案例，getSnapshotBeforeUpdate 的返回值会作为componentDidUpdate的第三个参数使用。</p>
+</li>
+</ul>
+<h5 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h5><ul>
+<li>componentWillUnmount<br>  卸载阶段唯一的回调函数。<br>  该函数主要用于执行清理工作。一个比较常见的 Bug 就是忘记在 componentWillUnmount 中取消定时器，导致定时操作依然在组件销毁后不停地执行。所以一定要在该阶段解除事件绑定，取消定时器。</li>
+</ul>
+<h4 id="职责梳理"><a href="#职责梳理" class="headerlink" title="职责梳理"></a>职责梳理</h4><p>如果我们的 React 应用足够复杂、渲染层级足够深时，一次重新渲染，将会消耗非常高的性能，导致卡顿等问题。<br>关键点：</p>
+<ol>
+<li>什么情况下会触发重新渲染。</li>
+<li>渲染中发生报错后会怎样？又该如何处理？</li>
+</ol>
+<hr>
+<ul>
+<li>函数组件</li>
+</ul>
+<p>函数组件任何情况下都会重新渲染。<br>官方提供了一种方式优化手段，那就是 React.memo。<br>React.memo 并不是阻断渲染，而是跳过渲染组件的操作并直接复用最近一次渲染的结果，这与 shouldComponentUpdate 是完全不同的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MyComponent = React.memo(<span class="function"><span class="keyword">function</span> <span class="title">MyComponent</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/* 使用 props 渲染 */</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>React.Component<br>  如果不实现 shouldComponentUpdate 函数，那么有两种情况触发重新渲染。</p>
+<ol>
+<li>当 state 发生变化时。这个很好理解，是常见的情况。</li>
+<li>当父级组件的 Props 传入时。无论 Props 有没有变化，只要传入就会引发重新渲染。</li>
+</ol>
+</li>
+<li><p>React.PureComponent<br>  PureComponent 默认实现了 shouldComponentUpdate 函数。所以仅在 props 与 state 进行浅比较后，确认有变更时才会触发重新渲染。</p>
+</li>
+<li><p>错误边界<br>错误边界是一种 React 组件，这种组件可以捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且，它会渲染出备用 UI，如下 React 官方所给的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ErrorBoundary</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123; <span class="attr">hasError</span>: <span class="literal">false</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> getDerivedStateFromError(error) &#123;</span><br><span class="line">    <span class="comment">// 更新 state 使下一次渲染能够显示降级后的 UI</span></span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">hasError</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidCatch(error, errorInfo) &#123;</span><br><span class="line">    <span class="comment">// 你同样可以将错误日志上报给服务器</span></span><br><span class="line">    logErrorToMyService(error, errorInfo);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state.hasError) &#123;</span><br><span class="line">      <span class="comment">// 你可以自定义降级后的 UI 并渲染</span></span><br><span class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Something went wrong.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.props.children; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>无论是 React，还是 React Native，如果没有错误边界，在用户侧看到的现象会是这样的：在执行某个操作时，触发了 Bug，引发了崩溃，页面突然白屏。<br>但渲染时的报错，只能通过 componentDidCatch 捕获。这是在做线上页面报错监控时，极其容易忽略的点儿。</p>
+</li>
+</ul>
+<h4 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h4><ul>
+<li>在不恰当的时机调用不合适的代码</li>
+<li>在需要调用时，忘记了调用</li>
+</ul>
+<p>以下情况容易造成生命周期的坑</p>
+<ol>
+<li><p>getDerivedStateFromProps 容易编写反模式代码，使受控组件与非受控组件区分模糊。</p>
+</li>
+<li><p>componentWillMount 在 React 中已被标记弃用，不推荐使用，主要原因是新的异步渲染架构会导致它被多次调用。所以网络请求及事件绑定代码应移至 componentDidMount 中。</p>
+</li>
+<li><p>componentWillReceiveProps 同样被标记弃用，被 getDerivedStateFromProps 所取代，主要原因是性能问题。</p>
+</li>
+<li><p>shouldComponentUpdate 通过返回 true 或者 false 来确定是否需要触发新的渲染。主要用于性能优化。</p>
+</li>
+<li><p>componentWillUpdate 同样是由于新的异步渲染机制，而被标记废弃，不推荐使用，原先的逻辑可结合 getSnapshotBeforeUpdate 与 componentDidUpdate 改造使用。</p>
+</li>
+<li><p>如果在 componentWillUnmount 函数中忘记解除事件绑定，取消定时器等清理操作，容易引发 bug。</p>
+</li>
+<li><p>如果没有添加错误边界处理，当渲染发生异常时，用户将会看到一个无法操作的白屏，所以一定要添加。</p>
+</li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：react生命周期爬坑</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-12-28 19:43:41</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/12/28/react生命周期爬坑/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/12/29/react%E7%9A%84%E7%B1%BB%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">react的类组件和函数组件</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/12/28/%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E6%B4%BE%E7%94%9Fstate/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">你可能不需要使用派生state</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#梳理生命周期的时机和职责，建立时机与操作的对应关系"><span class="nav-number">1.</span> <span class="nav-text">梳理生命周期的时机和职责，建立时机与操作的对应关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时机梳理"><span class="nav-number">1.1.</span> <span class="nav-text">时机梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#挂载阶段"><span class="nav-number">1.1.1.</span> <span class="nav-text">挂载阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更新阶段"><span class="nav-number">1.1.2.</span> <span class="nav-text">更新阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#卸载阶段"><span class="nav-number">1.1.3.</span> <span class="nav-text">卸载阶段</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#职责梳理"><span class="nav-number">1.2.</span> <span class="nav-text">职责梳理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坑"><span class="nav-number">1.3.</span> <span class="nav-text">坑</span></a></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

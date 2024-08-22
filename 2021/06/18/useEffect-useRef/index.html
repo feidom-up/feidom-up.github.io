@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        useEffect &amp; useRef |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">useEffect &amp; useRef</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2021-06-18 09:58:48
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>本文是一片翻译，原文来自<a class="link"   href="https://leewarrick.com/"  target="_blank" rel="noopener">Lee Warrick<i class="fas fa-external-link-alt"></i></a>的<a class="link"   href="https://leewarrick.com/blog/react-use-effect-explained/"  target="_blank" rel="noopener">React’s useEffect and useRef Explained for Mortals<i class="fas fa-external-link-alt"></i></a>。<br>为啥翻译并记录这篇文章呢，因为看了以后觉得通俗易懂的为凡人解释了<code>useEffect</code>和<code>useRef</code>。<br>在此记录，方便以后回头复习。</p>
+<h4 id="通俗的解释React的-useEffect-和-useRef"><a href="#通俗的解释React的-useEffect-和-useRef" class="headerlink" title="通俗的解释React的 useEffect 和 useRef"></a>通俗的解释React的 useEffect 和 useRef</h4><p><img src="https://leewarrick.com/blog/static/fdb92914fc9093dee6a2c20dad8fbd50/c35de/acropolis.jpg" alt="原文中过的图"><br>&emsp;&emsp;如果React文档让你一筹莫展，或者Dan Abramov的博客让你觉得你在阅读从奥林匹斯山流传下来的古希腊文卷轴，你并不孤单,不是只有你这样认为。<br>&emsp;&emsp;有时，React神殿的众神们很难将他们的智慧转化为我们其他人可以理解的语言。事情通常是这样的。你在使用React时遇到困难，用谷歌搜索你的问题，然后读到一个博客或Stack Overflow的帖子，其中的一些建议让你感到比开始时更迷茫。<br>&emsp;&emsp;我当然也曾多次成为这种情况的受害者。特别是useEffect。在我们深入研究这个特殊的钩子之前，让我说我喜欢用hooks来写React，而且不想再回到类中去。这就是说，useEffect是一个很大的痛点。</p>
+<h6 id="到底什么是“effect副作用”"><a href="#到底什么是“effect副作用”" class="headerlink" title="到底什么是“effect副作用”"></a>到底什么是“effect副作用”</h6><p>&emsp;&emsp;为了让你真正理解useEffect，让我们退后一点，谈谈编程和JavaScript。<br>&emsp;&emsp;useEffect的名字就是我们亲切地称为 “副作用 “的效果。<br>&emsp;&emsp;那么什么是副作用呢？它是一段代码，它伸出手来……做别的事情。这是一个抽象的概念，所以让我们用例子来说明。<br>&emsp;&emsp;这里有一个没有副作用的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;函数add除了接受一个输入并返回一个输出外，什么也没做。它并没有伸手到自身以外的地方去捣乱!<br>&emsp;&emsp;我们来介绍一个副作用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> resultDiv = <span class="built_in">document</span>.getElementById(<span class="string">'add-example'</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> result = a + b</span><br><span class="line">  resultDiv.textContent = <span class="string">`The Result is <span class="subst">$&#123;result&#125;</span>`</span></span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;add-example&quot;&gt;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;现在，我们的函数伸到了自身之外来更新DOM（Document Object Model的缩写），并显示了结果。这个额外的行为是一个副作用。</p>
+<h6 id="React中的副作用"><a href="#React中的副作用" class="headerlink" title="React中的副作用"></a>React中的副作用</h6><p>&emsp;&emsp;那么React呢？它是一个几乎只更新DOM的库。一个视图库，如果你愿意的话。那么在React中，你会把什么叫做副作用呢？<br>&emsp;&emsp;任何在更新页面之外的东西。如果你不使用React来更新状态或渲染HTML，那就是一个副作用。它是任何非React的东西。<br>&emsp;&emsp;这意味着任何时候你调用API，使用setInterval/setTimeout，添加键盘监听器，或者真的任何时候你搞乱窗口对象，你都在引入副作用。<br>&emsp;&emsp;hooks很神奇，让你写出真正可读、可重用的代码……除了当你处理副作用的时候。这很不幸，因为当你仔细想想，作为网络开发者，我们所做的大多数有趣的事情都是围绕着副作用展开的。<br>&emsp;&emsp;让我们从钩子上退一步，看看我们如何在基于类的组件中处理副作用。</p>
+<h6 id="类组件和副作用"><a href="#类组件和副作用" class="headerlink" title="类组件和副作用"></a>类组件和副作用</h6><p>&emsp;&emsp;在基于类的组件中，我们会使用生命周期方法来执行侧面效果。例如，在componentDidMount上，我们会调用API来获取渲染的数据。<br>&emsp;&emsp;”为什么不在构造函数中调用API？”你可能会问。好吧，因为React说我们用于渲染的东西都在 “状态 “中，在我们的组件被加载到页面上之前，我们不能乱用状态。如果我们试图在组件加载之前更新状态，就会出现错误。<br>&emsp;&emsp;下面是一个典型的基于类的组件的情况,这是一个小精灵的例子（后面会用hooks改写）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pokemon</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    fetch(<span class="string">'https://pokeapi.co/api/v2/pokemon/gengar/'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(res)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> pokemon = <span class="keyword">this</span>.state</span><br><span class="line">    <span class="keyword">const</span> style = &#123;<span class="attr">textTransform</span>: <span class="string">'capitalize'</span>&#125;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">      &#123; pokemon</span><br><span class="line">        ? <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line">          &lt;img src=&#123;pokemon.sprites.front_default&#125;</span><br><span class="line"><span class="xml">            alt=&#123;'Image of ' + pokemon.name&#125;/&gt;</span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&#123;style&#125;</span>&gt;</span>Name: &#123;pokemon.name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">          &lt;p style=&#123;style&#125;&gt;</span><br><span class="line">            Type: &#123;pokemon.types.map(x =&gt; x.type.name).join(', ')&#125;</span><br><span class="line"><span class="xml">          <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">        : <span class="string">'Loading...'</span></span><br><span class="line">      &#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这样做很好，除了不这样做的时候。当我们想再次点击API来抓取不同的小精灵时会发生什么？如果这个组件被连接到我们的应用程序中的某个路由上，而这个路由发生了变化，但这个组件并没有卸载/重装。如果用户进入了不同的页面，而组件在API调用结束前就卸载了怎么办？<br>&emsp;&emsp;答案是增加更多的生命周期方法，如<code>componentDidUpdate</code>和<code>componentWillUnmount</code>，以执行更多的API调用，防止奇怪的卸载错误。所以我们添加了这些生命周期方法来处理我们所有的边缘情况。当我们完成后，我们发现我们的大部分组件都是由生命周期代码组成的。</p>
+<h5 id="然后来试一下Hooks"><a href="#然后来试一下Hooks" class="headerlink" title="然后来试一下Hooks"></a>然后来试一下Hooks</h5><p>&emsp;&emsp;React团队意识到，类的API有点笨重，难以推理。人们正在制作生命周期流程图，试图了解React的内部运作……这是一个混乱。<br>&emsp;&emsp;因此，在2018年10月的ReactConf上，在Sophie Alpert概述了类的使用有多么糟糕之后，Dan Abramov上台介绍了钩子（你可以在这里观看视频）。<br>&emsp;&emsp;钩子在功能组件中引入了状态性，以及处理副作用的新方法。钩子使React的代码更容易重复使用，而且代码量更少–这是一个巨大的胜利！但是有一个小问题。<br>&emsp;&emsp;除了一个小问题。<strong>每次渲染，整个组件/功能都要重新运行</strong>。<br>&emsp;&emsp;让我们看一个基于Hooks开发的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">RerenderExample</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [bool, setBool] = React.useState(<span class="literal">false</span>)</span><br><span class="line">  <span class="keyword">const</span> randomNum = <span class="built_in">Math</span>.random()</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;This number will be different each time you click the button:&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;p&gt;&#123;randomNum&#125;&lt;/</span>p&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setBool(!bool)&#125;&gt;Trigger a render&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;我们在渲染的JSX中甚至没有使用bool，但每次状态改变时，整个函数都会运行。每次渲染，组件内的所有东西都会重新运行：函数定义、变量创建/分配等等。<br>&emsp;&emsp;如果你在想 “如果我必须在组件中做一些计算量大的事情怎么办？这不可能是高性能的……”，这是个敏锐的观察。在一个功能性组件中进行昂贵的操作是不可能有性能的。事实上，useCallback和useMemo的存在正是为了解决这个问题而设置的避难所。Kent C Dodds在这里对这些问题有一个挑战性的解读，但总结起来，根据Kent的说法，在你看到性能影响之前，你不应该担心重读的问题。</p>
+<blockquote>
+<p>注意：如果你对钩子不熟悉，请把这篇文章收藏起来，等你准备好了再来看看。除非你必须要担心记忆化的问题<br>&emsp;&emsp;像useState这样的钩子采用了一些内在的魔法来避免重现的问题。这很好，而且使用useState似乎很简单，但是<strong>当你需要做设置状态以外的事情时，怎么办？</strong><br>&emsp;&emsp;使用useEffect。那些讨厌的生命周期方法没有了，万岁！然而，这个钩子也有它自己的奇怪之处。首先让我们来看看语法。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//accepts two arguments: a function, and dependency array</span></span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// do stuff</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125; <span class="comment">//function to undo our stuff from above when component unmounts</span></span><br><span class="line">&#125;, []) <span class="comment">//dependency array of things to watch for changes on</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;所以你给useEffect传递一个要运行的回调函数，其中包含你的副作用，然后是一个要观察的事物的数组。如果被监视的事物发生变化，useEffect将重新运行我们的回调函数。如果你需要在卸载时清理你的副作用，返回一个包含该代码的函数。<br>&emsp;&emsp;让我们看看我们的小精灵的例子，用钩子和useEffect。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pokemon</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [pokemon, setPokemon] = React.useState(<span class="literal">null</span>)</span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fetch(<span class="string">'https://pokeapi.co/api/v2/pokemon/gengar/'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      setPokemon(res)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, []) <span class="comment">// empty array means nothing to watch, so run once and no more</span></span><br><span class="line">  <span class="keyword">const</span> style = &#123;<span class="attr">textTransform</span>: <span class="string">'capitalize'</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &#123; pokemon</span><br><span class="line">      ? <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line">        &lt;img src=&#123;pokemon.sprites.front_default&#125;</span><br><span class="line"><span class="xml">            alt=&#123;'Image of ' + pokemon.name&#125;/&gt;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&#123;style&#125;</span>&gt;</span>Name: &#123;pokemon.name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">        &lt;p style=&#123;style&#125;&gt;</span><br><span class="line">          Type: &#123;pokemon.types.map(x =&gt; x.type.name).join(', ')&#125;</span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">      : <span class="string">'Loading...'</span></span><br><span class="line">    &#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;如果你盯着那个空的依赖性数组，你已经注意到了第一个useEffect的怪癖。通过传递一个空数组，我们在说 “只做这一次”。React万神殿告诉我们，在极少数情况下这是可以的，但大多数时候你都希望里面有东西。原因是，通常你想与你的代码中的东西同步，而不是只执行一次效果。例如，如果我们的小精灵组件依赖于一个路由参数或道具，任何可以说 “去获得一个新的小精灵 “而不需要挂载/卸载的东西呢？<br>&emsp;&emsp;比方说，我们的组件依赖于一个道具pokemonToGet，它是一个参数，告诉它要从API中获得哪些小精灵。让我们也为测试目的添加一个小小的表单。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pokemon</span>(<span class="params">&#123;pokemonToGet&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [pokemon, setPokemon] = React.useState(<span class="literal">null</span>)</span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fetch(<span class="string">`https://pokeapi.co/api/v2/pokemon/<span class="subst">$&#123;pokemonToGet&#125;</span>/`</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      setPokemon(res)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [pokemonToGet]) <span class="comment">// get a new pokemon with the pokemonToGet prop changes</span></span><br><span class="line">  <span class="keyword">const</span> style = &#123;<span class="attr">textTransform</span>: <span class="string">'capitalize'</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &#123; pokemon</span><br><span class="line">      ? <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line">        &lt;img src=&#123;pokemon.sprites.front_default&#125;</span><br><span class="line"><span class="xml">          alt=&#123;'Image of ' + pokemon.name&#125;/&gt;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&#123;style&#125;</span>&gt;</span>Name: &#123;pokemon.name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">        &lt;p style=&#123;style&#125;&gt;</span><br><span class="line">          Type: &#123;pokemon.types.map(x =&gt; x.type.name).join(', ')&#125;</span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">      : <span class="string">'Loading...'</span></span><br><span class="line">    &#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">function PokemonForm() &#123;</span></span><br><span class="line"><span class="regexp">  const [inputValue, setInputValue] = React.useState("rowlet")</span></span><br><span class="line"><span class="regexp">  const [pokemonToGet, setPokemonToGet] = React.useState("gengar")</span></span><br><span class="line"><span class="regexp">  function getPokemon() &#123;</span></span><br><span class="line"><span class="regexp">    setPokemonToGet(inputValue.trim().toLowerCase())</span></span><br><span class="line"><span class="regexp">    setInputValue("")</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;input onChange=&#123;(e) =&gt; setInputValue(e.target.value)&#125;</span></span><br><span class="line"><span class="regexp">        value=&#123;inputValue&#125; type="text"/</span>&gt;</span><br><span class="line">      &lt;button onClick=&#123;getPokemon&#125;&gt;</span><br><span class="line">        Get Pokemon</span><br><span class="line">      &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;Pokemon pokemonToGet=&#123;pokemonToGet&#125; /</span>&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">render(&lt;PokemonForm /</span>&gt;)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;很好，现在我们的组件根据我们的道具变化获取了一个新的小精灵。如果使用类，我们就必须使用<code>componentDidUpdate</code>之类的东西来达到类似的效果。<br>&emsp;&emsp;Ryan Florence在推特上对useEffect的用法做了很好的总结。</p>
+<blockquote>
+<p>The question is not “when does this effect run” the question is “with which state does this effect synchronize with”<br>  useEffect(fn) // all state<br>  useEffect(fn, []) // no state<br>  useEffect(fn, [these, states])</p>
+</blockquote>
+<p>&emsp;&emsp;他提到的 “所有状态 “的情况，即你没有传入任何依赖关系的情况是一个奇怪的情况。我个人从未发现它的用途。我们知道整个组件在每次渲染时都会运行，所以我想知道是否有一些奇怪的边缘情况需要你使用<code>useEffect(fn)</code>而不使用任何依赖阵列。在任何情况下，大多数时候你都会用这个方法：<code>useEffect(fn, [these, states])</code>。</p>
+<h5 id="UseEffect和Previous-State-事情败露的地方。"><a href="#UseEffect和Previous-State-事情败露的地方。" class="headerlink" title="UseEffect和Previous State: 事情败露的地方。"></a>UseEffect和Previous State: 事情败露的地方。</h5><p>&emsp;&emsp;到目前为止，useEffect的心理模型似乎很简单：将它与你选择的某些状态变化同步。问题是，当你需要在一个效果中引用该状态，而不仅仅是知道它是否发生了变化。<br>&emsp;&emsp;在useEffect中，你无法获得对当前状态的访问。<br>&emsp;&emsp;在我们的API调用例子中，我们没有看到这一点，因为我们只是覆盖了之前的状态。<br>&emsp;&emsp;让我们看一个简单的例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>);</span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        setCount(count + <span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;似乎我们做了所有正确的事情（甚至清理了卸载时的副作用），但我们的计数器没有递增。这是一个问题吗？我们是否无法访问setInterval所属的窗口对象？<br>&emsp;&emsp;不是，也不是。如果你把console.log添加到那个间隔中，你会看到它每秒钟都在跳动。<br>&emsp;&emsp;我可以证明给你看:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> [randomNum, setRandomNum] = React.useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setCount(count + <span class="number">1</span>)</span><br><span class="line">      setRandomNum(<span class="built_in">Math</span>.random())</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;p&gt;RandomNum is &#123;randomNum&#125;&lt;/</span>p&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;注意，我们每秒钟都会得到一个新的随机数。我们的时间间隔代码是好的。<br>&emsp;&emsp;我们能够设置新的状态，但无法访问当前状态。<br>&emsp;&emsp;这就是一个 “陈旧的闭包”。我不会去讨论闭包，但只需知道，由于React/hooks的实现，在我们的间隔函数中，count变量总是会是0。这是一个旧的参考。<br>&emsp;&emsp;事实证明，像上面这样的简单例子有一个解决方案，正如John Tucker所指出的（谢谢John！）。和基于类的组件中的setState一样，useState也可以接受一个回调函数，接收之前的状态作为一个参数。React文档也注意到了这一点。<br>&emsp;&emsp;下面是一个快速修复的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>);</span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">//let's pass a function instead</span></span><br><span class="line">      <span class="comment">//the argument is the current state</span></span><br><span class="line">      setCount(<span class="function"><span class="params">count</span> =&gt;</span> count + <span class="number">1</span>)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;不过，这仍然不能解决我们所有的问题。如果你需要在useEffect中访问最新的状态，但不更新它，你将不得不开始用setState回调来包装你的useEffect代码，然后在最后返回未改变的状态。这很快就会变成一个绝对的混乱，特别是当你在处理多个状态值的时候。<br>&emsp;&emsp;另一个可能的解决方案是只使用useReducer，因为它可以接收之前的状态，但是用副作用填充你的reducer也显得非常混乱，而且我不建议任何人完全停止使用useState。<br>&emsp;&emsp;无论如何，在写钩子的时候，我已经陷入了陈旧的闭包陷阱很多很多次。我甚至不知道它有个名字，直到我在Svelte背后的人Rich Harris的演讲中看到它<br>&emsp;&emsp;显然，我也不是唯一一个在钩子上被它们绊倒的人。<br><img src="https://leewarrick.com/blog/static/5a5dbcc6667a5da9eeabc5cbe90a1427/ed46b/staleclosures.png" alt="Rich Harris的"><br>&emsp;&emsp; <strong>React甚至在他们的文档中提到了这一点。</strong></p>
+<blockquote>
+<p>“Any function inside a component, including event handlers and effects, “sees” the props and state from the render it was created in.”<br>  译：组件内的任何功能，包括事件处理程序和效果，都能 “看到 “它所创建的渲染中的道具和状态。<br>&emsp;&emsp;我之前读过这个，在真正深入了解这个问题之前，我觉得没什么意义。我想象这可能是React的一个不好的点，所以也许他们不希望太大声地叫出来。<br>&emsp;&emsp;然而，Dan Abramov在他的博客中更好地描述了这个问题，甚至提供了一个解决方案。<br>“Effects always “see” props and state from the render they were defined in. That helps prevent bugs but in some cases can be annoying. For those cases, you can explicitly maintain some value in a mutable ref.”<br>  译：效果总是 “看到 “它们所定义的渲染中的道具和状态。这有助于防止bug，但在某些情况下会很烦人。对于这些情况，你可以明确地在一个可变的上下文中保存一些值。</p>
+</blockquote>
+<p>&emsp;&emsp;这很有帮助，因为它以useRef的形式提供了一个解决方案（感谢Dan！），但它让我对如何帮助避免这个问题一无所知（主要是因为我不了解useRef）。</p>
+<h5 id="什么是“ref”，你会怎么使用它"><a href="#什么是“ref”，你会怎么使用它" class="headerlink" title="什么是“ref”，你会怎么使用它"></a>什么是“ref”，你会怎么使用它</h5><p>&emsp;&emsp;传统上，引用的目的是让你直接访问一个html元素。例如，假设你需要关注一个输入字段。你必须跳出React，使用常规的JavaScript来调用.focus()。钩子实际上让这一切变得相当简单。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">InputField</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = React.useRef()</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;input type=<span class="string">"text"</span> ref=&#123;inputRef&#125; /&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; inputRef.current.focus()&#125;&gt;</span><br><span class="line">        Click to Focus the input</span><br><span class="line">      &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;很好! 当我们需要的时候，Refs是访问本地DOM APIs的一个简单的逃生通道。<br>&emsp;&emsp;…但这如何帮助我们解决我们陈旧的关闭计数器的例子呢？</p>
+<h5 id="使用“Refs”来避免陈旧的闭包"><a href="#使用“Refs”来避免陈旧的闭包" class="headerlink" title="使用“Refs”来避免陈旧的闭包"></a>使用“Refs”来避免陈旧的闭包</h5><p>&emsp;&emsp;React文档将“Refs”比作 “实例变量”。我不知道那是什么意思（谢谢维基百科），所以我觉得那没什么用。<br>&emsp;&emsp;我设法通过这样思考来理解Refs的含义。<br>&emsp;&emsp;<strong>Refs存在于重新渲染周期之外。</strong><br>&emsp;&emsp;<strong>把Refs看作是你设置在一边的一个变量。当你的组件重新运行时，它会很高兴地跳过这个反射，直到你用<code>.current</code>调用它。</strong><br>&emsp;&emsp;让我们看看对我们的定时器例子的修正。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> countRef = React.useRef(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      countRef.current = countRef.current + <span class="number">1</span></span><br><span class="line">      setCount(countRef.current)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;如果我们想把计时器停在比如说10的位置，我们可以很容易地用refs来做。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> countRef = React.useRef(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (countRef.current === <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">return</span> clearInterval(intervalId)</span><br><span class="line">      countRef.current = countRef.current + <span class="number">1</span></span><br><span class="line">      setCount(countRef.current)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;为了便于比较，这里是使用setState回调方法的替代方案。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        setCount(<span class="function"><span class="params">count</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (count === <span class="number">10</span>) &#123;</span><br><span class="line">            clearInterval(intervalId)</span><br><span class="line">            <span class="keyword">return</span> count</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">return</span> count + <span class="number">1</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;可以看到这很快就会接近回调地狱，所以如果你在做更复杂的事情，我会提醒你不要使用回调方法。</p>
+<h5 id="State-Versus-Refs"><a href="#State-Versus-Refs" class="headerlink" title="State Versus Refs"></a>State Versus Refs</h5><p>&emsp;&emsp;是否有可能完全抛弃状态而只使用refs？<br>&emsp;&emsp;你可能倾向于认为你可以用 refs 来代替你的组件的状态，从而避开所有这些奇怪的行为。<br>&emsp;&emsp;你不能这样做。refs不是反应性的。当你改变一个 ref 时，它不会导致重新渲染。记住，<strong>它们存在于重新渲染周期之外</strong>。<br>&emsp;&emsp;以下是不可能的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> count = React.useRef(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  React.useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> intervalId = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      count.current = count.current + <span class="number">1</span></span><br><span class="line">      <span class="comment">//console.log('Ref example count: ' + count.current)</span></span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(intervalId)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;The count is: &#123;count.current&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;那个组件实际上是在内部进行计数，但它并没有导致HTML的更新。你需要useState来实现这一点。如果你不相信我的话，请继续取消对console.log的注释）。<br>&emsp;&emsp;这里有一个例子来证明Refs与state。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = React.useState(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">const</span> countRef = React.useRef(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;State Count: &#123;count&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="regexp">        Increment State Count</span></span><br><span class="line"><span class="regexp">      &lt;/</span>button&gt;</span><br><span class="line">      &lt;p&gt;Ref Count: &#123;countRef.current&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;button onClick=&#123;() =&gt; countRef.current = countRef.current + 1&#125;&gt;</span></span><br><span class="line"><span class="regexp">        Increment Ref Count</span></span><br><span class="line"><span class="regexp">      &lt;/</span>button&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">render(&lt;Counter/</span>&gt;)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在你通过设置状态触发重新渲染之前，你不会看到Ref计数的变化。</p>
+<h5 id="离别感言"><a href="#离别感言" class="headerlink" title="离别感言"></a>离别感言</h5><p>&emsp;&emsp;我喜欢React中的钩子和功能组件，但我所概述的怪异现象让我暂停了。我不喜欢被要求对React的内部工作了解这么多才能使用它。我认为这给学习React的人带来了障碍，我希望将来React团队能想出一些更好的方法来处理这些问题。</p>
+<h4 id="翻译结束"><a href="#翻译结束" class="headerlink" title="翻译结束"></a>翻译结束</h4><p>很棒的文章。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：useEffect &amp; useRef</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2021-06-18 09:58:48</li>
+        <li>
+            本文链接：http://www.feidom.com/2021/06/18/useEffect-useRef/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/06/18/React-%E9%98%B2%E6%AD%A2%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%A4%84%E7%90%86/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React-防止内存泄漏处理</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/06/07/touch%E5%92%8Cmouse%E4%BA%8B%E4%BB%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Touch和Mouse事件</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">1.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通俗的解释React的-useEffect-和-useRef"><span class="nav-number">2.</span> <span class="nav-text">通俗的解释React的 useEffect 和 useRef</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#到底什么是“effect副作用”"><span class="nav-number">2.0.1.</span> <span class="nav-text">到底什么是“effect副作用”</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#React中的副作用"><span class="nav-number">2.0.2.</span> <span class="nav-text">React中的副作用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#类组件和副作用"><span class="nav-number">2.0.3.</span> <span class="nav-text">类组件和副作用</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后来试一下Hooks"><span class="nav-number">2.1.</span> <span class="nav-text">然后来试一下Hooks</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UseEffect和Previous-State-事情败露的地方。"><span class="nav-number">2.2.</span> <span class="nav-text">UseEffect和Previous State: 事情败露的地方。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是“ref”，你会怎么使用它"><span class="nav-number">2.3.</span> <span class="nav-text">什么是“ref”，你会怎么使用它</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用“Refs”来避免陈旧的闭包"><span class="nav-number">2.4.</span> <span class="nav-text">使用“Refs”来避免陈旧的闭包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#State-Versus-Refs"><span class="nav-number">2.5.</span> <span class="nav-text">State Versus Refs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#离别感言"><span class="nav-number">2.6.</span> <span class="nav-text">离别感言</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#翻译结束"><span class="nav-number">3.</span> <span class="nav-text">翻译结束</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

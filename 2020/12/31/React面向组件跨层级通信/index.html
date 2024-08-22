@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        React面向组件跨层级通信 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">React面向组件跨层级通信</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2020-12-31 17:13:02
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/react/">react</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h4 id="父与子"><a href="#父与子" class="headerlink" title="父与子"></a>父与子</h4><pre><code>父组件包裹子组件，父组件向子组件传递数据。</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子 </span></span><br><span class="line"><span class="keyword">const</span> Button = <span class="function">(<span class="params">&#123; text &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    &lt;button type=<span class="string">"button"</span>&gt;&#123;text&#125;&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 父</span></span><br><span class="line"><span class="regexp">class HomePage extends React.Component &#123;</span></span><br><span class="line"><span class="regexp">state = &#123;</span></span><br><span class="line"><span class="regexp">    text: "默认文案"</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">asyc componentDidMount() &#123;</span></span><br><span class="line"><span class="regexp">    const response = await fetch('/</span>api/buttonText<span class="string">')</span></span><br><span class="line"><span class="string">    this.setState(&#123;</span></span><br><span class="line"><span class="string">    text: response.buttoText</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">    render() &#123;</span></span><br><span class="line"><span class="string">        const &#123;</span></span><br><span class="line"><span class="string">        text</span></span><br><span class="line"><span class="string">        &#125; = this.state</span></span><br><span class="line"><span class="string">        return (</span></span><br><span class="line"><span class="string">            &lt;Button text=&#123;text&#125; /&gt;</span></span><br><span class="line"><span class="string">        )</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这样的通信方式非常适用于展示组件。</p>
+<h4 id="子与父"><a href="#子与父" class="headerlink" title="子与父"></a>子与父</h4><pre><code>子组件存在于父组件之中，子组件需要向父组件传递数据。</code></pre><ul>
+<li>回调函数（主要方式）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FetchPosts</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        loading: <span class="literal">true</span>,</span><br><span class="line">        data: []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">async</span> componentDidMount() &#123;</span><br><span class="line">        <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">'/api/posts'</span>)</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            data: response.data,</span><br><span class="line">            loading: <span class="literal">false</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.state.loading) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Loading</span> /&gt;</span></span>  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.props.renderPosts(<span class="keyword">this</span>.state.data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 父</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomePage</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">        &lt;FetchPosts</span><br><span class="line">            renderPosts=&#123;posts =&gt; (</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123;posts.map(<span class="function"><span class="params">post</span> =&gt;</span> (</span><br><span class="line">                &lt;li key=&#123;post.id&#125;&gt;</span><br><span class="line">                    &lt;h2&gt;&#123;post.title&#125;&lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">                    &lt;p&gt;&#123;post.description&#125;&lt;/</span>p&gt;</span><br><span class="line">                &lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">                    ))&#125;</span></span><br><span class="line"><span class="regexp">                &lt;/u</span>l&gt;</span><br><span class="line">            )&#125;</span><br><span class="line">        /&gt;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实例函数（不符合 React 的设计理念，不被推荐）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomePage</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">   modalRef = React.createRef()  <span class="comment">//实例</span></span><br><span class="line">   showModal = () =&#123;</span><br><span class="line">     <span class="keyword">this</span>.modalRef.show()</span><br><span class="line">   &#125;</span><br><span class="line">   hideModal = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="keyword">this</span>.modalRef.hide()</span><br><span class="line">   &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;</span><br><span class="line">          text</span><br><span class="line">        &#125; = <span class="keyword">this</span>.state</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;&gt;</span><br><span class="line">              &lt;Button onClick=&#123;<span class="keyword">this</span>.showModal&#125;&gt;展示 Modal &lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">              &lt;Button onClick=&#123;this.hideModal&#125;&gt;隐藏 Modal &lt;/</span>Button&gt;</span><br><span class="line">              &lt;Modal ref=&#123;modalRef&#125; /&gt;</span><br><span class="line">            &lt;<span class="regexp">/&gt;</span></span><br><span class="line"><span class="regexp">          /</span>&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="兄弟"><a href="#兄弟" class="headerlink" title="兄弟"></a>兄弟</h4><p>  两个组件并列存在于父组件中，数据需要进行相互传递，往往依赖共同的父组件进行中转。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Input</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    handleChanged = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.onChangeText(e.target.text)</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">onChange</span>=<span class="string">&#123;handleTextChanged&#125;</span> /&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 子</span></span><br><span class="line"><span class="keyword">const</span> StaticText = <span class="function">(<span class="params">&#123; children &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;P&gt;&#123;children&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 父</span></span><br><span class="line"><span class="regexp">class HomePage extends React.Component &#123;</span></span><br><span class="line"><span class="regexp">    state = &#123;</span></span><br><span class="line"><span class="regexp">        text: '默认文案'</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    handleTextChanged = (text) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">        this.setState(&#123;</span></span><br><span class="line"><span class="regexp">        text,</span></span><br><span class="line"><span class="regexp">        &#125;)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    render() &#123;</span></span><br><span class="line"><span class="regexp">        return (</span></span><br><span class="line"><span class="regexp">            &lt;&gt;</span></span><br><span class="line"><span class="regexp">              &lt;Input onChangeText=&#123;this.handleTextChanged&#125; /</span>&gt;</span><br><span class="line">              &lt;StaticText&gt;<span class="keyword">this</span>.state.text&lt;<span class="regexp">/StaticText&gt; </span></span><br><span class="line"><span class="regexp">            &lt;/</span>&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="无直接关系"><a href="#无直接关系" class="headerlink" title="无直接关系"></a>无直接关系</h4><p>  两个组件并没有直接的关联关系，处在一棵树中相距甚远的位置，但需要共享、传递数据。</p>
+</li>
+<li><p>Context<br>  Context 第一个最常见的用途就是做 i18n</p>
+<ol>
+<li>i18n使用Context <code>I18nContext</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>  &#123; createContext &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">const</span> I18nContext = createContext(&#123;</span><br><span class="line">    translate: <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">''</span>,</span><br><span class="line">    getLocale: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line">    setLocale: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> I18nContext;</span><br></pre></td></tr></table></figure></li>
+<li>用<code>I18nContext</code>封装个组件<code>I18nProvider</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> I18nContext <span class="keyword">from</span> <span class="string">'./I18nContext'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">I18nProvider</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        locale: <span class="string">''</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> i18n =  &#123;</span><br><span class="line">            translate: <span class="function"><span class="params">key</span> =&gt;</span> <span class="keyword">this</span>.props.languages[locale][key],</span><br><span class="line">            getLocale: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.state.locale,</span><br><span class="line">            setLocale: <span class="function"><span class="params">locale</span> =&gt;</span> <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">                loacal,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;I18nContext.Provider value=&#123;i18n&#125;&gt;</span><br><span class="line">                &#123;<span class="keyword">this</span>.props.children&#125;</span><br><span class="line">            &lt;<span class="regexp">/I18nContext.Provider&gt;</span></span><br><span class="line"><span class="regexp">        )</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">export default I18nProvider;</span></span><br></pre></td></tr></table></figure></li>
+<li>用<code>I18nContext</code>实现高阶组件<code>withI18n</code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> I18nContext <span class="keyword">from</span> <span class="string">'./I18nContext'</span>;</span><br><span class="line"><span class="keyword">const</span> withI18n = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">WrappedComponent</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function">(<span class="params">props</span>) =&gt;</span> (</span><br><span class="line">        &lt;I18nContext.Consumer&gt;</span><br><span class="line">            &#123;i18n =&gt; <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> &#123;<span class="attr">...i18n</span>&#125; &#123;<span class="attr">...props</span>&#125; /&gt;</span></span>&#125;</span><br><span class="line">        &lt;<span class="regexp">/I18nContext.Consumer&gt;</span></span><br><span class="line"><span class="regexp">        )</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp">export default withI18n;</span></span><br></pre></td></tr></table></figure></li>
+<li>在最顶层注入 Provider<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; I18nProvider &#125; <span class="keyword">from</span> <span class="string">'./i18n'</span>;</span><br><span class="line"><span class="keyword">const</span> locales = [ <span class="string">'en-US'</span>, <span class="string">'zh-CN'</span> ];</span><br><span class="line"><span class="keyword">const</span> languages = &#123;</span><br><span class="line">    <span class="string">'en-US'</span>: <span class="built_in">require</span>(<span class="string">'./locales/en-US'</span>),</span><br><span class="line">    <span class="string">'zh-CN'</span>: <span class="built_in">require</span>(<span class="string">'./locales/zh-CN'</span>),</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">    &lt;I18nProvider locales=&#123;locales&#125; languages=&#123;languages&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;<span class="regexp">/I18nProvider&gt;,</span></span><br><span class="line"><span class="regexp">    document.getElementById('root')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure></li>
+<li>在需要的地方使用<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Title = withI18n(</span><br><span class="line">    (&#123; translate &#125;) =&gt; &#123; </span><br><span class="line">        <span class="keyword">return</span> ( <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;translate('title')&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span> )</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span> Footer = withI18n(</span><br><span class="line">    (&#123; setLocale &#125;) =&gt; &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="function">(<span class="params"> &lt;Button onClick=((</span>) =&gt;</span> &#123;</span><br><span class="line">            setLocale(<span class="string">'zh-CN'</span>)</span><br><span class="line">        &#125;) /&gt; )</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>全局变量<br>  全局变量，顾名思义就是放在 Window 上的变量。但值得注意的是修改 Window 上的变量并不会引起 React 组件重新渲染。</p>
+</li>
+<li><p>状态管理框架</p>
+<ul>
+<li>Flux</li>
+<li>Redux</li>
+<li>Mobx</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：React面向组件跨层级通信</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2020-12-31 17:13:02</li>
+        <li>
+            本文链接：http://www.feidom.com/2020/12/31/React面向组件跨层级通信/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/01/01/Serverless%E6%98%AF%E4%BB%80%E4%B9%88/"
+                        >
+                            <span class="left arrow-icon flex-center" >
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Serverless是什么</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2020/12/29/%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1react%E7%BB%84%E4%BB%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">如何设计react组件</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2024 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#父与子"><span class="nav-number">1.</span> <span class="nav-text">父与子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子与父"><span class="nav-number">2.</span> <span class="nav-text">子与父</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兄弟"><span class="nav-number">3.</span> <span class="nav-text">兄弟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无直接关系"><span class="nav-number">4.</span> <span class="nav-text">无直接关系</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>
