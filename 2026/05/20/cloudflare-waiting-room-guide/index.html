@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        Cloudflare Waiting Room 完整指南：从原理到生产级安全实践 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Cloudflare Waiting Room 完整指南：从原理到生产级安全实践</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2026-05-20 08:00:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Cloudflare/">Cloudflare</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Workers/">Workers</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%AE%89%E5%85%A8/">安全</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97/">边缘计算</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>Cloudflare Waiting Room 是一个运行在边缘网络的虚拟排队系统。当流量突然激增（大促、抢票、疫苗预约），它把超出承载能力的用户引导到等候页面，而不是让服务器直接崩溃。</p>
+<a id="more"></a>
+
+<h2 id="Waiting-Room-是什么？"><a href="#Waiting-Room-是什么？" class="headerlink" title="Waiting Room 是什么？"></a>Waiting Room 是什么？</h2><p>核心能力：</p>
+<ul>
+<li>实时更新预计等待时间</li>
+<li>通过 Cookie 记录排队位置，防止刷新后丢失</li>
+<li>无需修改应用代码，Dashboard 填 5 个字段即可启用</li>
+<li>支持自定义 HTML/CSS 等候页面</li>
+</ul>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><h3 id="底层架构"><a href="#底层架构" class="headerlink" title="底层架构"></a>底层架构</h3><p>Waiting Room 本质上是运行在 <strong>Cloudflare Workers</strong> 上的边缘程序，覆盖全球 300+ 节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户请求 → Cloudflare Edge → Waiting Room Worker → 放行 &#x2F; 排队</span><br></pre></td></tr></table></figure>
+
+<h3 id="两个核心阈值"><a href="#两个核心阈值" class="headerlink" title="两个核心阈值"></a>两个核心阈值</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Total Active Users</strong></td>
+<td>同时允许在源站上的最大并发用户数</td>
+</tr>
+<tr>
+<td><strong>New Users Per Minute</strong></td>
+<td>每分钟允许新进入源站的用户上限</td>
+</tr>
+</tbody></table>
+<p>任意一个触及上限，新用户就开始排队。</p>
+<h3 id="全球状态同步"><a href="#全球状态同步" class="headerlink" title="全球状态同步"></a>全球状态同步</h3><p>各数据中心不依赖中央节点（避免延迟），通过 <strong>Cloudflare Durable Objects</strong> 构建的聚合管道在秒级完成全球同步。</p>
+<h3 id="Session-Duration-的双重作用"><a href="#Session-Duration-的双重作用" class="headerlink" title="Session Duration 的双重作用"></a>Session Duration 的双重作用</h3><p>Session Duration 不只是”多久踢出用户”，它还驱动了<strong>动态出流</strong>：当用户 Cookie 因不活跃过期时，空位立即释放，等待时间更短、更准确。</p>
+<h2 id="与-Pages-Workers-的组合架构"><a href="#与-Pages-Workers-的组合架构" class="headerlink" title="与 Pages + Workers 的组合架构"></a>与 Pages + Workers 的组合架构</h2><p>三者都运行在同一个边缘网络，请求链路不需要离开 Cloudflare，延迟极低：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户</span><br><span class="line"> └→ Waiting Room Worker（判断放行 &#x2F; 排队）</span><br><span class="line">      ├→ Cloudflare Pages（页面渲染，SSR &#x2F; 静态 + CDN）</span><br><span class="line">      └→ Workers（API、鉴权、A&#x2F;B 测试、边缘逻辑）</span><br><span class="line">               └→ KV &#x2F; D1 &#x2F; R2 &#x2F; Durable Objects（数据层）</span><br></pre></td></tr></table></figure>
+
+<p>Waiting Room 只负责”放不放行”，放行后完全不干涉后续流程，架构上非常干净。</p>
+<h2 id="Pages-Functions-vs-独立-Worker"><a href="#Pages-Functions-vs-独立-Worker" class="headerlink" title="Pages Functions vs 独立 Worker"></a>Pages Functions vs 独立 Worker</h2><p><strong>一句话原则：逻辑是否只属于这个 Pages 站点？</strong></p>
+<h3 id="Pages-Functions"><a href="#Pages-Functions" class="headerlink" title="Pages Functions"></a>Pages Functions</h3><ul>
+<li>与 Pages 项目同仓库，<code>functions/</code> 目录按文件自动路由</li>
+<li>适合：页面级鉴权 middleware、SSR、请求改写、A/B 测试</li>
+<li>不支持 Cron、Queue 等独立触发器</li>
+</ul>
+<h3 id="独立-Worker"><a href="#独立-Worker" class="headerlink" title="独立 Worker"></a>独立 Worker</h3><ul>
+<li>独立仓库 + <code>wrangler.toml</code>，独立部署和版本管理</li>
+<li>适合：跨站点共享的 API、复杂业务逻辑、Cron 定时任务</li>
+<li>可被 Pages Functions 通过 <strong>Service Binding</strong> 零延迟调用</li>
+</ul>
+<h3 id="最常见的搭配"><a href="#最常见的搭配" class="headerlink" title="最常见的搭配"></a>最常见的搭配</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pages Functions  →  鉴权 &#x2F; 请求改写 &#x2F; SSR</span><br><span class="line">      ↓ Service Binding（零网络开销，同进程调用）</span><br><span class="line">独立 Worker      →  业务 API &#x2F; 数据读写 &#x2F; 复杂计算</span><br></pre></td></tr></table></figure>
+
+<p>两者不互斥，Service Binding 让你把复杂逻辑抽到独立 Worker，同时保持 Pages Functions 的部署简便性。</p>
+<h2 id="Waiting-Room-Bypass-规则"><a href="#Waiting-Room-Bypass-规则" class="headerlink" title="Waiting Room Bypass 规则"></a>Waiting Room Bypass 规则</h2><p>内部系统调用、VIP 用户、健康检查、静态资源不应该被排队。Cloudflare 提供了基于 Wirefilter 表达式的 <strong>Waiting Room Rules</strong>。</p>
+<p><strong>配置路径：</strong> Traffic → Waiting Room → Rules 标签页</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 内部 IP &#x2F; VPN</span><br><span class="line">ip.src in &#123;10.0.0.0&#x2F;8 172.16.0.0&#x2F;12 192.168.0.0&#x2F;16&#125;</span><br><span class="line"></span><br><span class="line"># 健康检查 &#x2F; 监控 Bot</span><br><span class="line">http.user_agent contains &quot;HealthChecker&quot; or</span><br><span class="line">http.user_agent contains &quot;UptimeRobot&quot;</span><br><span class="line"></span><br><span class="line"># 静态资源（JS&#x2F;CSS&#x2F;图片）</span><br><span class="line">http.request.uri.path matches &quot;.*\\.(js|css|png|svg|woff2|ico)$&quot;</span><br><span class="line"></span><br><span class="line"># Worker 内部调用（见下文安全方案）</span><br><span class="line">http.request.headers[&quot;x-bypass-verified&quot;] &#x3D;&#x3D; &quot;1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意：规则按顺序执行，首条匹配即停止。把范围窄、优先级高的规则放前面。</p>
+<h2 id="HMAC-签名-Bypass-Token：生产级安全方案"><a href="#HMAC-签名-Bypass-Token：生产级安全方案" class="headerlink" title="HMAC 签名 Bypass Token：生产级安全方案"></a>HMAC 签名 Bypass Token：生产级安全方案</h2><p>明文 token（如 <code>vip_pass=abc123</code>）一旦泄露就永久有效，且无法追溯是谁在使用。用 <strong>HMAC-SHA256 签名 + 过期时间戳</strong>可以解决这两个问题。</p>
+<h3 id="Token-格式"><a href="#Token-格式" class="headerlink" title="Token 格式"></a>Token 格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;userId&#125;.&#123;expireAt&#125;.&#123;hmac_hex&#125;</span><br><span class="line">示例：u123.1735000000.a3f9c2d1e4b8...</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成端（调用方-Worker）"><a href="#生成端（调用方-Worker）" class="headerlink" title="生成端（调用方 Worker）"></a>生成端（调用方 Worker）</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">generateBypassToken</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  userId: <span class="built_in">string</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  env: &#123; BYPASS_SECRET: <span class="built_in">string</span> &#125;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">Promise</span>&lt;<span class="title">string</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> expireAt = <span class="built_in">Math</span>.floor(<span class="built_in">Date</span>.now() / <span class="number">1000</span>) + <span class="number">300</span>  <span class="comment">// 5 分钟有效期</span></span><br><span class="line">  <span class="keyword">const</span> payload = <span class="string">`<span class="subst">$&#123;userId&#125;</span>.<span class="subst">$&#123;expireAt&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> key = <span class="keyword">await</span> crypto.subtle.importKey(</span><br><span class="line">    <span class="string">"raw"</span>,</span><br><span class="line">    <span class="keyword">new</span> TextEncoder().encode(env.BYPASS_SECRET),</span><br><span class="line">    &#123; name: <span class="string">"HMAC"</span>, hash: <span class="string">"SHA-256"</span> &#125;,</span><br><span class="line">    <span class="literal">false</span>,</span><br><span class="line">    [<span class="string">"sign"</span>]</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> sig = <span class="keyword">await</span> crypto.subtle.sign(<span class="string">"HMAC"</span>, key, <span class="keyword">new</span> TextEncoder().encode(payload))</span><br><span class="line">  <span class="keyword">const</span> sigHex = <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>(sig))</span><br><span class="line">    .map(<span class="function"><span class="params">b</span> =&gt;</span> b.toString(<span class="number">16</span>).padStart(<span class="number">2</span>, <span class="string">"0"</span>))</span><br><span class="line">    .join(<span class="string">""</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;payload&#125;</span>.<span class="subst">$&#123;sigHex&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> token = <span class="keyword">await</span> generateBypassToken(<span class="string">"u123"</span>, env)</span><br><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">"https://example.com/api/order"</span>, &#123;</span><br><span class="line">  headers: &#123; <span class="string">"x-bypass-token"</span>: token &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证端（Waiting-Room-前的-Worker-或-Pages-Middleware）"><a href="#验证端（Waiting-Room-前的-Worker-或-Pages-Middleware）" class="headerlink" title="验证端（Waiting Room 前的 Worker 或 Pages Middleware）"></a>验证端（Waiting Room 前的 Worker 或 Pages Middleware）</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">verifyBypassToken</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  token: <span class="built_in">string</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">  env: &#123; BYPASS_SECRET: <span class="built_in">string</span> &#125;</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">Promise</span>&lt;</span>&#123; valid: <span class="built_in">boolean</span>; userId?: <span class="built_in">string</span> &#125;&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> parts = token.split(<span class="string">"."</span>)</span><br><span class="line">  <span class="keyword">if</span> (parts.length !== <span class="number">3</span>) <span class="keyword">return</span> &#123; valid: <span class="literal">false</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [userId, expireAtStr, receivedSig] = parts</span><br><span class="line">  <span class="keyword">const</span> expireAt = <span class="built_in">parseInt</span>(expireAtStr)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Math</span>.floor(<span class="built_in">Date</span>.now() / <span class="number">1000</span>) &gt; expireAt) <span class="keyword">return</span> &#123; valid: <span class="literal">false</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> payload = <span class="string">`<span class="subst">$&#123;userId&#125;</span>.<span class="subst">$&#123;expireAtStr&#125;</span>`</span></span><br><span class="line">  <span class="keyword">const</span> key = <span class="keyword">await</span> crypto.subtle.importKey(</span><br><span class="line">    <span class="string">"raw"</span>,</span><br><span class="line">    <span class="keyword">new</span> TextEncoder().encode(env.BYPASS_SECRET),</span><br><span class="line">    &#123; name: <span class="string">"HMAC"</span>, hash: <span class="string">"SHA-256"</span> &#125;,</span><br><span class="line">    <span class="literal">false</span>,</span><br><span class="line">    [<span class="string">"sign"</span>]</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> sig = <span class="keyword">await</span> crypto.subtle.sign(<span class="string">"HMAC"</span>, key, <span class="keyword">new</span> TextEncoder().encode(payload))</span><br><span class="line">  <span class="keyword">const</span> expectedSig = <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>(sig))</span><br><span class="line">    .map(<span class="function"><span class="params">b</span> =&gt;</span> b.toString(<span class="number">16</span>).padStart(<span class="number">2</span>, <span class="string">"0"</span>))</span><br><span class="line">    .join(<span class="string">""</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!timingSafeEqual(expectedSig, receivedSig)) <span class="keyword">return</span> &#123; valid: <span class="literal">false</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; valid: <span class="literal">true</span>, userId &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 时间恒定比对：防止攻击者通过响应时间差逐字符猜签名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timingSafeEqual</span>(<span class="params">a: <span class="built_in">string</span>, b: <span class="built_in">string</span></span>): <span class="title">boolean</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (a.length !== b.length) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  <span class="keyword">let</span> diff = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">    diff |= a.charCodeAt(i) ^ b.charCodeAt(i)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> diff === <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SECRET-KEY-管理"><a href="#SECRET-KEY-管理" class="headerlink" title="SECRET_KEY 管理"></a>SECRET_KEY 管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成随机密钥</span></span><br><span class="line">openssl rand -hex 32</span><br><span class="line"></span><br><span class="line"><span class="comment"># 两端（生成侧和验证侧）都执行，输入同一个随机字符串</span></span><br><span class="line">wrangler secret put BYPASS_SECRET</span><br></pre></td></tr></table></figure>
+
+<p>Secret 加密存储在 Workers 环境变量中，不出现在代码仓库里。</p>
+<h3 id="三个关键安全属性"><a href="#三个关键安全属性" class="headerlink" title="三个关键安全属性"></a>三个关键安全属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>机制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>有效期</strong></td>
+<td>过期时间戳内嵌在 payload，泄露后自动失效</td>
+</tr>
+<tr>
+<td><strong>可追溯</strong></td>
+<td>userId 内嵌在 payload，知道是谁在使用</td>
+</tr>
+<tr>
+<td><strong>不可伪造</strong></td>
+<td>没有 SECRET_KEY 无法构造合法签名</td>
+</tr>
+</tbody></table>
+<h3 id="为什么需要-timingSafeEqual？"><a href="#为什么需要-timingSafeEqual？" class="headerlink" title="为什么需要 timingSafeEqual？"></a>为什么需要 timingSafeEqual？</h3><p>普通 <code>===</code> 比对在签名不匹配时会<strong>提前返回</strong>，攻击者可以通过测量响应时间差，逐字符猜出正确签名。<code>timingSafeEqual</code> 用异或累积差值，始终跑完全部字符再判断，消除了这个侧信道。</p>
+<h3 id="Token-放在哪里？"><a href="#Token-放在哪里？" class="headerlink" title="Token 放在哪里？"></a>Token 放在哪里？</h3><ul>
+<li><strong>Worker 内部调用</strong> → 放 HTTP Header，干净、不可见</li>
+<li><strong>浏览器端携带</strong> → 放 <code>HttpOnly</code> Cookie，JS 不可读</li>
+<li><strong>永远不要放 URL query string</strong> → 会出现在服务器日志、Referer 头、浏览器历史里</li>
+</ul>
+<h2 id="快速参考"><a href="#快速参考" class="headerlink" title="快速参考"></a>快速参考</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内部系统调用绕过排队</td>
+<td>HMAC 签名 token + header</td>
+</tr>
+<tr>
+<td>VIP 用户绕过排队</td>
+<td>HMAC token 签发后存入 HttpOnly Cookie</td>
+</tr>
+<tr>
+<td>健康检查绕过</td>
+<td>User-Agent 规则匹配</td>
+</tr>
+<tr>
+<td>静态资源绕过</td>
+<td>URI path 正则匹配</td>
+</tr>
+<tr>
+<td>页面逻辑</td>
+<td>Pages Functions</td>
+</tr>
+<tr>
+<td>跨服务 API / Cron</td>
+<td>独立 Worker + Service Binding</td>
+</tr>
+<tr>
+<td>边缘数据存储</td>
+<td>KV（简单 K/V）/ D1（SQL）/ R2（对象存储）</td>
+</tr>
+</tbody></table>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Cloudflare Waiting Room 完整指南：从原理到生产级安全实践</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2026-05-20 08:00:00</li>
+        <li>
+            本文链接：http://www.feidom.com/2026/05/20/cloudflare-waiting-room-guide/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2025/08/15/Claude-desktop-%E4%B8%AD-MCP-error-%E7%9A%84-issue-%E4%BF%AE%E5%A4%8D/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Claude desktop 中 MCP error 的 issue 修复</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2026 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Waiting-Room-是什么？"><span class="nav-number">1.</span> <span class="nav-text">Waiting Room 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作原理"><span class="nav-number">2.</span> <span class="nav-text">工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#底层架构"><span class="nav-number">2.1.</span> <span class="nav-text">底层架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个核心阈值"><span class="nav-number">2.2.</span> <span class="nav-text">两个核心阈值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全球状态同步"><span class="nav-number">2.3.</span> <span class="nav-text">全球状态同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-Duration-的双重作用"><span class="nav-number">2.4.</span> <span class="nav-text">Session Duration 的双重作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与-Pages-Workers-的组合架构"><span class="nav-number">3.</span> <span class="nav-text">与 Pages + Workers 的组合架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pages-Functions-vs-独立-Worker"><span class="nav-number">4.</span> <span class="nav-text">Pages Functions vs 独立 Worker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pages-Functions"><span class="nav-number">4.1.</span> <span class="nav-text">Pages Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独立-Worker"><span class="nav-number">4.2.</span> <span class="nav-text">独立 Worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最常见的搭配"><span class="nav-number">4.3.</span> <span class="nav-text">最常见的搭配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Waiting-Room-Bypass-规则"><span class="nav-number">5.</span> <span class="nav-text">Waiting Room Bypass 规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HMAC-签名-Bypass-Token：生产级安全方案"><span class="nav-number">6.</span> <span class="nav-text">HMAC 签名 Bypass Token：生产级安全方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Token-格式"><span class="nav-number">6.1.</span> <span class="nav-text">Token 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成端（调用方-Worker）"><span class="nav-number">6.2.</span> <span class="nav-text">生成端（调用方 Worker）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证端（Waiting-Room-前的-Worker-或-Pages-Middleware）"><span class="nav-number">6.3.</span> <span class="nav-text">验证端（Waiting Room 前的 Worker 或 Pages Middleware）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SECRET-KEY-管理"><span class="nav-number">6.4.</span> <span class="nav-text">SECRET_KEY 管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三个关键安全属性"><span class="nav-number">6.5.</span> <span class="nav-text">三个关键安全属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要-timingSafeEqual？"><span class="nav-number">6.6.</span> <span class="nav-text">为什么需要 timingSafeEqual？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Token-放在哪里？"><span class="nav-number">6.7.</span> <span class="nav-text">Token 放在哪里？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速参考"><span class="nav-number">7.</span> <span class="nav-text">快速参考</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>
