@@ -118,6 +118,67 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/2020/11/05/vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E6%96%B9%E6%B3%95/">
+                        vue定义全局方法
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        一、将方法挂在到vue原型(Vue.prototype)上
+定义：
+1234567// global.jsconst Func = ()=&gt;&#123;    console.log('global')&#125;export default ...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Thu Nov 05 2020 08:34:48 GMT+0800">2020-11-05</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/11/05/vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E6%96%B9%E6%B3%95/">阅读全文 <i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/11/03/vue%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87/">
+                        vue中使用svg图标
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        对svg图标的简单实用和认识svg图标的使用
+在Vue项目中写一个svg组件
+安装svg-sprite-loader插件对svg文件进行编译解析  yarn add svg-sprite-loader
+在src/assets/目录下新建icons目录...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Tue Nov 03 2020 08:41:24 GMT+0800">2020-11-03</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/11/03/vue%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87/">阅读全文 <i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/2020/09/10/%E5%89%8D%E7%AB%AF%E5%A6%82%E4%BD%95%E9%98%B2%E8%8C%83xss%E6%94%BB%E5%87%BB/">
                         前端如何防范xss攻击
                     </a>
@@ -345,69 +406,6 @@ compiler编译阅读源码逻辑可得，在实际上compiler的主要处理点�
     </div>
 
     <a href="/2020/08/13/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB%E4%B9%8Bhtml%E4%B8%8EvNode%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/">阅读全文 <i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/08/13/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/">
-                        vue源码解读
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        看完这张图
-各阶段间详细解读
-html 《==转换==》 vNode
-Observer重写array监听
-keep-alive的实现
-
-
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Thu Aug 13 2020 14:45:50 GMT+0800">2020-08-13</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/08/13/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/">阅读全文 <i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/08/12/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bobserver%E9%87%8D%E5%86%99array%E7%9B%91%E5%90%AC/">
-                        vue2.x源码解读之observer重写array监听
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        Observervue的核心功能之一就是双向绑定，在vue2.x中，双向绑定的原理，是依赖Object.defineProperty这个方法。由于这个方法的一些弊端，导致Observer的实现，需要兼容这些弊端。以下内容详细说明了来龙去脉
-先自己实现...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Wed Aug 12 2020 14:37:36 GMT+0800">2020-08-12</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/08/12/vue%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B9%8Bobserver%E9%87%8D%E5%86%99array%E7%9B%91%E5%90%AC/">阅读全文 <i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>

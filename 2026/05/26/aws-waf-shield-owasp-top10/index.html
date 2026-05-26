@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <title>
+        AWS 安全三件套：WAF、Shield 与 OWASP Top 10 通俗指南 |
+        
+        FEIDOM
+    </title>
+    <link rel="shortcut icon" href="/images/logo.jpg">
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"feidom-up.github.io","root":"/","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":true,"expand_all":true},"style":{"primary_color":"#0066CC","avatar":"/images/logo.jpg","favicon":"/images/logo.jpg","img_position":"left","left_side_width":"260px","content_max_width":"900px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"你问我买不买得起全套的喜羊羊，我的奖学金可以洒满黄浦江。"}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"version":"3.0.4"};
+    KEEP.language = {"search":"搜索...","prev":"上一页","next":"下一页","prev_posts":"上一篇","next_posts":"下一篇","page":"第 %d 页","recent_posts":"最新文章","share":"分享","powered_by":"由 %s 驱动","theme":"主题","rss_feed":"RSS Feed","category":"分类","categories":"分类","tag":"标签","tags":"标签","tagcloud":"标签云","comment":"评论","home":"首页","archive":"归档","archives":"归档","about":"关于","site_uv":"访问人数","site_pv":"总访问量","links":"友链","link":"友链","top":"顶置","read_more":"阅读全文","wordcount":"字","min2read":"分钟","changelog":"更新日志","copyright":{"title":"本文标题","author":"本文作者","link":"本文链接","create_time":"创建时间","license_title":"版权声明","license_content":"本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。"},"ago":{"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 月前","year":"%s 年前"}};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="feidom up up up" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="page-container">
+
+    
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+        <a class="logo-title" href="/">
+            FEIDOM
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/about"
+                    >
+                        关于
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">AWS 安全三件套：WAF、Shield 与 OWASP Top 10 通俗指南</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/logo.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span>乔文飞</span>
+                        <span class="level">Lv8</span>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-calendar"></i> 2026-05-26 08:00:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%AE%89%E5%85%A8/">安全</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/AWS/">AWS</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/OWASP/">OWASP</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/WAF/">WAF</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/DDoS/">DDoS</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>学习 AWS WAF、AWS Shield 和 OWASP Top 10 的过程中整理的笔记，尽量用通俗语言解释每个概念，适合对云安全感兴趣但还没深入了解的开发者。</p>
+<a id="more"></a>
+
+<h1 id="AWS-安全三件套学习笔记"><a href="#AWS-安全三件套学习笔记" class="headerlink" title="AWS 安全三件套学习笔记"></a>AWS 安全三件套学习笔记</h1><blockquote>
+<p>AWS WAF · OWASP Top 10 · AWS Shield — 通俗易懂版</p>
+</blockquote>
+<hr>
+<h2 id="一、先搞清楚”攻击”是什么"><a href="#一、先搞清楚”攻击”是什么" class="headerlink" title="一、先搞清楚”攻击”是什么"></a>一、先搞清楚”攻击”是什么</h2><p>在学防护之前，先理解我们在防什么。</p>
+<h3 id="常见攻击类型"><a href="#常见攻击类型" class="headerlink" title="常见攻击类型"></a>常见攻击类型</h3><table>
+<thead>
+<tr>
+<th>攻击名称</th>
+<th>通俗解释</th>
+<th>危害</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DDoS</td>
+<td>一万台机器同时刷你的网站，服务器被压垮</td>
+<td>网站瘫痪，正常用户无法访问</td>
+</tr>
+<tr>
+<td>SQL 注入</td>
+<td>在输入框里填恶意代码，骗数据库执行</td>
+<td>数据泄露、数据被篡改</td>
+</tr>
+<tr>
+<td>XSS</td>
+<td>把恶意脚本植入网页，攻击访问者</td>
+<td>用户 Cookie 被盗、账号被劫持</td>
+</tr>
+<tr>
+<td>供应链攻击</td>
+<td>在第三方库或工具中植入恶意代码</td>
+<td>大规模感染，难以察觉</td>
+</tr>
+<tr>
+<td>暴力破解</td>
+<td>用脚本不停尝试密码</td>
+<td>账号被入侵</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、AWS-Shield-—-防洪水"><a href="#二、AWS-Shield-—-防洪水" class="headerlink" title="二、AWS Shield — 防洪水"></a>二、AWS Shield — 防洪水</h2><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>专门用来抵御 <strong>DDoS 攻击</strong>的服务。</p>
+<p>DDoS 就像餐厅突然涌入一万个假顾客，把座位占满，真实顾客进不来。Shield 的作用就是在门口识别并驱散这些假顾客。</p>
+<h3 id="两个版本"><a href="#两个版本" class="headerlink" title="两个版本"></a>两个版本</h3><h4 id="Shield-Standard（免费）"><a href="#Shield-Standard（免费）" class="headerlink" title="Shield Standard（免费）"></a>Shield Standard（免费）</h4><ul>
+<li>所有 AWS 用户<strong>自动启用</strong>，无需配置</li>
+<li>防护网络层（L3）和传输层（L4）的常见攻击<ul>
+<li>SYN Flood：伪造大量连接请求耗尽服务器资源</li>
+<li>UDP Flood：发送大量无效数据包占满带宽</li>
+<li>反射攻击：利用第三方服务器放大攻击流量</li>
+</ul>
+</li>
+<li>覆盖 CloudFront 和 Route 53</li>
+</ul>
+<h4 id="Shield-Advanced（付费，约-3000-月）"><a href="#Shield-Advanced（付费，约-3000-月）" class="headerlink" title="Shield Advanced（付费，约 $3000/月）"></a>Shield Advanced（付费，约 $3000/月）</h4><ul>
+<li>在 Standard 基础上增加：<ul>
+<li><strong>L7 应用层防护</strong>（HTTP Flood、CC 攻击）</li>
+<li><strong>实时攻击可视化</strong>，看到攻击正在发生</li>
+<li><strong>24/7 SRT 专家团队</strong>支持，攻击时可以联系 AWS 专家</li>
+<li><strong>费用保护</strong>：DDoS 导致账单飙升可申请抵免</li>
+<li>WAF 免费集成</li>
+</ul>
+</li>
+</ul>
+<h3 id="防护的资源"><a href="#防护的资源" class="headerlink" title="防护的资源"></a>防护的资源</h3><table>
+<thead>
+<tr>
+<th>资源</th>
+<th>Standard</th>
+<th>Advanced</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CloudFront</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Route 53</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>ALB / NLB</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>EC2 弹性 IP</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Global Accelerator</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h3 id="防护层次图"><a href="#防护层次图" class="headerlink" title="防护层次图"></a>防护层次图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L7 应用层  ──  HTTP Flood、CC 攻击        ← Shield Advanced + WAF</span><br><span class="line">L4 传输层  ──  SYN Flood、TCP 耗尽         ← Shield Standard &amp; Advanced</span><br><span class="line">L3 网络层  ──  UDP Flood、IP 碎片攻击      ← Shield Standard &amp; Advanced</span><br></pre></td></tr></table></figure>
+
+<h3 id="什么时候用-Advanced"><a href="#什么时候用-Advanced" class="headerlink" title="什么时候用 Advanced"></a>什么时候用 Advanced</h3><ul>
+<li>业务对可用性要求极高（金融、电商、游戏）</li>
+<li>担心 DDoS 攻击导致 AWS 账单暴涨</li>
+<li>需要专家实时介入处理攻击</li>
+</ul>
+<hr>
+<h2 id="三、AWS-WAF-—-防坏请求"><a href="#三、AWS-WAF-—-防坏请求" class="headerlink" title="三、AWS WAF — 防坏请求"></a>三、AWS WAF — 防坏请求</h2><h3 id="是什么-1"><a href="#是什么-1" class="headerlink" title="是什么"></a>是什么</h3><p>WAF = <strong>Web Application Firewall</strong>，Web 应用防火墙。</p>
+<p>如果说 Shield 防的是”请求的量”（洪水），WAF 防的是”请求的质”（坏人混进来）。</p>
+<p>WAF 就像一个检查员，每个请求进来都要过一遍：这个请求正常吗？有没有夹带恶意内容？</p>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Web ACL（访问控制列表）</span><br><span class="line">  └── 规则组（Rule Group）</span><br><span class="line">        └── 规则（Rule）</span><br><span class="line">              ├── 匹配条件（什么样的请求？）</span><br><span class="line">              └── 动作（怎么处理？）</span><br></pre></td></tr></table></figure>
+
+<p><strong>动作类型：</strong></p>
+<ul>
+<li><code>Allow</code> — 放行</li>
+<li><code>Block</code> — 拦截，返回 403</li>
+<li><code>Count</code> — 只计数，不拦截（用于观察阶段）</li>
+<li><code>CAPTCHA</code> — 弹出验证码</li>
+</ul>
+<blockquote>
+<p>💡 <strong>建议</strong>：新规则先用 Count 模式跑一段时间，确认不会误伤正常用户，再切换到 Block。</p>
+</blockquote>
+<h3 id="可以挂在哪里"><a href="#可以挂在哪里" class="headerlink" title="可以挂在哪里"></a>可以挂在哪里</h3><ul>
+<li>CloudFront（推荐，离用户最近）</li>
+<li>Application Load Balancer（ALB）</li>
+<li>API Gateway</li>
+<li>AWS AppSync</li>
+</ul>
+<h3 id="AWS-托管规则集（开箱即用）"><a href="#AWS-托管规则集（开箱即用）" class="headerlink" title="AWS 托管规则集（开箱即用）"></a>AWS 托管规则集（开箱即用）</h3><p>不用自己写规则，AWS 提供现成的规则集：</p>
+<table>
+<thead>
+<tr>
+<th>规则集名称</th>
+<th>防护内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AWSManagedRulesCommonRuleSet</td>
+<td>通用 Web 攻击（必开）</td>
+</tr>
+<tr>
+<td>AWSManagedRulesSQLiRuleSet</td>
+<td>SQL 注入攻击</td>
+</tr>
+<tr>
+<td>AWSManagedRulesKnownBadInputsRuleSet</td>
+<td>已知恶意输入模式</td>
+</tr>
+<tr>
+<td>AWSManagedRulesBotControlRuleSet</td>
+<td>爬虫和机器人</td>
+</tr>
+<tr>
+<td>AWSManagedRulesAmazonIpReputationList</td>
+<td>已知恶意 IP</td>
+</tr>
+<tr>
+<td>AWSManagedRulesAnonymousIpList</td>
+<td>匿名代理、VPN、Tor</td>
+</tr>
+</tbody></table>
+<h3 id="常用自定义规则"><a href="#常用自定义规则" class="headerlink" title="常用自定义规则"></a>常用自定义规则</h3><p><strong>速率限制</strong>（防暴力破解）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：同一个 IP，5 分钟内请求超过 100 次</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure>
+
+<p><strong>IP 白名单</strong>（只允许指定 IP 访问）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：源 IP 不在白名单列表中</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure>
+
+<p><strong>地理位置限制</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：请求来自某些国家</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意：WAF-有容量限制"><a href="#注意：WAF-有容量限制" class="headerlink" title="注意：WAF 有容量限制"></a>注意：WAF 有容量限制</h3><p>每个 Web ACL 默认上限是 <strong>1500 WCU</strong>（Web ACL Capacity Units），每个规则有自己的 WCU 消耗，规则越复杂消耗越高。</p>
+<hr>
+<h2 id="四、OWASP-Top-10-—-最危险的-10-类漏洞"><a href="#四、OWASP-Top-10-—-最危险的-10-类漏洞" class="headerlink" title="四、OWASP Top 10 — 最危险的 10 类漏洞"></a>四、OWASP Top 10 — 最危险的 10 类漏洞</h2><h3 id="是什么-2"><a href="#是什么-2" class="headerlink" title="是什么"></a>是什么</h3><p>OWASP（开放全球应用安全项目）是一个非营利安全社区，每隔几年发布一次 <strong>Top 10 Web 安全风险榜单</strong>，汇总全球真实漏洞数据，相当于安全界的”年度通缉令”。</p>
+<blockquote>
+<p>这份榜单已成为行业标准，很多企业的安全合规要求直接引用它。</p>
+</blockquote>
+<h3 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h3><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OWASP Top 10 <strong>2025</strong></td>
+<td>✅ 当前最新版</td>
+</tr>
+<tr>
+<td>OWASP Top 10 2021</td>
+<td>上一版，仍广泛引用</td>
+</tr>
+<tr>
+<td>OWASP Top 10 2017</td>
+<td>已过时</td>
+</tr>
+</tbody></table>
+<h3 id="2021-vs-2025-排名对比"><a href="#2021-vs-2025-排名对比" class="headerlink" title="2021 vs 2025 排名对比"></a>2021 vs 2025 排名对比</h3><table>
+<thead>
+<tr>
+<th>排名</th>
+<th>2021 版</th>
+<th>2025 版</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A01</td>
+<td>访问控制失效</td>
+<td>访问控制失效（不变）</td>
+</tr>
+<tr>
+<td>A02</td>
+<td>加密失败</td>
+<td><strong>安全配置错误</strong>（上升 ↑）</td>
+</tr>
+<tr>
+<td>A03</td>
+<td>注入攻击</td>
+<td><strong>软件供应链失败</strong>（新晋 🆕）</td>
+</tr>
+<tr>
+<td>A04</td>
+<td>不安全设计</td>
+<td>加密失败（下降 ↓）</td>
+</tr>
+<tr>
+<td>A05</td>
+<td>安全配置错误</td>
+<td>注入攻击（下降 ↓）</td>
+</tr>
+<tr>
+<td>A06</td>
+<td>易受攻击的过时组件</td>
+<td>不安全设计（下降 ↓）</td>
+</tr>
+<tr>
+<td>A07</td>
+<td>身份认证失败</td>
+<td>身份认证失败（不变）</td>
+</tr>
+<tr>
+<td>A08</td>
+<td>软件和数据完整性失败</td>
+<td>软件和数据完整性失败（不变）</td>
+</tr>
+<tr>
+<td>A09</td>
+<td>安全日志与监控失败</td>
+<td>安全日志与告警失败（不变）</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>SSRF</td>
+<td><strong>异常条件处理不当</strong>（新晋 🆕，SSRF 并入 A01）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="2025-版-Top-10-详解"><a href="#2025-版-Top-10-详解" class="headerlink" title="2025 版 Top 10 详解"></a>2025 版 Top 10 详解</h3><hr>
+<h4 id="A01-—-访问控制失效-⚠️-连续两版排名第一"><a href="#A01-—-访问控制失效-⚠️-连续两版排名第一" class="headerlink" title="A01 — 访问控制失效 ⚠️ 连续两版排名第一"></a>A01 — 访问控制失效 ⚠️ 连续两版排名第一</h4><p><strong>是什么：</strong> 用户能访问他不应该访问的功能或数据。2025 版还将 SSRF 并入此类。</p>
+<p><strong>两种常见形式：</strong></p>
+<ul>
+<li><strong>垂直越权</strong>：普通用户访问到管理员功能</li>
+<li><strong>水平越权</strong>：用户 A 能看到用户 B 的订单</li>
+</ul>
+<p><strong>真实案例：</strong> 把 URL 里的 <code>user_id=123</code> 改成 <code>user_id=124</code>，就看到了别人的数据。</p>
+<p><strong>SSRF（现归入此类）：</strong> 攻击者骗服务器访问内部地址。在 AWS 上可通过 SSRF 访问 EC2 元数据接口（<code>169.254.169.254</code>），窃取 IAM 临时凭证。</p>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>服务器端严格校验权限（不能只靠前端隐藏按钮）</li>
+<li>IAM 最小权限原则</li>
+<li>AWS 上<strong>强制启用 IMDSv2</strong>，防止 SSRF 获取元数据</li>
+<li>JWT Token 中嵌入用户身份，后端每次验证</li>
+</ul>
+<hr>
+<h4 id="A02-—-安全配置错误（从-A05-升至-A02）"><a href="#A02-—-安全配置错误（从-A05-升至-A02）" class="headerlink" title="A02 — 安全配置错误（从 A05 升至 A02）"></a>A02 — 安全配置错误（从 A05 升至 A02）</h4><p><strong>是什么：</strong> 服务配置不当，留下漏洞。2025 版排名大幅上升，反映云环境下配置错误越来越普遍。</p>
+<p><strong>常见错误：</strong></p>
+<ul>
+<li>S3 存储桶设置为公开可读</li>
+<li>生产环境开着调试模式，报错信息暴露代码细节</li>
+<li>云服务使用默认账号密码没修改</li>
+<li>开了很多不需要的端口和服务</li>
+</ul>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>AWS Security Hub 自动检测配置问题</li>
+<li>AWS Config Rules 持续监控资源配置</li>
+<li>定期做安全审计</li>
+</ul>
+<hr>
+<h4 id="A03-—-软件供应链失败-🆕（2025-新晋，直接进入第三）"><a href="#A03-—-软件供应链失败-🆕（2025-新晋，直接进入第三）" class="headerlink" title="A03 — 软件供应链失败 🆕（2025 新晋，直接进入第三）"></a>A03 — 软件供应链失败 🆕（2025 新晋，直接进入第三）</h4><p><strong>是什么：</strong> 你依赖的第三方代码、工具、库被篡改或含有漏洞，导致你的系统也被攻击。这是 2025 版最大的变化，社区投票中有 50% 的人把它列为第一。</p>
+<p><strong>真实案例：</strong></p>
+<ul>
+<li><strong>SolarWinds（2019）</strong>：供应商软件更新被植入后门，约 18000 家机构受影响，包括美国多个政府部门</li>
+<li><strong>Log4Shell（2021）</strong>：Java 日志库 Log4j 漏洞，攻击者发送一条特殊日志即可远程执行代码</li>
+<li><strong>Bybit 被盗（2025）</strong>：通过供应链攻击盗走 15 亿美元加密货币</li>
+</ul>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>维护 <strong>SBOM</strong>（软件物料清单），追踪所有直接和间接依赖</li>
+<li>只从官方可信来源获取组件，优先使用签名包</li>
+<li>使用 AWS Inspector 扫描漏洞，ECR 开启镜像扫描</li>
+<li>CI/CD 流水线加强访问控制，做到职责分离（写代码的人不能直接推送到生产）</li>
+<li>使用分阶段发布（金丝雀发布），避免供应商被入侵时全量受影响</li>
+</ul>
+<hr>
+<h4 id="A04-—-加密失败（从-A02-降至-A04）"><a href="#A04-—-加密失败（从-A02-降至-A04）" class="headerlink" title="A04 — 加密失败（从 A02 降至 A04）"></a>A04 — 加密失败（从 A02 降至 A04）</h4><p><strong>是什么：</strong> 敏感数据没有加密，或者用了弱加密。</p>
+<p><strong>常见错误：</strong></p>
+<ul>
+<li>数据库里存明文密码</li>
+<li>用 MD5 / SHA1 哈希密码（已被破解）</li>
+<li>接口用 HTTP 而不是 HTTPS 传输</li>
+</ul>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>密码用 bcrypt 哈希存储</li>
+<li>全站强制 HTTPS</li>
+<li>AWS 上用 KMS 加密敏感数据，S3 / RDS 开启静态加密</li>
+</ul>
+<hr>
+<h4 id="A05-—-注入攻击（从-A03-降至-A05）"><a href="#A05-—-注入攻击（从-A03-降至-A05）" class="headerlink" title="A05 — 注入攻击（从 A03 降至 A05）"></a>A05 — 注入攻击（从 A03 降至 A05）</h4><p><strong>是什么：</strong> 攻击者把恶意代码混进输入，骗程序执行。</p>
+<p><strong>SQL 注入例子：</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 正常查询</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'张三'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 攻击者输入：张三' OR '1'='1</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'张三'</span> <span class="keyword">OR</span> <span class="string">'1'</span>=<span class="string">'1'</span></span><br><span class="line"><span class="comment">-- 结果：返回所有用户数据！</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>使用参数化查询（Prepared Statement），永远不拼接 SQL 字符串</li>
+<li>AWS WAF 开启 SQLi 规则集</li>
+<li>输入内容严格校验和过滤</li>
+</ul>
+<hr>
+<h4 id="A06-—-不安全设计（从-A04-降至-A06）"><a href="#A06-—-不安全设计（从-A04-降至-A06）" class="headerlink" title="A06 — 不安全设计（从 A04 降至 A06）"></a>A06 — 不安全设计（从 A04 降至 A06）</h4><p><strong>是什么：</strong> 系统设计阶段就有安全缺陷，不是代码写错了，而是根本没考虑安全。</p>
+<p><strong>例子：</strong> 密码找回功能用”密保问题”，问题太简单，攻击者猜得出来。</p>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>设计阶段做威胁建模（想清楚攻击者会怎么利用你的系统）</li>
+<li>遵循最小攻击面原则</li>
+</ul>
+<hr>
+<h4 id="A07-—-身份认证失败（位置不变）"><a href="#A07-—-身份认证失败（位置不变）" class="headerlink" title="A07 — 身份认证失败（位置不变）"></a>A07 — 身份认证失败（位置不变）</h4><p><strong>是什么：</strong> 登录和会话管理有漏洞，导致账号被入侵。</p>
+<p><strong>常见问题：</strong></p>
+<ul>
+<li>允许弱密码（123456）</li>
+<li>没有 MFA（多因素认证）</li>
+<li>登录失败次数不限制，可以无限暴力破解</li>
+<li>Session Token 不过期</li>
+</ul>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>强制强密码 + MFA</li>
+<li>AWS Cognito 内置登录保护</li>
+<li>WAF 速率限制防暴力破解</li>
+<li>Secrets Manager 管理密钥，定期自动轮换</li>
+</ul>
+<hr>
+<h4 id="A08-—-软件和数据完整性失败（位置不变）"><a href="#A08-—-软件和数据完整性失败（位置不变）" class="headerlink" title="A08 — 软件和数据完整性失败（位置不变）"></a>A08 — 软件和数据完整性失败（位置不变）</h4><p><strong>是什么：</strong> 代码或数据在传输/更新过程中被篡改，但没有验证。</p>
+<p><strong>常见场景：</strong></p>
+<ul>
+<li>从不可信的 CDN 加载第三方脚本</li>
+<li>CI/CD 流水线没有校验构建产物的完整性</li>
+<li>不安全的反序列化（接收外部数据直接反序列化执行）</li>
+</ul>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>使用 AWS CodeArtifact 私有包仓库</li>
+<li>对关键软件包验证签名</li>
+<li>维护 SBOM（软件物料清单）</li>
+</ul>
+<hr>
+<h4 id="A09-—-安全日志与告警失败（位置不变）"><a href="#A09-—-安全日志与告警失败（位置不变）" class="headerlink" title="A09 — 安全日志与告警失败（位置不变）"></a>A09 — 安全日志与告警失败（位置不变）</h4><p><strong>是什么：</strong> 没有足够的日志，攻击发生了都不知道，事后也无法溯源。</p>
+<p><strong>后果：</strong> 攻击者可能已经潜伏数月，你毫无察觉。</p>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>AWS CloudTrail：记录所有 API 操作（谁、什么时间、做了什么）</li>
+<li>CloudWatch：设置异常告警</li>
+<li>AWS GuardDuty：机器学习自动检测威胁行为</li>
+<li>AWS Security Lake：集中存储和分析安全日志</li>
+</ul>
+<hr>
+<h4 id="A10-—-异常条件处理不当-🆕（2025-新晋，替换-SSRF）"><a href="#A10-—-异常条件处理不当-🆕（2025-新晋，替换-SSRF）" class="headerlink" title="A10 — 异常条件处理不当 🆕（2025 新晋，替换 SSRF）"></a>A10 — 异常条件处理不当 🆕（2025 新晋，替换 SSRF）</h4><p><strong>是什么：</strong> 程序遇到异常情况时处理不当，导致崩溃、泄露信息或出现安全漏洞。</p>
+<p><strong>常见问题：</strong></p>
+<ul>
+<li>报错信息把数据库结构、堆栈信息直接返回给用户</li>
+<li>异常发生时”失败开放”（fail open）：本应拒绝的操作，因为出错而意外放行</li>
+<li>未捕获的异常导致程序进入未知状态，被攻击者利用</li>
+</ul>
+<p><strong>真实例子：</strong> 登录接口报错时返回 <code>User not found in database: users_v2 table</code>，攻击者由此得知数据库表名。</p>
+<p><strong>防护方法：</strong></p>
+<ul>
+<li>对用户只显示通用错误信息，详细错误只写进日志</li>
+<li>每个可能出错的地方都要有明确的错误处理逻辑</li>
+<li>异常时”失败关闭”（fail closed）：不确定的情况下默认拒绝</li>
+<li>设置全局异常处理兜底，防止漏网之鱼</li>
+</ul>
+<hr>
+<h2 id="五、三者关系总结"><a href="#五、三者关系总结" class="headerlink" title="五、三者关系总结"></a>五、三者关系总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">你的应用</span><br><span class="line">    │</span><br><span class="line">    ├─ 遭受大流量攻击（DDoS）        → AWS Shield 来防</span><br><span class="line">    │</span><br><span class="line">    ├─ 请求内容有恶意（注入&#x2F;XSS等）  → AWS WAF 来挡</span><br><span class="line">    │</span><br><span class="line">    └─ 应用本身有漏洞                → 参考 OWASP Top 10 来修</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>AWS Shield</th>
+<th>AWS WAF</th>
+<th>OWASP Top 10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>性质</td>
+<td>AWS 服务</td>
+<td>AWS 服务</td>
+<td>安全标准/指南</td>
+</tr>
+<tr>
+<td>防什么</td>
+<td>DDoS 大流量攻击</td>
+<td>恶意 HTTP 请求内容</td>
+<td>应用层漏洞</td>
+</tr>
+<tr>
+<td>在哪里生效</td>
+<td>网络边缘</td>
+<td>HTTP 请求检查</td>
+<td>代码和架构层面</td>
+</tr>
+<tr>
+<td>需要写代码吗</td>
+<td>不需要</td>
+<td>配置规则即可</td>
+<td>需要开发时注意</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、快速上手建议"><a href="#六、快速上手建议" class="headerlink" title="六、快速上手建议"></a>六、快速上手建议</h2><h3 id="基础配置（适合大多数项目）"><a href="#基础配置（适合大多数项目）" class="headerlink" title="基础配置（适合大多数项目）"></a>基础配置（适合大多数项目）</h3><ol>
+<li><strong>Shield Standard</strong> — 已自动开启，不用管</li>
+<li><strong>WAF</strong> 挂到 API Gateway 或 CloudFront，开启这两个托管规则集：<ul>
+<li><code>AWSManagedRulesCommonRuleSet</code></li>
+<li><code>AWSManagedRulesSQLiRuleSet</code></li>
+</ul>
+</li>
+<li><strong>CloudTrail</strong> 开启，保留操作日志</li>
+<li><strong>开发时</strong> 对照 OWASP Top 10 2025 检查自己的代码</li>
+</ol>
+<h3 id="进阶配置（高安全要求项目）"><a href="#进阶配置（高安全要求项目）" class="headerlink" title="进阶配置（高安全要求项目）"></a>进阶配置（高安全要求项目）</h3><ul>
+<li>WAF 加速率限制规则，防暴力破解</li>
+<li>如果后端 API 在 Cloudflare 之后，设置 IP 白名单只允许 Cloudflare IP 段访问</li>
+<li><strong>强制启用 IMDSv2</strong>，防止 SSRF 窃取 EC2 元数据凭证</li>
+<li>开启 GuardDuty 自动威胁检测</li>
+<li>维护 SBOM，定期扫描依赖漏洞（对应 OWASP A03）</li>
+<li>考虑 Shield Advanced（业务可用性要求极高时）</li>
+</ul>
+<hr>
+<p><em>基于 OWASP Top 10:2025 整理，参考官方文档：<a class="link"   href="https://owasp.org/Top10/2025/"  target="_blank" rel="noopener">https://owasp.org/Top10/2025/<i class="fas fa-external-link-alt"></i></a></em></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：AWS 安全三件套：WAF、Shield 与 OWASP Top 10 通俗指南</li>
+        <li>本文作者：乔文飞</li>
+        <li>创建时间：2026-05-26 08:00:00</li>
+        <li>
+            本文链接：http://www.feidom.com/2026/05/26/aws-waf-shield-owasp-top10/
+        </li>
+        <li>
+            版权声明：本博客所有文章为作者学习笔记，有转载其他前端大佬的文章。转载时请注明出处。
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2026/05/26/react-usecallback-usememo/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">React useCallback 和 useMemo 什么时候真的有用？</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center" >
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span> -
+            
+            2026 <i class="fas fa-heart icon-animate"></i> <a href="/">乔文飞</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备20066977号</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fas fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-top flex-center">
+            <i class="fas fa-arrow-up"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="tools-ul-1">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AWS-安全三件套学习笔记"><span class="nav-number">1.</span> <span class="nav-text">AWS 安全三件套学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、先搞清楚”攻击”是什么"><span class="nav-number">1.1.</span> <span class="nav-text">一、先搞清楚”攻击”是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见攻击类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">常见攻击类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、AWS-Shield-—-防洪水"><span class="nav-number">1.2.</span> <span class="nav-text">二、AWS Shield — 防洪水</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是什么"><span class="nav-number">1.2.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两个版本"><span class="nav-number">1.2.2.</span> <span class="nav-text">两个版本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Shield-Standard（免费）"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Shield Standard（免费）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shield-Advanced（付费，约-3000-月）"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Shield Advanced（付费，约 $3000&#x2F;月）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防护的资源"><span class="nav-number">1.2.3.</span> <span class="nav-text">防护的资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防护层次图"><span class="nav-number">1.2.4.</span> <span class="nav-text">防护层次图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候用-Advanced"><span class="nav-number">1.2.5.</span> <span class="nav-text">什么时候用 Advanced</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、AWS-WAF-—-防坏请求"><span class="nav-number">1.3.</span> <span class="nav-text">三、AWS WAF — 防坏请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是什么-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心概念"><span class="nav-number">1.3.2.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可以挂在哪里"><span class="nav-number">1.3.3.</span> <span class="nav-text">可以挂在哪里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-托管规则集（开箱即用）"><span class="nav-number">1.3.4.</span> <span class="nav-text">AWS 托管规则集（开箱即用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用自定义规则"><span class="nav-number">1.3.5.</span> <span class="nav-text">常用自定义规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意：WAF-有容量限制"><span class="nav-number">1.3.6.</span> <span class="nav-text">注意：WAF 有容量限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、OWASP-Top-10-—-最危险的-10-类漏洞"><span class="nav-number">1.4.</span> <span class="nav-text">四、OWASP Top 10 — 最危险的 10 类漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是什么-2"><span class="nav-number">1.4.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本说明"><span class="nav-number">1.4.2.</span> <span class="nav-text">版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2021-vs-2025-排名对比"><span class="nav-number">1.4.3.</span> <span class="nav-text">2021 vs 2025 排名对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2025-版-Top-10-详解"><span class="nav-number">1.4.4.</span> <span class="nav-text">2025 版 Top 10 详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A01-—-访问控制失效-⚠️-连续两版排名第一"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">A01 — 访问控制失效 ⚠️ 连续两版排名第一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A02-—-安全配置错误（从-A05-升至-A02）"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">A02 — 安全配置错误（从 A05 升至 A02）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A03-—-软件供应链失败-🆕（2025-新晋，直接进入第三）"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">A03 — 软件供应链失败 🆕（2025 新晋，直接进入第三）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A04-—-加密失败（从-A02-降至-A04）"><span class="nav-number">1.4.4.4.</span> <span class="nav-text">A04 — 加密失败（从 A02 降至 A04）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A05-—-注入攻击（从-A03-降至-A05）"><span class="nav-number">1.4.4.5.</span> <span class="nav-text">A05 — 注入攻击（从 A03 降至 A05）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A06-—-不安全设计（从-A04-降至-A06）"><span class="nav-number">1.4.4.6.</span> <span class="nav-text">A06 — 不安全设计（从 A04 降至 A06）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A07-—-身份认证失败（位置不变）"><span class="nav-number">1.4.4.7.</span> <span class="nav-text">A07 — 身份认证失败（位置不变）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A08-—-软件和数据完整性失败（位置不变）"><span class="nav-number">1.4.4.8.</span> <span class="nav-text">A08 — 软件和数据完整性失败（位置不变）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A09-—-安全日志与告警失败（位置不变）"><span class="nav-number">1.4.4.9.</span> <span class="nav-text">A09 — 安全日志与告警失败（位置不变）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A10-—-异常条件处理不当-🆕（2025-新晋，替换-SSRF）"><span class="nav-number">1.4.4.10.</span> <span class="nav-text">A10 — 异常条件处理不当 🆕（2025 新晋，替换 SSRF）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、三者关系总结"><span class="nav-number">1.5.</span> <span class="nav-text">五、三者关系总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、快速上手建议"><span class="nav-number">1.6.</span> <span class="nav-text">六、快速上手建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础配置（适合大多数项目）"><span class="nav-number">1.6.1.</span> <span class="nav-text">基础配置（适合大多数项目）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进阶配置（高安全要求项目）"><span class="nav-number">1.6.2.</span> <span class="nav-text">进阶配置（高安全要求项目）</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+    <!-- image viewer -->
+    <div class="image-viewer-container">
+    <div class="img-box">
+        <img src="">
+    </div>
+</div>
+
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/local-search.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/left-side-toggle.js"></script>
+
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.0.4/source/js/code-copy.js"></script>
+    
+
+    
+
+
+</body>
+</html>

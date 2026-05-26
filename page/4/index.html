@@ -118,6 +118,70 @@
                 
 
                 <h3 class="home-article-title">
+                    <a href="/2020/12/21/webpack%E4%BC%98%E5%8C%96%E4%B9%8BScopeHoisting/">
+                        webpack优化之Scope Hoisting
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        webpack打包现象webpack构建后的代码存在大量的闭包代码
+
+大量函数闭包包裹代码，导致体积增大(模块越多越明显)
+运行代码时创建的函数作用域变多，内存开销变大
+被webpack转换后的模块会带上一层包裹，import会被转换成webpack...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Mon Dec 21 2020 13:58:20 GMT+0800">2020-12-21</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/12/21/webpack%E4%BC%98%E5%8C%96%E4%B9%8BScopeHoisting/">阅读全文 <i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2020/12/21/webpack%E4%BC%98%E5%8C%96%E4%B9%8BTreeShaking/">
+                        webpack优化之tree-shaking
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        tree-shaking
+静态分析，不是动态分析
+代码不会被执行到，就不会打包到bound.js
+必须使用ES6的语法(import、export)才支持tree-shaking，commonjs方式不支持
+webpck默认支持，在.babelrc里...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Mon Dec 21 2020 13:57:47 GMT+0800">2020-12-21</span></span>
+        
+        
+    </div>
+
+    <a href="/2020/12/21/webpack%E4%BC%98%E5%8C%96%E4%B9%8BTreeShaking/">阅读全文 <i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
                     <a href="/2020/12/15/webpack4&&ESlint/">
                         webpack4&amp;&amp;ESlint
                     </a>
@@ -362,67 +426,6 @@ entry  依赖入口
     </div>
 
     <a href="/2020/11/25/webpack4%E5%9F%BA%E7%A1%80/">阅读全文 <i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/11/05/vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E6%96%B9%E6%B3%95/">
-                        vue定义全局方法
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        一、将方法挂在到vue原型(Vue.prototype)上
-定义：
-1234567// global.jsconst Func = ()=&gt;&#123;    console.log('global')&#125;export default ...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Thu Nov 05 2020 08:34:48 GMT+0800">2020-11-05</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/11/05/vue%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E6%96%B9%E6%B3%95/">阅读全文 <i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2020/11/03/vue%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87/">
-                        vue中使用svg图标
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        对svg图标的简单实用和认识svg图标的使用
-在Vue项目中写一个svg组件
-安装svg-sprite-loader插件对svg文件进行编译解析  yarn add svg-sprite-loader
-在src/assets/目录下新建icons目录...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fas fa-edit"></i> <span class="home-article-date" data-date="Tue Nov 03 2020 08:41:24 GMT+0800">2020-11-03</span></span>
-        
-        
-    </div>
-
-    <a href="/2020/11/03/vue%E4%B8%AD%E4%BD%BF%E7%94%A8svg%E5%9B%BE%E6%A0%87/">阅读全文 <i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>

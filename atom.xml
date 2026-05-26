@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://feidom-up.github.io/"/>
-  <updated>2026-05-19T23:54:36.873Z</updated>
+  <updated>2026-05-26T13:41:39.798Z</updated>
   <id>https://feidom-up.github.io/</id>
   
   <author>
@@ -15,6 +15,70 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWS 安全三件套：WAF、Shield 与 OWASP Top 10 通俗指南</title>
+    <link href="https://feidom-up.github.io/2026/05/26/aws-waf-shield-owasp-top10/"/>
+    <id>https://feidom-up.github.io/2026/05/26/aws-waf-shield-owasp-top10/</id>
+    <published>2026-05-26T00:00:00.000Z</published>
+    <updated>2026-05-26T13:41:39.798Z</updated>
+    
+    <content type="html"><![CDATA[<p>学习 AWS WAF、AWS Shield 和 OWASP Top 10 的过程中整理的笔记，尽量用通俗语言解释每个概念，适合对云安全感兴趣但还没深入了解的开发者。</p><a id="more"></a><h1 id="AWS-安全三件套学习笔记"><a href="#AWS-安全三件套学习笔记" class="headerlink" title="AWS 安全三件套学习笔记"></a>AWS 安全三件套学习笔记</h1><blockquote><p>AWS WAF · OWASP Top 10 · AWS Shield — 通俗易懂版</p></blockquote><hr><h2 id="一、先搞清楚”攻击”是什么"><a href="#一、先搞清楚”攻击”是什么" class="headerlink" title="一、先搞清楚”攻击”是什么"></a>一、先搞清楚”攻击”是什么</h2><p>在学防护之前，先理解我们在防什么。</p><h3 id="常见攻击类型"><a href="#常见攻击类型" class="headerlink" title="常见攻击类型"></a>常见攻击类型</h3><table><thead><tr><th>攻击名称</th><th>通俗解释</th><th>危害</th></tr></thead><tbody><tr><td>DDoS</td><td>一万台机器同时刷你的网站，服务器被压垮</td><td>网站瘫痪，正常用户无法访问</td></tr><tr><td>SQL 注入</td><td>在输入框里填恶意代码，骗数据库执行</td><td>数据泄露、数据被篡改</td></tr><tr><td>XSS</td><td>把恶意脚本植入网页，攻击访问者</td><td>用户 Cookie 被盗、账号被劫持</td></tr><tr><td>供应链攻击</td><td>在第三方库或工具中植入恶意代码</td><td>大规模感染，难以察觉</td></tr><tr><td>暴力破解</td><td>用脚本不停尝试密码</td><td>账号被入侵</td></tr></tbody></table><hr><h2 id="二、AWS-Shield-—-防洪水"><a href="#二、AWS-Shield-—-防洪水" class="headerlink" title="二、AWS Shield — 防洪水"></a>二、AWS Shield — 防洪水</h2><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>专门用来抵御 <strong>DDoS 攻击</strong>的服务。</p><p>DDoS 就像餐厅突然涌入一万个假顾客，把座位占满，真实顾客进不来。Shield 的作用就是在门口识别并驱散这些假顾客。</p><h3 id="两个版本"><a href="#两个版本" class="headerlink" title="两个版本"></a>两个版本</h3><h4 id="Shield-Standard（免费）"><a href="#Shield-Standard（免费）" class="headerlink" title="Shield Standard（免费）"></a>Shield Standard（免费）</h4><ul><li>所有 AWS 用户<strong>自动启用</strong>，无需配置</li><li>防护网络层（L3）和传输层（L4）的常见攻击<ul><li>SYN Flood：伪造大量连接请求耗尽服务器资源</li><li>UDP Flood：发送大量无效数据包占满带宽</li><li>反射攻击：利用第三方服务器放大攻击流量</li></ul></li><li>覆盖 CloudFront 和 Route 53</li></ul><h4 id="Shield-Advanced（付费，约-3000-月）"><a href="#Shield-Advanced（付费，约-3000-月）" class="headerlink" title="Shield Advanced（付费，约 $3000/月）"></a>Shield Advanced（付费，约 $3000/月）</h4><ul><li>在 Standard 基础上增加：<ul><li><strong>L7 应用层防护</strong>（HTTP Flood、CC 攻击）</li><li><strong>实时攻击可视化</strong>，看到攻击正在发生</li><li><strong>24/7 SRT 专家团队</strong>支持，攻击时可以联系 AWS 专家</li><li><strong>费用保护</strong>：DDoS 导致账单飙升可申请抵免</li><li>WAF 免费集成</li></ul></li></ul><h3 id="防护的资源"><a href="#防护的资源" class="headerlink" title="防护的资源"></a>防护的资源</h3><table><thead><tr><th>资源</th><th>Standard</th><th>Advanced</th></tr></thead><tbody><tr><td>CloudFront</td><td>✅</td><td>✅</td></tr><tr><td>Route 53</td><td>✅</td><td>✅</td></tr><tr><td>ALB / NLB</td><td>❌</td><td>✅</td></tr><tr><td>EC2 弹性 IP</td><td>❌</td><td>✅</td></tr><tr><td>Global Accelerator</td><td>❌</td><td>✅</td></tr></tbody></table><h3 id="防护层次图"><a href="#防护层次图" class="headerlink" title="防护层次图"></a>防护层次图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L7 应用层  ──  HTTP Flood、CC 攻击        ← Shield Advanced + WAF</span><br><span class="line">L4 传输层  ──  SYN Flood、TCP 耗尽         ← Shield Standard &amp; Advanced</span><br><span class="line">L3 网络层  ──  UDP Flood、IP 碎片攻击      ← Shield Standard &amp; Advanced</span><br></pre></td></tr></table></figure><h3 id="什么时候用-Advanced"><a href="#什么时候用-Advanced" class="headerlink" title="什么时候用 Advanced"></a>什么时候用 Advanced</h3><ul><li>业务对可用性要求极高（金融、电商、游戏）</li><li>担心 DDoS 攻击导致 AWS 账单暴涨</li><li>需要专家实时介入处理攻击</li></ul><hr><h2 id="三、AWS-WAF-—-防坏请求"><a href="#三、AWS-WAF-—-防坏请求" class="headerlink" title="三、AWS WAF — 防坏请求"></a>三、AWS WAF — 防坏请求</h2><h3 id="是什么-1"><a href="#是什么-1" class="headerlink" title="是什么"></a>是什么</h3><p>WAF = <strong>Web Application Firewall</strong>，Web 应用防火墙。</p><p>如果说 Shield 防的是”请求的量”（洪水），WAF 防的是”请求的质”（坏人混进来）。</p><p>WAF 就像一个检查员，每个请求进来都要过一遍：这个请求正常吗？有没有夹带恶意内容？</p><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Web ACL（访问控制列表）</span><br><span class="line">  └── 规则组（Rule Group）</span><br><span class="line">        └── 规则（Rule）</span><br><span class="line">              ├── 匹配条件（什么样的请求？）</span><br><span class="line">              └── 动作（怎么处理？）</span><br></pre></td></tr></table></figure><p><strong>动作类型：</strong></p><ul><li><code>Allow</code> — 放行</li><li><code>Block</code> — 拦截，返回 403</li><li><code>Count</code> — 只计数，不拦截（用于观察阶段）</li><li><code>CAPTCHA</code> — 弹出验证码</li></ul><blockquote><p>💡 <strong>建议</strong>：新规则先用 Count 模式跑一段时间，确认不会误伤正常用户，再切换到 Block。</p></blockquote><h3 id="可以挂在哪里"><a href="#可以挂在哪里" class="headerlink" title="可以挂在哪里"></a>可以挂在哪里</h3><ul><li>CloudFront（推荐，离用户最近）</li><li>Application Load Balancer（ALB）</li><li>API Gateway</li><li>AWS AppSync</li></ul><h3 id="AWS-托管规则集（开箱即用）"><a href="#AWS-托管规则集（开箱即用）" class="headerlink" title="AWS 托管规则集（开箱即用）"></a>AWS 托管规则集（开箱即用）</h3><p>不用自己写规则，AWS 提供现成的规则集：</p><table><thead><tr><th>规则集名称</th><th>防护内容</th></tr></thead><tbody><tr><td>AWSManagedRulesCommonRuleSet</td><td>通用 Web 攻击（必开）</td></tr><tr><td>AWSManagedRulesSQLiRuleSet</td><td>SQL 注入攻击</td></tr><tr><td>AWSManagedRulesKnownBadInputsRuleSet</td><td>已知恶意输入模式</td></tr><tr><td>AWSManagedRulesBotControlRuleSet</td><td>爬虫和机器人</td></tr><tr><td>AWSManagedRulesAmazonIpReputationList</td><td>已知恶意 IP</td></tr><tr><td>AWSManagedRulesAnonymousIpList</td><td>匿名代理、VPN、Tor</td></tr></tbody></table><h3 id="常用自定义规则"><a href="#常用自定义规则" class="headerlink" title="常用自定义规则"></a>常用自定义规则</h3><p><strong>速率限制</strong>（防暴力破解）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：同一个 IP，5 分钟内请求超过 100 次</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure><p><strong>IP 白名单</strong>（只允许指定 IP 访问）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：源 IP 不在白名单列表中</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure><p><strong>地理位置限制</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">条件：请求来自某些国家</span><br><span class="line">动作：Block</span><br></pre></td></tr></table></figure><h3 id="注意：WAF-有容量限制"><a href="#注意：WAF-有容量限制" class="headerlink" title="注意：WAF 有容量限制"></a>注意：WAF 有容量限制</h3><p>每个 Web ACL 默认上限是 <strong>1500 WCU</strong>（Web ACL Capacity Units），每个规则有自己的 WCU 消耗，规则越复杂消耗越高。</p><hr><h2 id="四、OWASP-Top-10-—-最危险的-10-类漏洞"><a href="#四、OWASP-Top-10-—-最危险的-10-类漏洞" class="headerlink" title="四、OWASP Top 10 — 最危险的 10 类漏洞"></a>四、OWASP Top 10 — 最危险的 10 类漏洞</h2><h3 id="是什么-2"><a href="#是什么-2" class="headerlink" title="是什么"></a>是什么</h3><p>OWASP（开放全球应用安全项目）是一个非营利安全社区，每隔几年发布一次 <strong>Top 10 Web 安全风险榜单</strong>，汇总全球真实漏洞数据，相当于安全界的”年度通缉令”。</p><blockquote><p>这份榜单已成为行业标准，很多企业的安全合规要求直接引用它。</p></blockquote><h3 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h3><table><thead><tr><th>版本</th><th>状态</th></tr></thead><tbody><tr><td>OWASP Top 10 <strong>2025</strong></td><td>✅ 当前最新版</td></tr><tr><td>OWASP Top 10 2021</td><td>上一版，仍广泛引用</td></tr><tr><td>OWASP Top 10 2017</td><td>已过时</td></tr></tbody></table><h3 id="2021-vs-2025-排名对比"><a href="#2021-vs-2025-排名对比" class="headerlink" title="2021 vs 2025 排名对比"></a>2021 vs 2025 排名对比</h3><table><thead><tr><th>排名</th><th>2021 版</th><th>2025 版</th></tr></thead><tbody><tr><td>A01</td><td>访问控制失效</td><td>访问控制失效（不变）</td></tr><tr><td>A02</td><td>加密失败</td><td><strong>安全配置错误</strong>（上升 ↑）</td></tr><tr><td>A03</td><td>注入攻击</td><td><strong>软件供应链失败</strong>（新晋 🆕）</td></tr><tr><td>A04</td><td>不安全设计</td><td>加密失败（下降 ↓）</td></tr><tr><td>A05</td><td>安全配置错误</td><td>注入攻击（下降 ↓）</td></tr><tr><td>A06</td><td>易受攻击的过时组件</td><td>不安全设计（下降 ↓）</td></tr><tr><td>A07</td><td>身份认证失败</td><td>身份认证失败（不变）</td></tr><tr><td>A08</td><td>软件和数据完整性失败</td><td>软件和数据完整性失败（不变）</td></tr><tr><td>A09</td><td>安全日志与监控失败</td><td>安全日志与告警失败（不变）</td></tr><tr><td>A10</td><td>SSRF</td><td><strong>异常条件处理不当</strong>（新晋 🆕，SSRF 并入 A01）</td></tr></tbody></table><hr><h3 id="2025-版-Top-10-详解"><a href="#2025-版-Top-10-详解" class="headerlink" title="2025 版 Top 10 详解"></a>2025 版 Top 10 详解</h3><hr><h4 id="A01-—-访问控制失效-⚠️-连续两版排名第一"><a href="#A01-—-访问控制失效-⚠️-连续两版排名第一" class="headerlink" title="A01 — 访问控制失效 ⚠️ 连续两版排名第一"></a>A01 — 访问控制失效 ⚠️ 连续两版排名第一</h4><p><strong>是什么：</strong> 用户能访问他不应该访问的功能或数据。2025 版还将 SSRF 并入此类。</p><p><strong>两种常见形式：</strong></p><ul><li><strong>垂直越权</strong>：普通用户访问到管理员功能</li><li><strong>水平越权</strong>：用户 A 能看到用户 B 的订单</li></ul><p><strong>真实案例：</strong> 把 URL 里的 <code>user_id=123</code> 改成 <code>user_id=124</code>，就看到了别人的数据。</p><p><strong>SSRF（现归入此类）：</strong> 攻击者骗服务器访问内部地址。在 AWS 上可通过 SSRF 访问 EC2 元数据接口（<code>169.254.169.254</code>），窃取 IAM 临时凭证。</p><p><strong>防护方法：</strong></p><ul><li>服务器端严格校验权限（不能只靠前端隐藏按钮）</li><li>IAM 最小权限原则</li><li>AWS 上<strong>强制启用 IMDSv2</strong>，防止 SSRF 获取元数据</li><li>JWT Token 中嵌入用户身份，后端每次验证</li></ul><hr><h4 id="A02-—-安全配置错误（从-A05-升至-A02）"><a href="#A02-—-安全配置错误（从-A05-升至-A02）" class="headerlink" title="A02 — 安全配置错误（从 A05 升至 A02）"></a>A02 — 安全配置错误（从 A05 升至 A02）</h4><p><strong>是什么：</strong> 服务配置不当，留下漏洞。2025 版排名大幅上升，反映云环境下配置错误越来越普遍。</p><p><strong>常见错误：</strong></p><ul><li>S3 存储桶设置为公开可读</li><li>生产环境开着调试模式，报错信息暴露代码细节</li><li>云服务使用默认账号密码没修改</li><li>开了很多不需要的端口和服务</li></ul><p><strong>防护方法：</strong></p><ul><li>AWS Security Hub 自动检测配置问题</li><li>AWS Config Rules 持续监控资源配置</li><li>定期做安全审计</li></ul><hr><h4 id="A03-—-软件供应链失败-🆕（2025-新晋，直接进入第三）"><a href="#A03-—-软件供应链失败-🆕（2025-新晋，直接进入第三）" class="headerlink" title="A03 — 软件供应链失败 🆕（2025 新晋，直接进入第三）"></a>A03 — 软件供应链失败 🆕（2025 新晋，直接进入第三）</h4><p><strong>是什么：</strong> 你依赖的第三方代码、工具、库被篡改或含有漏洞，导致你的系统也被攻击。这是 2025 版最大的变化，社区投票中有 50% 的人把它列为第一。</p><p><strong>真实案例：</strong></p><ul><li><strong>SolarWinds（2019）</strong>：供应商软件更新被植入后门，约 18000 家机构受影响，包括美国多个政府部门</li><li><strong>Log4Shell（2021）</strong>：Java 日志库 Log4j 漏洞，攻击者发送一条特殊日志即可远程执行代码</li><li><strong>Bybit 被盗（2025）</strong>：通过供应链攻击盗走 15 亿美元加密货币</li></ul><p><strong>防护方法：</strong></p><ul><li>维护 <strong>SBOM</strong>（软件物料清单），追踪所有直接和间接依赖</li><li>只从官方可信来源获取组件，优先使用签名包</li><li>使用 AWS Inspector 扫描漏洞，ECR 开启镜像扫描</li><li>CI/CD 流水线加强访问控制，做到职责分离（写代码的人不能直接推送到生产）</li><li>使用分阶段发布（金丝雀发布），避免供应商被入侵时全量受影响</li></ul><hr><h4 id="A04-—-加密失败（从-A02-降至-A04）"><a href="#A04-—-加密失败（从-A02-降至-A04）" class="headerlink" title="A04 — 加密失败（从 A02 降至 A04）"></a>A04 — 加密失败（从 A02 降至 A04）</h4><p><strong>是什么：</strong> 敏感数据没有加密，或者用了弱加密。</p><p><strong>常见错误：</strong></p><ul><li>数据库里存明文密码</li><li>用 MD5 / SHA1 哈希密码（已被破解）</li><li>接口用 HTTP 而不是 HTTPS 传输</li></ul><p><strong>防护方法：</strong></p><ul><li>密码用 bcrypt 哈希存储</li><li>全站强制 HTTPS</li><li>AWS 上用 KMS 加密敏感数据，S3 / RDS 开启静态加密</li></ul><hr><h4 id="A05-—-注入攻击（从-A03-降至-A05）"><a href="#A05-—-注入攻击（从-A03-降至-A05）" class="headerlink" title="A05 — 注入攻击（从 A03 降至 A05）"></a>A05 — 注入攻击（从 A03 降至 A05）</h4><p><strong>是什么：</strong> 攻击者把恶意代码混进输入，骗程序执行。</p><p><strong>SQL 注入例子：</strong></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 正常查询</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'张三'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 攻击者输入：张三' OR '1'='1</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'张三'</span> <span class="keyword">OR</span> <span class="string">'1'</span>=<span class="string">'1'</span></span><br><span class="line"><span class="comment">-- 结果：返回所有用户数据！</span></span><br></pre></td></tr></table></figure><p><strong>防护方法：</strong></p><ul><li>使用参数化查询（Prepared Statement），永远不拼接 SQL 字符串</li><li>AWS WAF 开启 SQLi 规则集</li><li>输入内容严格校验和过滤</li></ul><hr><h4 id="A06-—-不安全设计（从-A04-降至-A06）"><a href="#A06-—-不安全设计（从-A04-降至-A06）" class="headerlink" title="A06 — 不安全设计（从 A04 降至 A06）"></a>A06 — 不安全设计（从 A04 降至 A06）</h4><p><strong>是什么：</strong> 系统设计阶段就有安全缺陷，不是代码写错了，而是根本没考虑安全。</p><p><strong>例子：</strong> 密码找回功能用”密保问题”，问题太简单，攻击者猜得出来。</p><p><strong>防护方法：</strong></p><ul><li>设计阶段做威胁建模（想清楚攻击者会怎么利用你的系统）</li><li>遵循最小攻击面原则</li></ul><hr><h4 id="A07-—-身份认证失败（位置不变）"><a href="#A07-—-身份认证失败（位置不变）" class="headerlink" title="A07 — 身份认证失败（位置不变）"></a>A07 — 身份认证失败（位置不变）</h4><p><strong>是什么：</strong> 登录和会话管理有漏洞，导致账号被入侵。</p><p><strong>常见问题：</strong></p><ul><li>允许弱密码（123456）</li><li>没有 MFA（多因素认证）</li><li>登录失败次数不限制，可以无限暴力破解</li><li>Session Token 不过期</li></ul><p><strong>防护方法：</strong></p><ul><li>强制强密码 + MFA</li><li>AWS Cognito 内置登录保护</li><li>WAF 速率限制防暴力破解</li><li>Secrets Manager 管理密钥，定期自动轮换</li></ul><hr><h4 id="A08-—-软件和数据完整性失败（位置不变）"><a href="#A08-—-软件和数据完整性失败（位置不变）" class="headerlink" title="A08 — 软件和数据完整性失败（位置不变）"></a>A08 — 软件和数据完整性失败（位置不变）</h4><p><strong>是什么：</strong> 代码或数据在传输/更新过程中被篡改，但没有验证。</p><p><strong>常见场景：</strong></p><ul><li>从不可信的 CDN 加载第三方脚本</li><li>CI/CD 流水线没有校验构建产物的完整性</li><li>不安全的反序列化（接收外部数据直接反序列化执行）</li></ul><p><strong>防护方法：</strong></p><ul><li>使用 AWS CodeArtifact 私有包仓库</li><li>对关键软件包验证签名</li><li>维护 SBOM（软件物料清单）</li></ul><hr><h4 id="A09-—-安全日志与告警失败（位置不变）"><a href="#A09-—-安全日志与告警失败（位置不变）" class="headerlink" title="A09 — 安全日志与告警失败（位置不变）"></a>A09 — 安全日志与告警失败（位置不变）</h4><p><strong>是什么：</strong> 没有足够的日志，攻击发生了都不知道，事后也无法溯源。</p><p><strong>后果：</strong> 攻击者可能已经潜伏数月，你毫无察觉。</p><p><strong>防护方法：</strong></p><ul><li>AWS CloudTrail：记录所有 API 操作（谁、什么时间、做了什么）</li><li>CloudWatch：设置异常告警</li><li>AWS GuardDuty：机器学习自动检测威胁行为</li><li>AWS Security Lake：集中存储和分析安全日志</li></ul><hr><h4 id="A10-—-异常条件处理不当-🆕（2025-新晋，替换-SSRF）"><a href="#A10-—-异常条件处理不当-🆕（2025-新晋，替换-SSRF）" class="headerlink" title="A10 — 异常条件处理不当 🆕（2025 新晋，替换 SSRF）"></a>A10 — 异常条件处理不当 🆕（2025 新晋，替换 SSRF）</h4><p><strong>是什么：</strong> 程序遇到异常情况时处理不当，导致崩溃、泄露信息或出现安全漏洞。</p><p><strong>常见问题：</strong></p><ul><li>报错信息把数据库结构、堆栈信息直接返回给用户</li><li>异常发生时”失败开放”（fail open）：本应拒绝的操作，因为出错而意外放行</li><li>未捕获的异常导致程序进入未知状态，被攻击者利用</li></ul><p><strong>真实例子：</strong> 登录接口报错时返回 <code>User not found in database: users_v2 table</code>，攻击者由此得知数据库表名。</p><p><strong>防护方法：</strong></p><ul><li>对用户只显示通用错误信息，详细错误只写进日志</li><li>每个可能出错的地方都要有明确的错误处理逻辑</li><li>异常时”失败关闭”（fail closed）：不确定的情况下默认拒绝</li><li>设置全局异常处理兜底，防止漏网之鱼</li></ul><hr><h2 id="五、三者关系总结"><a href="#五、三者关系总结" class="headerlink" title="五、三者关系总结"></a>五、三者关系总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">你的应用</span><br><span class="line">    │</span><br><span class="line">    ├─ 遭受大流量攻击（DDoS）        → AWS Shield 来防</span><br><span class="line">    │</span><br><span class="line">    ├─ 请求内容有恶意（注入&#x2F;XSS等）  → AWS WAF 来挡</span><br><span class="line">    │</span><br><span class="line">    └─ 应用本身有漏洞                → 参考 OWASP Top 10 来修</span><br></pre></td></tr></table></figure><table><thead><tr><th></th><th>AWS Shield</th><th>AWS WAF</th><th>OWASP Top 10</th></tr></thead><tbody><tr><td>性质</td><td>AWS 服务</td><td>AWS 服务</td><td>安全标准/指南</td></tr><tr><td>防什么</td><td>DDoS 大流量攻击</td><td>恶意 HTTP 请求内容</td><td>应用层漏洞</td></tr><tr><td>在哪里生效</td><td>网络边缘</td><td>HTTP 请求检查</td><td>代码和架构层面</td></tr><tr><td>需要写代码吗</td><td>不需要</td><td>配置规则即可</td><td>需要开发时注意</td></tr></tbody></table><hr><h2 id="六、快速上手建议"><a href="#六、快速上手建议" class="headerlink" title="六、快速上手建议"></a>六、快速上手建议</h2><h3 id="基础配置（适合大多数项目）"><a href="#基础配置（适合大多数项目）" class="headerlink" title="基础配置（适合大多数项目）"></a>基础配置（适合大多数项目）</h3><ol><li><strong>Shield Standard</strong> — 已自动开启，不用管</li><li><strong>WAF</strong> 挂到 API Gateway 或 CloudFront，开启这两个托管规则集：<ul><li><code>AWSManagedRulesCommonRuleSet</code></li><li><code>AWSManagedRulesSQLiRuleSet</code></li></ul></li><li><strong>CloudTrail</strong> 开启，保留操作日志</li><li><strong>开发时</strong> 对照 OWASP Top 10 2025 检查自己的代码</li></ol><h3 id="进阶配置（高安全要求项目）"><a href="#进阶配置（高安全要求项目）" class="headerlink" title="进阶配置（高安全要求项目）"></a>进阶配置（高安全要求项目）</h3><ul><li>WAF 加速率限制规则，防暴力破解</li><li>如果后端 API 在 Cloudflare 之后，设置 IP 白名单只允许 Cloudflare IP 段访问</li><li><strong>强制启用 IMDSv2</strong>，防止 SSRF 窃取 EC2 元数据凭证</li><li>开启 GuardDuty 自动威胁检测</li><li>维护 SBOM，定期扫描依赖漏洞（对应 OWASP A03）</li><li>考虑 Shield Advanced（业务可用性要求极高时）</li></ul><hr><p><em>基于 OWASP Top 10:2025 整理，参考官方文档：<a class="link"   href="https://owasp.org/Top10/2025/"  target="_blank" rel="noopener">https://owasp.org/Top10/2025/<i class="fas fa-external-link-alt"></i></a></em></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;学习 AWS WAF、AWS Shield 和 OWASP Top 10 的过程中整理的笔记，尽量用通俗语言解释每个概念，适合对云安全感兴趣但还没深入了解的开发者。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="后端" scheme="https://feidom-up.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="安全" scheme="https://feidom-up.github.io/tags/%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="AWS" scheme="https://feidom-up.github.io/tags/AWS/"/>
+    
+      <category term="OWASP" scheme="https://feidom-up.github.io/tags/OWASP/"/>
+    
+      <category term="WAF" scheme="https://feidom-up.github.io/tags/WAF/"/>
+    
+      <category term="DDoS" scheme="https://feidom-up.github.io/tags/DDoS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React useCallback 和 useMemo 什么时候真的有用？</title>
+    <link href="https://feidom-up.github.io/2026/05/26/react-usecallback-usememo/"/>
+    <id>https://feidom-up.github.io/2026/05/26/react-usecallback-usememo/</id>
+    <published>2026-05-25T16:00:00.000Z</published>
+    <updated>2026-05-25T23:29:37.795Z</updated>
+    
+    <content type="html"><![CDATA[<p>很多人刚学 hooks 就开始到处加 useCallback/useMemo，以为这样能优化性能。但实际上大多数时候是在做无用功，甚至拖慢了渲染。</p><h2 id="先搞清楚它们做什么"><a href="#先搞清楚它们做什么" class="headerlink" title="先搞清楚它们做什么"></a>先搞清楚它们做什么</h2><ul><li><code>useMemo(fn, deps)</code>：缓存计算结果，deps 不变就不重新计算</li><li><code>useCallback(fn, deps)</code>：缓存函数引用，deps 不变就返回同一个函数对象</li></ul><p>两者的核心都是”缓存”，代价是每次渲染都要比较 deps 数组。</p><h2 id="什么时候有用"><a href="#什么时候有用" class="headerlink" title="什么时候有用"></a>什么时候有用</h2><p><strong>useMemo 有用的场景：</strong></p><ol><li>计算量大的纯函数（比如对大数组排序/过滤）</li><li>作为其他 hook 的依赖（避免引用变化触发无限循环）</li></ol><p><strong>useCallback 有用的场景：</strong></p><ol><li>传给用 <code>React.memo</code> 包裹的子组件的回调</li><li>作为 useEffect 的依赖</li></ol><h2 id="什么时候没用"><a href="#什么时候没用" class="headerlink" title="什么时候没用"></a>什么时候没用</h2><ul><li>普通子组件（没有 React.memo）：父组件重渲染子组件一定重渲染，缓存函数没意义</li><li>计算很简单的值：比较 deps 的开销 &gt; 重新计算的开销</li></ul><h2 id="一个判断标准"><a href="#一个判断标准" class="headerlink" title="一个判断标准"></a>一个判断标准</h2><p>先不加，profiler 发现有问题再加。过早优化是万恶之源。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;很多人刚学 hooks 就开始到处加 useCallback/useMemo，以为这样能优化性能。但实际上大多数时候是在做无用功，甚至拖慢了渲染。&lt;/p&gt;
+&lt;h2 id=&quot;先搞清楚它们做什么&quot;&gt;&lt;a href=&quot;#先搞清楚它们做什么&quot; class=&quot;headerlink&quot; 
+      
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="https://feidom-up.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="React" scheme="https://feidom-up.github.io/tags/React/"/>
+    
+      <category term="hooks" scheme="https://feidom-up.github.io/tags/hooks/"/>
+    
+      <category term="性能优化" scheme="https://feidom-up.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+      <category term="前端" scheme="https://feidom-up.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>Cloudflare Waiting Room 完整指南：从原理到生产级安全实践</title>
@@ -499,69 +563,6 @@
     
       <category term="手写代码系列" scheme="https://feidom-up.github.io/categories/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E7%B3%BB%E5%88%97/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构与算法之栈结构</title>
-    <link href="https://feidom-up.github.io/2021/03/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E6%A0%88%E7%BB%93%E6%9E%84/"/>
-    <id>https://feidom-up.github.io/2021/03/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E6%A0%88%E7%BB%93%E6%9E%84/</id>
-    <published>2021-03-16T07:15:17.000Z</published>
-    <updated>2026-05-19T23:12:31.430Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><ul><li>特性：先进后出</li><li>解题法则：<ul><li>题目中有<strong>配对、消除</strong>的题意，优先考虑<strong>栈</strong>结构</li><li>栈中存放的可以是<strong>内容本身</strong>和<strong>内容的索引</strong></li><li>数组中右边<strong>第一个比我小</strong>的元素的位置，求解用<strong>递增栈</strong></li><li>较小的数<strong>消除</strong>掉较大的数的时候，使用<strong>递增栈</strong>。</li><li>根据题意总结<strong>入栈与出栈的时机</strong></li></ul></li></ul><h5 id="普通栈"><a href="#普通栈" class="headerlink" title="普通栈"></a>普通栈</h5><ul><li>规律性：<font color=red>配对、消除</font></li></ul><hr><ul><li>例题1：字符串中只有字符’(‘和’)’。合法字符串需要括号可以配对。比如：<br>  输入：”()”<br>  输出：true<br>  解释：()，()()，(())是合法的。)(，()(，(()是非法的。<br>  请你实现一个函数<code>isValid(s)</code>，来判断给定的字符串是否合法。<blockquote><p>针对例1这种<font color=green>内容一样</font>时，可以使用<font color=green>计数器优化</font></p></blockquote></li><li>例题拓展： 给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。有效字符串需满足：<br>  左括号必须用相同类型的右括号闭合<br>  左括号必须以正确的顺序闭合<br>  注意空字符串可被认为是有效字符串<br>  请实现<code>isValid(s)</code></li></ul><hr><ul><li>例题2：在水中有许多鱼，可以认为这些鱼停放在 x 轴上。再给定两个数组 Size，Dir，Size[i] 表示第 i 条鱼的大小，Dir[i] 表示鱼的方向 （0 表示向左游，1 表示向右游）。这两个数组分别表示鱼的大小和游动的方向，并且两个数组的长度相等。鱼的行为符合以下几个条件:<br>  所有的鱼都同时开始游动，每次按照鱼的方向，都游动一个单位距离；<br>  当方向相对时，大鱼会吃掉小鱼；<br>  鱼的大小都不一样。<br>  输入：Size = [4, 2, 5, 3, 1], Dir = [1, 1, 0, 0, 0]<br>  输出：3<br>  完成<code>solution(Size, Dir)</code>来计算还剩下几条鱼？</li></ul><hr><h5 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h5><ul><li>定义：单调栈就是指栈中的元素必须是按照升序排列的栈，或者是降序排列的栈。<br>  升序排列的栈称为<strong>递增栈</strong><br>  降序排列的栈称为<strong>递减栈</strong><br>  特点：任何时候都需要保证栈的有序性</li></ul><hr><ul><li>例题1：一个整数数组 A，找到每个元素：右边第一个比我小的下标位置，没有则用 -1 表示。（找出数组中右边比我小的元素）<br>  输入：[5, 2]<br>  输出：[1, -1]<br>  解释：因为元素 5 的右边离我最近且比我小的位置应该是 A[1]，最后一个元素 2 右边没有比 2 小的元素，所以应该输出 -1。</li></ul><blockquote><p>类似题：<br>数组中右边第一个比我大的元素的位置<br>数组中元素左边离我最近且比我小的元素的位置<br>数组中元素左边离我最近且比我大的元素的位置</p></blockquote><ul><li>例题2：给定一个正整数数组和 k，要求依次取出 k 个数，输出其中数组的一个子序列，需要满足：1. 长度为 k；2.字典序最小。<br>  输入：nums = [3,5,2,6], k = 2<br>  输出：[2,6]<br>  解释：在所有可能的解：{[3,5], [3,2], [3,6], [5,2], [5,6], [2,6]} 中，[2,6] 字典序最小。</li></ul><h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p><img src="https://s0.lgstatic.com/i/image6/M01/0B/7F/CioPOWA4q6qASB-UAADhj7uzOwg933.png" alt="图"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;栈&quot;&gt;&lt;a href=&quot;#栈&quot; class=&quot;headerlink&quot; title=&quot;栈&quot;&gt;&lt;/a&gt;栈&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;特性：先进后出&lt;/li&gt;
-&lt;li&gt;解题法则：&lt;ul&gt;
-&lt;li&gt;题目中有&lt;strong&gt;配对、消除&lt;/strong&gt;的题意，优先考虑&lt;st
-      
-    
-    </summary>
-    
-    
-      <category term="算法" scheme="https://feidom-up.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="数据结构" scheme="https://feidom-up.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-      <category term="算法" scheme="https://feidom-up.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="栈" scheme="https://feidom-up.github.io/tags/%E6%A0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构与算法</title>
-    <link href="https://feidom-up.github.io/2021/03/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    <id>https://feidom-up.github.io/2021/03/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</id>
-    <published>2021-03-03T01:34:21.000Z</published>
-    <updated>2026-05-19T23:12:31.429Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="算法四步分析法："><a href="#算法四步分析法：" class="headerlink" title="算法四步分析法："></a>算法四步分析法：</h3><ol><li>模拟：模拟题目的运行。</li><li>规律：尝试总结出题目的一般规律和特点。</li><li>匹配：找到符合这些特点的数据结构与算法。</li><li>边界：考虑特殊情况。</li></ol><h3 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h3><ul><li><a href="/2021/03/16/数据结构与算法之栈结构/">栈结构与算法</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;算法四步分析法：&quot;&gt;&lt;a href=&quot;#算法四步分析法：&quot; class=&quot;headerlink&quot; title=&quot;算法四步分析法：&quot;&gt;&lt;/a&gt;算法四步分析法：&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;模拟：模拟题目的运行。&lt;/li&gt;
-&lt;li&gt;规律：尝试总结出题目的一般规律和特点。
-      
-    
-    </summary>
-    
-    
-      <category term="算法" scheme="https://feidom-up.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="数据结构" scheme="https://feidom-up.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-      <category term="算法" scheme="https://feidom-up.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
