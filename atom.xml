@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://feidom-up.github.io/"/>
-  <updated>2026-05-26T23:10:23.158Z</updated>
+  <updated>2026-06-02T00:07:18.567Z</updated>
   <id>https://feidom-up.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IPFS 与 IPFS Desktop 入门：原理、安装与安全</title>
+    <link href="https://feidom-up.github.io/2026/06/02/ipfs-and-ipfs-desktop-guide/"/>
+    <id>https://feidom-up.github.io/2026/06/02/ipfs-and-ipfs-desktop-guide/</id>
+    <published>2026-06-02T00:00:00.000Z</published>
+    <updated>2026-06-02T00:07:18.567Z</updated>
+    
+    <content type="html"><![CDATA[<p>IPFS 是一套去中心化的点对点文件分发协议，IPFS Desktop 则是它的官方桌面客户端。这篇笔记从「它是什么」讲到工作原理、安装步骤，以及实际使用中真正需要注意的安全问题。</p><a id="more"></a><h2 id="一、IPFS-是什么"><a href="#一、IPFS-是什么" class="headerlink" title="一、IPFS 是什么"></a>一、IPFS 是什么</h2><p>IPFS 全称 InterPlanetary File System（星际文件系统），是一种去中心化的点对点（P2P）文件分发协议。它和我们熟悉的 HTTP 最大的区别，在于<strong>寻址方式</strong>。</p><p>传统 Web 是<strong>地址寻址（location-based）</strong>：你访问一个文件，本质是说”去<strong>某台服务器的某个路径</strong>拿这个东西”，比如 <code>https://example.com/cat.jpg</code>。问题是——那台服务器挂了、文件被删了、路径改了，链接就失效了。文件的身份绑定在”它存在哪儿”。</p><p>IPFS 是<strong>内容寻址（content-based）</strong>：你不问”它在哪台机器上”，而是问”我要这份<strong>具体内容</strong>“。每个文件经过哈希计算得到一个独一无二的指纹，叫 <strong>CID（Content Identifier，内容标识符）</strong>，长得像 <code>QmYHuXit...</code>。你拿着 CID 去网络里问”谁有这份内容”，任何存了它的节点都能给你。</p><p>由此带来一个关键性质：<strong>只要内容不变，CID 就永远不变；内容改一个字节，CID 就完全不同</strong>。所以 CID 天然能验证完整性——拿到文件后自己算一遍哈希，对得上就说明没被篡改。</p><p>两种寻址方式的对比如下图：</p><p><img src="/img/ipfs-addressing.svg" alt="内容寻址 vs 地址寻址"></p><h2 id="二、工作原理"><a href="#二、工作原理" class="headerlink" title="二、工作原理"></a>二、工作原理</h2><h3 id="分块-Merkle-DAG"><a href="#分块-Merkle-DAG" class="headerlink" title="分块 + Merkle DAG"></a>分块 + Merkle DAG</h3><p>大文件会被切成小块（chunk），每一块单独算哈希，再用这些哈希组成一棵树状结构（Merkle DAG，有向无环图），顶层的根哈希代表整个文件。好处是：相同的块可以被复用（两个文件有重复部分时不用存两遍），下载时也能从不同节点并行拿不同的块。</p><h3 id="DHT（分布式哈希表）"><a href="#DHT（分布式哈希表）" class="headerlink" title="DHT（分布式哈希表）"></a>DHT（分布式哈希表）</h3><p>网络怎么知道”谁有某个 CID”？靠 DHT。它像一本分散在所有节点上的全网通讯录，记录着”哪个内容由哪些节点提供”。你查一个 CID，DHT 帮你定位到持有者，然后你直接和他们点对点连接下载。</p><h3 id="Pinning（固定）"><a href="#Pinning（固定）" class="headerlink" title="Pinning（固定）"></a>Pinning（固定）</h3><p>节点默认只是临时缓存访问过的内容，垃圾回收时可能被清掉。如果希望某份内容<strong>长期保留</strong>在节点上，就要把它 “pin”（固定）住。这也是”固定服务（pinning service）”存在的原因——可以让别人的节点帮你长期保存内容，保证它一直在线可取。</p><h3 id="IPNS（命名系统）"><a href="#IPNS（命名系统）" class="headerlink" title="IPNS（命名系统）"></a>IPNS（命名系统）</h3><p>CID 有个不便：内容一变 CID 就变，没法做”始终指向最新版”的固定链接。IPNS 解决这个问题——它提供一个不变的名字，背后可以指向不断更新的 CID，类似 DNS 之于 IP 地址的关系。</p><h3 id="一句话总结流程"><a href="#一句话总结流程" class="headerlink" title="一句话总结流程"></a>一句话总结流程</h3><p>导入文件 → IPFS 分块、算哈希、生成 CID → 通过 DHT 向全网宣告”我这有这份内容” → 别人拿着 CID 来找，就能从你（或任何缓存了它的节点）那里点对点取走，并能自行验证内容没被改过。</p><p>这套设计的意义在于：内容不再依赖单一服务器，理论上只要网络里还有<strong>任何一个</strong>节点存着它就取得到，因此更抗审查、抗单点故障，是去中心化网络（dweb）的基础设施之一。</p><h2 id="三、IPFS-Desktop"><a href="#三、IPFS-Desktop" class="headerlink" title="三、IPFS Desktop"></a>三、IPFS Desktop</h2><p>IPFS Desktop 是 IPFS 官方出品的桌面客户端，支持 Windows、Mac、Linux。它把 IPFS 打包成图形化应用，让你不碰命令行也能用。</p><p>本质上它内置了一个完整的 IPFS 节点（运行 Kubo，IPFS 的主流实现），并整合了 IPFS Web UI，同时在系统托盘/菜单栏加了快捷控制。主要功能：</p><ul><li><strong>运行完整节点</strong>：内置 Kubo，开机可自启</li><li><strong>托盘控制</strong>：随时启停节点</li><li><strong>文件管理</strong>：拖拽导入，预览、重命名、复制 CID 或分享链接、pin 文件</li><li><strong>Peers 地图</strong>：可视化展示连接到的全球节点</li><li><strong>Explore</strong>：直观查看文件如何被拆成内容寻址的碎片</li><li><strong>协议支持</strong>：让系统识别 <code>ipfs://</code>、<code>ipns://</code> 链接</li><li><strong>CLI 教学模式</strong>：边操作边显示对应命令</li></ul><h3 id="辨别官方仓库"><a href="#辨别官方仓库" class="headerlink" title="辨别官方仓库"></a>辨别官方仓库</h3><p>官方仓库是 <code>https://github.com/ipfs/ipfs-desktop</code>。一个通用辨别习惯：在 GitHub 上决定”是不是官方”的是<strong>斜杠前面的组织/用户名</strong>，而不是仓库名。<code>ipfs/ipfs-desktop</code> 中的 <code>ipfs</code> 是 IPFS 项目官方组织；若是 <code>someuser/ipfs-desktop</code>，即使名字一样也只是 fork 或仿冒。</p><h2 id="四、安装（以-Mac-为例）"><a href="#四、安装（以-Mac-为例）" class="headerlink" title="四、安装（以 Mac 为例）"></a>四、安装（以 Mac 为例）</h2><p>各平台都可以从官方 GitHub Releases 页下载带自动更新的安装包。</p><ul><li><strong>Windows</strong>：下载 <code>.exe</code> 安装器，或用 <code>winget install IPFS.IPFS-Desktop</code></li><li><strong>Mac</strong>：下载 <code>.dmg</code>，或 <code>brew install --cask ipfs</code></li><li><strong>Linux</strong>：推荐 AppImage（注意可能需要装 libfuse2）</li></ul><p>Mac 安装步骤：</p><ol><li>双击 <code>.dmg</code>，把图标拖进 Applications</li><li>首次打开若被拦截，去「系统设置 → 隐私与安全性」点”仍要打开”（官方来源可放心）</li><li>启动后会自动初始化节点，菜单栏出现 IPFS 图标即成功</li></ol><p>从源码安装（需 Node.js LTS）：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ipfs/ipfs-desktop.git</span><br><span class="line"><span class="built_in">cd</span> ipfs-desktop</span><br><span class="line">npm ci</span><br><span class="line">npm run build</span><br><span class="line">npm start</span><br></pre></td></tr></table></figure><h2 id="五、安全注意事项"><a href="#五、安全注意事项" class="headerlink" title="五、安全注意事项"></a>五、安全注意事项</h2><p>最该上心的是 IPFS <strong>设计层面</strong>的隐私特性，最容易栽跟头：</p><ul><li><strong>内容默认公开、不加密</strong>。任何东西导入后，只要 CID 被网络知道，谁拿到 CID 都能取走，内容是明文。</li><li><strong>CID 不可撤回</strong>。你”删除”只是从自己节点移除；若别人已取走或 pin 了，那份内容会继续存在于网络里。<strong>IPFS 上没有真正的删除。</strong></li><li><strong>结论</strong>：绝不要把私密、敏感、未来可能想撤回的东西直接放进去；要存先自己加密。</li></ul><p>其他需要留意的点：</p><ul><li>节点运行时会开放网络端口做 P2P 连接，扩大了对外暴露面；P2P 天性会让对端看到彼此 IP。</li><li>本地 API 端口（默认 5001）能完全操控节点，正常只绑定本机，<strong>千万别暴露到公网</strong>。</li><li>它是 Electron + 大量 npm 依赖的应用，保持更新到最新版是最实在的防护；只从官方渠道下载。</li></ul><p><strong>实操建议</strong>（优先级从高到低）：不放私密内容（要放先加密）→ 保持更新 → 只从官方渠道下载 → 不用时停掉节点 → 别暴露本地 API 端口 → 敏感网络环境检查防火墙。</p><p>对普通个人用户，在正常使用下安全风险是可控的。最大的”风险”其实不是被黑，而是因为不了解”公开、不可删除”这个特性，把不该公开的东西放了进去。守住这条线，其余都是常规软件卫生问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;IPFS 是一套去中心化的点对点文件分发协议，IPFS Desktop 则是它的官方桌面客户端。这篇笔记从「它是什么」讲到工作原理、安装步骤，以及实际使用中真正需要注意的安全问题。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="AI" scheme="https://feidom-up.github.io/categories/AI/"/>
+    
+    
+      <category term="IPFS" scheme="https://feidom-up.github.io/tags/IPFS/"/>
+    
+      <category term="去中心化" scheme="https://feidom-up.github.io/tags/%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96/"/>
+    
+      <category term="P2P" scheme="https://feidom-up.github.io/tags/P2P/"/>
+    
+      <category term="dweb" scheme="https://feidom-up.github.io/tags/dweb/"/>
+    
+  </entry>
   
   <entry>
     <title>AWS 数据处理中心架构学习笔记</title>
@@ -541,31 +570,6 @@
         &lt;h3 id=&quot;New操作符做了哪些事&quot;&gt;&lt;a href=&quot;#New操作符做了哪些事&quot; class=&quot;headerlink&quot; title=&quot;New操作符做了哪些事&quot;&gt;&lt;/a&gt;New操作符做了哪些事&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;创建了一个全新的对象。&lt;/li&gt;
 &lt;li&gt;会被执行[[P
-      
-    
-    </summary>
-    
-    
-      <category term="手写代码系列" scheme="https://feidom-up.github.io/categories/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E7%B3%BB%E5%88%97/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>手写代码系列之防抖与节流</title>
-    <link href="https://feidom-up.github.io/2021/03/16/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E7%B3%BB%E5%88%97%E4%B9%8B%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/"/>
-    <id>https://feidom-up.github.io/2021/03/16/%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81%E7%B3%BB%E5%88%97%E4%B9%8B%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/</id>
-    <published>2021-03-16T07:26:28.000Z</published>
-    <updated>2026-05-19T23:12:31.429Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h3><p><strong>思路</strong>：在规定时间内未触发第二次，则执行</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 利用闭包保存定时器</span></span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="comment">// 在规定时间内再次触发</span></span><br><span class="line">        <span class="comment">// 会先清除定时器再重设定时器</span></span><br><span class="line">        clearTimeout(timer);</span><br><span class="line">        timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            fn.apply(context, args)</span><br><span class="line">        &#125;,delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用举例：</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"防抖"</span>)</span><br><span class="line">&#125;</span><br><span class="line">addEventListener(<span class="string">"scroll"</span>, debounce(fn1, <span class="number">1000</span>))</span><br></pre></td></tr></table></figure><h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><p><strong>思路</strong>：在规定时间内只触发一次</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 利用闭包保存时间</span></span><br><span class="line">    <span class="keyword">let</span> prev = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> context = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">let</span> now = <span class="built_in">Date</span>.now();</span><br><span class="line">        <span class="keyword">if</span>(now - prev &gt;= delay)&#123;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">            prev = <span class="built_in">Date</span>.now();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用举例：</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"节流"</span>)</span><br><span class="line">&#125;</span><br><span class="line">addEventListener(<span class="string">"scroll"</span>, throttle(fn2, <span class="number">1000</span>))</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;防抖&quot;&gt;&lt;a href=&quot;#防抖&quot; class=&quot;headerlink&quot; title=&quot;防抖&quot;&gt;&lt;/a&gt;防抖&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;：在规定时间内未触发第二次，则执行&lt;/p&gt;
-&lt;figure class=&quot;highlight java
       
     
     </summary>
